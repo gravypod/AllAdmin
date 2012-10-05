@@ -5,16 +5,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
+import com.gravypod.AllAdmin.CommandHandling.ICommand;
 
 public class Test implements ICommand {
 	
 	@Override
-	public void registerSelf(AllAdmin plugin) {
-	
-		plugin.getCommand("Test").setExecutor(plugin.ch);
-		
-	}
+    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    
+		plugin.getCommand("Test").setExecutor(ch);
+	    
+    }
 	
 	@Override
 	public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
@@ -32,4 +33,5 @@ public class Test implements ICommand {
 		
 	    return ChatColor.AQUA + "Test command: /test, used for testing";
     }
+
 }

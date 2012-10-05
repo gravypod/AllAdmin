@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -18,14 +19,16 @@ public class AllAdmin extends JavaPlugin {
 	
 	private static AllAdmin instance;
 	
-	public CommandHandler ch = new CommandHandler();
+	public CommandHandler ch;
 	
 	@Override
 	public void onEnable() {
 	
 		instance = this;
 		
-		new Startup(this);
+		ch = new CommandHandler();
+		
+		new Startup(this, ch);
 		
 	}
 	
@@ -34,10 +37,6 @@ public class AllAdmin extends JavaPlugin {
 	
 		userList.clear();
 		
-	}
-	
-	public void addCommand(String classPath) {
-	
 	}
 	
 	public static IUser getUser(String name) {

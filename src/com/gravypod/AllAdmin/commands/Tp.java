@@ -6,24 +6,22 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
+import com.gravypod.AllAdmin.CommandHandling.ICommand;
 import com.gravypod.AllAdmin.utils.MatchUser;
 
 public class Tp implements ICommand {
 	
-	AllAdmin plugin;
-	
 	@Override
-	public void registerSelf(AllAdmin _plugin) {
-	
-		plugin = _plugin;
-		plugin.getCommand("Test").setExecutor(plugin.ch);
+	public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+		
+		plugin.getCommand("tp").setExecutor(ch);
 		
 	}
 	
 	@Override
 	public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
-	
+		
 		switch(args.length) {
 			case 2:
 				if (!MatchUser.matchOnlineUser(args[0]).teleport(MatchUser.matchOnlineUser(args[1]))) {
@@ -47,7 +45,7 @@ public class Tp implements ICommand {
 	
 	@Override
 	public String commandHelp() {
-	
+		
 		return ChatColor.AQUA + "Tp command: /tp (Player) ([optional] player), teleport to a player";
 		
 	}

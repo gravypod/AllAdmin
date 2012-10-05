@@ -1,9 +1,11 @@
-package com.gravypod.AllAdmin;
+package com.gravypod.AllAdmin.CommandHandling;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import com.gravypod.AllAdmin.AllAdmin;
 
 public class CommandHandler implements CommandExecutor {
 	
