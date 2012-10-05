@@ -1,0 +1,9 @@
+name: AllAdmin
+author: Gravypod
+main: com.gravypod.AllAdmin.AllAdmin
+version: 1.0
+commands:
+    test:
+        description: 'A test command.'
+        usage: '/test'
+        permission: alladmin.commands.test
