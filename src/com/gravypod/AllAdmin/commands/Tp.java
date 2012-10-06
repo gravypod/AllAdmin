@@ -29,6 +29,7 @@ public class Tp implements ICommand {
 				}
 				break;
 			case 1:
+				
 				if (!(sender instanceof Player))
 					AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
 				

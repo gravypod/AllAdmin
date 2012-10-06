@@ -6,5 +6,7 @@ public interface IUser {
 	public boolean hasPermission(String node);
 	
 	public void sendCommandFaliure(String command);
+
+	public void sendMessage(String message);
 	
 }

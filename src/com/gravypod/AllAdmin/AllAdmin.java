@@ -5,9 +5,11 @@ import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
+import com.gravypod.AllAdmin.listeners.*;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -27,6 +29,9 @@ public class AllAdmin extends JavaPlugin {
 		instance = this;
 		
 		ch = new CommandHandler();
+		
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new PlayerListener(), this);
 		
 		new Startup(this, ch);
 		
@@ -57,6 +62,14 @@ public class AllAdmin extends JavaPlugin {
 		}
 		
 		return userList.get(name);
+	}
+	
+	public static TreeMap<String, IUser> getUserList() {
+		return userList;
+	}
+	
+	public static void removeUser(String name) {
+		userList.remove(name);
 	}
 	
 	public static AllAdmin getInstance() {

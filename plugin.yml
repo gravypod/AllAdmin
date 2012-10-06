@@ -7,3 +7,11 @@ commands:
         description: 'A test command.'
         usage: '/test'
         permission: alladmin.commands.test
+    tp:
+        description: 'Teleport to a user.'
+        usage: '/tp <User to tp to, or player to tp> <[optional] person to tp to>'
+        permission: alladmin.commands.tp
+    list:
+        description: 'List all the users on the server.'
+        usage: '/list'
+        permission: alladmin.commands.list
