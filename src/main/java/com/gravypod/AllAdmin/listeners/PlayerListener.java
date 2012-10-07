@@ -13,22 +13,39 @@ public class PlayerListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public static void onLogin(final PlayerLoginEvent event) {
+    	
+    	AllAdmin.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
+    		
+    		@Override
+    		public void run() {
+            
+                if (event.getPlayer().getName().contains("["))
+                    return;
 
-        if (event.getPlayer().getName().contains("["))
-            return;
-
-        AllAdmin.getUser(event.getPlayer().getName());
-
+                AllAdmin.getUser(event.getPlayer().getName());
+    			
+    		}
+    		
+    	});
     }
 
     @EventHandler(ignoreCancelled = false)
     public static void onLogout(final PlayerQuitEvent event) {
+    	
+    	AllAdmin.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
+    		
+    		@Override
+    		public void run() {
+            
+                if (event.getPlayer().getName().contains("["))
+                    return;
 
-        if (event.getPlayer().getName().contains("["))
-            return;
-
-        AllAdmin.removeUser(event.getPlayer().getName());
-
+                AllAdmin.removeUser(event.getPlayer().getName());
+    			
+    		}
+    		
+    	});
+    	
     }
 
 }
