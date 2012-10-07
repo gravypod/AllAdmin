@@ -13,22 +13,22 @@ public class AllAdminCMD implements IUser {
 
 	final CommandSender sender;
 
-    public AllAdminCMD(CommandSender _sender) {
+    public AllAdminCMD(final CommandSender _sender) {
 
         sender = _sender;
     }
 
-    public String getUserName() {
+    public final String getUserName() {
 
         return "Console";
     }
 
-    public String getDisplayName() {
+    public final String getDisplayName() {
 
         return "Console";
     }
 
-    public Inventory getInventory() {
+    public final Inventory getInventory() {
 
         return null;
     }
@@ -53,12 +53,12 @@ public class AllAdminCMD implements IUser {
         sender.sendMessage(ChatColor.RED + "We could not exacute the command " + command + " !");
     }
 
-    public boolean canUseCommand(String command) {
+    public final boolean canUseCommand(String command) {
 
         return true;
     }
 
-    public boolean hasPermission(String permission) {
+    public final boolean hasPermission(String permission) {
 
         return true;
     }

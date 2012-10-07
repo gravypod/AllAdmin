@@ -43,17 +43,17 @@ public class AllAdminUser implements IUser {
 
     }
 
-    public String getUserName() {
+    public final String getUserName() {
 
         return bukkitPlayer.getName();
     }
 
-    public String getDisplayName() {
+    public final String getDisplayName() {
 
         return bukkitPlayer.getDisplayName();
     }
 
-    public Inventory getInventory() {
+    public final Inventory getInventory() {
 
         return bukkitPlayer.getInventory();
     }
@@ -88,17 +88,17 @@ public class AllAdminUser implements IUser {
         return PermissionsTesting.hasPermission(bukkitPlayer, permission);
     }
 
-    public Player getBukkitPlayer() {
+    public final Player getBukkitPlayer() {
 
         return this.bukkitPlayer;
     }
 
-    public Location getLastLocation() {
+    public final Location getLastLocation() {
 
         return lastLocation;
     }
 
-    public void setHome(Location loc) {
+    public void setHome(final Location loc) {
 
         userData.set("homes.world", loc.getWorld().getName());
         userData.set("homes.x", loc.getX());
