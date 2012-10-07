@@ -20,7 +20,7 @@ public class Test implements ICommand {
     }
 
     @Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
+    public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         AllAdmin.getUser(sender.getName()).hasPermission("alladmin.commands." + cmd);
 

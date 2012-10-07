@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class MatchUser {
 
-    public static Player matchOnlineUser(String name) {
+    public static Player matchOnlineUser(final String name) {
 
         return AllAdmin.getInstance().getServer().getPlayer(name);
 

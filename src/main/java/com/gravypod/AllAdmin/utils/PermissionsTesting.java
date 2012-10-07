@@ -7,11 +7,11 @@ import org.bukkit.entity.Player;
 
 public class PermissionsTesting {
 
-    public static boolean canUseCommand(Player player, String command) {
+    public static boolean canUseCommand(final Player player, final String command) {
         return hasPermission(player, "alladmin.commands." + command);
     }
 
-    public static boolean hasPermission(Player player, String node) {
+    public static boolean hasPermission(final Player player, final String node) {
 
         return player.hasPermission(node);
 

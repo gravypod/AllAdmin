@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class AllAdminCMD implements IUser {
 
-    CommandSender sender;
+	final CommandSender sender;
 
     public AllAdminCMD(CommandSender _sender) {
 

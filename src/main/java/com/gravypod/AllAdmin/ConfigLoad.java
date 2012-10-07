@@ -19,7 +19,7 @@ public class ConfigLoad {
 
     static File warpsList;
 
-    public ConfigLoad(AllAdmin _plugin, File _configFile) {
+    public ConfigLoad(final AllAdmin _plugin, final File _configFile) {
 
         plugin = _plugin;
         configFile = _configFile;

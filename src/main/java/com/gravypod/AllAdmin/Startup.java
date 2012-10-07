@@ -14,7 +14,7 @@ public class Startup {
 
     AllAdmin plugin;
 
-    public Startup(AllAdmin _plugin, CommandHandler ch) {
+    public Startup(final AllAdmin _plugin, final CommandHandler ch) {
 
         plugin = _plugin;
 
@@ -22,7 +22,7 @@ public class Startup {
 
     }
 
-    public void loadCommands(CommandHandler ch) {
+    public void loadCommands(final CommandHandler ch) {
 
         String classPath = "com.gravypod.AllAdmin.commands.";
         String packageName = classPath.replaceAll("\\.", "/");

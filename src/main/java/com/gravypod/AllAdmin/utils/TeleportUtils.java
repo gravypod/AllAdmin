@@ -11,7 +11,7 @@ import org.bukkit.Material;
 
 public class TeleportUtils {
 
-    public static void delayedTeleport(final AllAdminUser player, final Location toGo, long time) {
+    public static void delayedTeleport(final AllAdminUser player, final Location toGo, final long time) {
 
         player.sendMessage(ChatColor.AQUA + "Do not move for " + time + " seconds");
 
@@ -38,7 +38,7 @@ public class TeleportUtils {
 
     }
 
-    public static Location safeLocation(Location spawnLocation) {
+    public static final Location safeLocation(final Location spawnLocation) {
 
         Location blockLocation = spawnLocation;
         double yLoc = blockLocation.getY();

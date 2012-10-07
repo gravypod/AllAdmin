@@ -13,7 +13,7 @@ public class ConfigHandle {
 
     private final File configFile;
 
-    public ConfigHandle(AllAdmin plugin) {
+    public ConfigHandle(final AllAdmin plugin) {
 
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdirs();
@@ -41,7 +41,7 @@ public class ConfigHandle {
      * @param dst
      * @throws IOException
      */
-    public static void copy(InputStream src, File dst) throws IOException {
+    public static void copy(final InputStream src, final File dst) throws IOException {
 
         InputStream in = src;
         OutputStream out = new FileOutputStream(dst);

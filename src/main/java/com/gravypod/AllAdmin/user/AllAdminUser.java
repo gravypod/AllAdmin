@@ -19,13 +19,13 @@ import java.io.IOException;
 
 public class AllAdminUser implements IUser {
 
-    private Player bukkitPlayer;
+    private final Player bukkitPlayer;
 
     private Location lastLocation;
 
-    private File userDataFile;
+    private final File userDataFile;
 
-    private FileConfiguration userData = new YamlConfiguration();
+    private final FileConfiguration userData = new YamlConfiguration();
 
     public AllAdminUser(Player _bukkitPlayer) {
 
@@ -58,32 +58,32 @@ public class AllAdminUser implements IUser {
         return bukkitPlayer.getInventory();
     }
 
-    public boolean doesHaveItem(Material m) {
+    public boolean doesHaveItem(final Material m) {
 
         return getInventory().contains(m);
     }
 
-    public boolean doesHaveItem(ItemStack m) {
+    public boolean doesHaveItem(final ItemStack m) {
 
         return getInventory().contains(m);
     }
 
-    public boolean doesHaveItem(int m) {
+    public boolean doesHaveItem(final int m) {
 
         return getInventory().contains(m);
     }
 
-    public void sendCommandFaliure(String command) {
+    public void sendCommandFaliure(final String command) {
 
         bukkitPlayer.sendMessage(ChatColor.RED + "We could not exacute the command " + command + "!");
     }
 
-    public boolean canUseCommand(String command) {
+    public boolean canUseCommand(final String command) {
 
         return PermissionsTesting.canUseCommand(bukkitPlayer, command);
     }
 
-    public boolean hasPermission(String permission) {
+    public boolean hasPermission(final String permission) {
 
         return PermissionsTesting.hasPermission(bukkitPlayer, permission);
     }
@@ -112,7 +112,7 @@ public class AllAdminUser implements IUser {
 
     }
 
-    public Location getHome() {
+    public final Location getHome() {
 
         return new Location(AllAdmin.getInstance().getServer().getWorld(userData.getString("homes.world")), userData.getDouble("homes.x"), userData.getDouble("homes.y"), userData.getDouble("homes.z"));
     }
@@ -123,7 +123,7 @@ public class AllAdminUser implements IUser {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessage(final String message) {
 
         this.bukkitPlayer.sendMessage(message);
 

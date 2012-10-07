@@ -21,11 +21,11 @@ public class List implements ICommand {
     }
 
     @Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
+    public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         String players = null;
 
-        TreeMap<String,IUser> onlinePlayers = AllAdmin.getUserList();
+        final TreeMap<String,IUser> onlinePlayers = AllAdmin.getUserList();
 
         for (String player : onlinePlayers.keySet()) {
 

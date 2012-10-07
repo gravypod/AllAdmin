@@ -17,15 +17,15 @@ import org.bukkit.entity.Player;
 public class Home implements ICommand {
 
     @Override
-    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 
         plugin.getCommand("Home").setExecutor(ch);
     }
 
     @Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
+    public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
-        IUser user = AllAdmin.getUser(sender.getName());
+    	final IUser user = AllAdmin.getUser(sender.getName());
 
         if (!(sender instanceof Player)) {
 
@@ -35,7 +35,7 @@ public class Home implements ICommand {
 
         }
 
-        AllAdminUser allAdmin = (AllAdminUser) user;
+        final AllAdminUser allAdmin = (AllAdminUser) user;
 
         if (!allAdmin.canUseCommand(cmd)) {
             allAdmin.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have permissions to use that command!");

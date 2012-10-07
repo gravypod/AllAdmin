@@ -16,14 +16,14 @@ import org.bukkit.entity.Player;
 public class Sethome implements ICommand {
 
     @Override
-    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 
         plugin.getCommand("sethome").setExecutor(ch);
 
     }
 
     @Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
+    public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         if (!(sender instanceof Player)) {
             AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);

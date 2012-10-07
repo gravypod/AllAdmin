@@ -15,14 +15,14 @@ import org.bukkit.entity.Player;
 public class Tp implements ICommand {
 
     @Override
-    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 
         plugin.getCommand("tp").setExecutor(ch);
 
     }
 
     @Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
+    public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         switch(args.length) {
             case 2:

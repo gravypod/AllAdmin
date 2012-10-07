@@ -20,7 +20,7 @@ import java.util.TreeMap;
 
 public class AllAdmin extends JavaPlugin {
 
-    private static TreeMap<String, IUser> userList = new TreeMap<String, IUser>();
+    private final static TreeMap<String, IUser> userList = new TreeMap<String, IUser>();
 
     private static AllAdmin instance;
 
@@ -51,7 +51,7 @@ public class AllAdmin extends JavaPlugin {
 
     }
 
-    public static IUser getUser(String name) {
+    public static final IUser getUser(final String name) {
 
         if (!userList.containsKey(name)) {
 
@@ -77,12 +77,12 @@ public class AllAdmin extends JavaPlugin {
      * @param fileName
      * @return
      */
-    public InputStream getResourceAsStream(String fileName) {
+    public InputStream getResourceAsStream(final String fileName) {
 
         return this.getClassLoader().getResourceAsStream(fileName);
     }
 
-    public static TreeMap<String, IUser> getUserList() {
+    public static final TreeMap<String, IUser> getUserList() {
         return userList;
     }
 
@@ -102,7 +102,7 @@ public class AllAdmin extends JavaPlugin {
     }
 
 
-    public static CommandHandler getCommandHandler() {
+    public static final CommandHandler getCommandHandler() {
 
         return ch;
     }

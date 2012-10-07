@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
-    public static void onLogin(PlayerLoginEvent event) {
+    public static void onLogin(final PlayerLoginEvent event) {
 
         if (event.getPlayer().getName().contains("["))
             return;
@@ -22,7 +22,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = false)
-    public static void onLogout(PlayerQuitEvent event) {
+    public static void onLogout(final PlayerQuitEvent event) {
 
         if (event.getPlayer().getName().contains("["))
             return;
