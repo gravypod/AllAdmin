@@ -1,6 +1,7 @@
 package com.gravypod.AllAdmin;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class AllAdmin extends JavaPlugin {
 	
 	private static AllAdmin instance;
 	
-	public CommandHandler ch;
+	private static CommandHandler ch;
 	
 	@Override
 	public void onEnable() {
@@ -32,6 +33,10 @@ public class AllAdmin extends JavaPlugin {
 		
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(), this);
+		
+		File userdata = new File(this.getDataFolder(), "userdata/");
+		
+		userdata.mkdirs();
 		
 		new Startup(this, ch);
 		
@@ -64,6 +69,17 @@ public class AllAdmin extends JavaPlugin {
 		return userList.get(name);
 	}
 	
+	/**
+	 * Taken from groupmanager
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public InputStream getResourceAsStream(String fileName) {
+
+		return this.getClassLoader().getResourceAsStream(fileName);
+	}
+	
 	public static TreeMap<String, IUser> getUserList() {
 		return userList;
 	}
@@ -82,5 +98,11 @@ public class AllAdmin extends JavaPlugin {
 		return new File(this.getFile().getAbsolutePath());
 		
 	}
+
 	
+    public static CommandHandler getCommandHandler() {
+    
+    	return ch;
+    }
+
 }

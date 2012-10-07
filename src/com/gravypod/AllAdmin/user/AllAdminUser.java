@@ -1,12 +1,18 @@
 package com.gravypod.AllAdmin.user;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.utils.PermissionsTesting;
 
 public class AllAdminUser implements IUser {
@@ -15,9 +21,23 @@ public class AllAdminUser implements IUser {
 	
 	private Location lastLocation;
 	
+	private File userDataFile;
+	
+	private FileConfiguration userData = new YamlConfiguration();
+	
 	public AllAdminUser(Player _bukkitPlayer) {
 	
 		bukkitPlayer = _bukkitPlayer;
+		
+		userDataFile = new File(AllAdmin.getInstance().getDataFolder(), "userdata/" + bukkitPlayer.getName() + ".yml");
+		
+		try {
+			
+			userData.load(userDataFile);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -53,7 +73,7 @@ public class AllAdminUser implements IUser {
 	
 	public void sendCommandFaliure(String command) {
 	
-		bukkitPlayer.sendMessage(ChatColor.RED + "We could not exacute the command " + command + " !");
+		bukkitPlayer.sendMessage(ChatColor.RED + "We could not exacute the command " + command + "!");
 	}
 	
 	public boolean canUseCommand(String command) {
@@ -74,6 +94,25 @@ public class AllAdminUser implements IUser {
 	public Location getLastLocation() {
 	
 		return lastLocation;
+	}
+	
+	public void setHome(Location loc) {
+	
+		userData.set("homes.world", loc.getWorld().getName());
+		userData.set("homes.x", loc.getX());
+		userData.set("homes.y", loc.getY());
+		userData.set("homes.z", loc.getZ());
+		
+		try {
+			userData.save(userDataFile);
+		} catch (IOException e) {
+		}
+		
+	}
+	
+	public Location getHome() {
+	
+		return new Location(AllAdmin.getInstance().getServer().getWorld(userData.getString("homes.world")), userData.getDouble("homes.x"), userData.getDouble("homes.y"), userData.getDouble("homes.z"));
 	}
 	
 	public void updateLastLocation() {

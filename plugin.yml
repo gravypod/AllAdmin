@@ -15,3 +15,11 @@ commands:
         description: 'List all the users on the server.'
         usage: '/list'
         permission: alladmin.commands.list
+    home:
+        description: 'Teleport to a set home location.'
+        usage: '/home'
+        permission: alladmin.commands.home
+    sethome:
+        description: 'Set a home location.'
+        usage: '/sethome'
+        permission: alladmin.commands.sethome
