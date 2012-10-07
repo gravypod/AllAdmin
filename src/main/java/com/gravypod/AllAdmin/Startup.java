@@ -24,8 +24,8 @@ public class Startup {
 
     public void loadCommands(final CommandHandler ch) {
 
-        String classPath = "com.gravypod.AllAdmin.commands.";
-        String packageName = classPath.replaceAll("\\.", "/");
+    	final String classPath = "com.gravypod.AllAdmin.commands.";
+    	final String packageName = classPath.replaceAll("\\.", "/");
 
         try {
 
@@ -33,13 +33,7 @@ public class Startup {
 
             JarEntry jarEntry;
 
-            while(true) {
-
-                jarEntry = jarFile.getNextJarEntry();
-
-                if (jarEntry == null) {
-                    break;
-                }
+            while((jarEntry = jarFile.getNextJarEntry()) != null) {
 
                 if ((jarEntry.getName().startsWith(packageName)) && (jarEntry.getName().endsWith(".class")) && !(jarEntry.getName().contains("$"))) {
                     try {

@@ -47,7 +47,7 @@ public class Tp implements ICommand {
     }
 
     @Override
-    public String commandHelp() {
+    public final String commandHelp() {
 
         return ChatColor.AQUA + "Tp command: /tp (Player) ([optional] player), teleport to a player";
 

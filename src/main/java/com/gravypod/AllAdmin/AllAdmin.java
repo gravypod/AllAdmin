@@ -55,7 +55,7 @@ public class AllAdmin extends JavaPlugin {
 
         if (!userList.containsKey(name)) {
 
-            Player p = MatchUser.matchOnlineUser(name);
+            final Player p = MatchUser.matchOnlineUser(name);
 
             if (p == null) {
                 userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
@@ -77,7 +77,7 @@ public class AllAdmin extends JavaPlugin {
      * @param fileName
      * @return
      */
-    public InputStream getResourceAsStream(final String fileName) {
+    public final InputStream getResourceAsStream(final String fileName) {
 
         return this.getClassLoader().getResourceAsStream(fileName);
     }

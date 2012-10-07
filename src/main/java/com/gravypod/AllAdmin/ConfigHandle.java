@@ -43,11 +43,11 @@ public class ConfigHandle {
      */
     public static void copy(final InputStream src, final File dst) throws IOException {
 
-        InputStream in = src;
-        OutputStream out = new FileOutputStream(dst);
+    	final InputStream in = src;
+    	final OutputStream out = new FileOutputStream(dst);
 
         // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
+        final byte[] buf = new byte[1024];
         int len;
         while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);

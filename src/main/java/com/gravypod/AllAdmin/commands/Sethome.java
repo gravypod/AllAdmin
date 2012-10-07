@@ -30,7 +30,7 @@ public class Sethome implements ICommand {
             return true;
         }
 
-        AllAdminUser allAdmin = (AllAdminUser) AllAdmin.getUser(cmd);
+        final AllAdminUser allAdmin = (AllAdminUser) AllAdmin.getUser(cmd);
 
         if (!allAdmin.canUseCommand(cmd)) {
             allAdmin.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have permissions to use that command!");
@@ -45,7 +45,7 @@ public class Sethome implements ICommand {
     }
 
     @Override
-    public String commandHelp() {
+    public final String commandHelp() {
         return "/sethome to set a home location";
     }
 

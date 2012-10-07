@@ -42,7 +42,7 @@ public class Home implements ICommand {
             return true;
         }
 
-        Location homeLoc = allAdmin.getHome();
+        final Location homeLoc = allAdmin.getHome();
 
         if (homeLoc == null) {
             allAdmin.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have a home set yet. Please set it with /sethome!");
@@ -56,7 +56,7 @@ public class Home implements ICommand {
     }
 
     @Override
-    public String commandHelp() {
+    public final String commandHelp() {
 
         return "Use /sethome to set a home, /home takes you back";
     }

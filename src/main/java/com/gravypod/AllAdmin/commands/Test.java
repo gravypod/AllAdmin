@@ -31,7 +31,7 @@ public class Test implements ICommand {
     }
 
     @Override
-    public String commandHelp() {
+    public final String commandHelp() {
 
         return ChatColor.AQUA + "Test command: /test, used for testing";
     }

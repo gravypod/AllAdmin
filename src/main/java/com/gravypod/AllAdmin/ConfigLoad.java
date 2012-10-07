@@ -30,7 +30,7 @@ public class ConfigLoad {
 
     public static void loadData() {
 
-        FileConfiguration cheapConfig = plugin.getConfig();
+    	final FileConfiguration cheapConfig = plugin.getConfig();
 
         try {
 
@@ -50,7 +50,7 @@ public class ConfigLoad {
 
         }
 
-        FileConfiguration warpYamlFile = new YamlConfiguration();
+        final FileConfiguration warpYamlFile = new YamlConfiguration();
 
         try {
 
