@@ -17,9 +17,11 @@ public class Startup {
     public Startup(final AllAdmin _plugin, final CommandHandler ch) {
 
         plugin = _plugin;
-
+        
+        new ConfigHandle(_plugin);
+        
         loadCommands(ch);
-
+        
     }
 
     public void loadCommands(final CommandHandler ch) {

@@ -11,5 +11,7 @@ public interface IUser {
     public void sendCommandFaliure(String command);
 
     public void sendMessage(String message);
+    
+    public void saveData();
 
 }

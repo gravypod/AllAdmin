@@ -70,4 +70,8 @@ public class AllAdminCMD implements IUser {
 
     }
 
+	@Override
+    public void saveData() {
+    }
+
 }

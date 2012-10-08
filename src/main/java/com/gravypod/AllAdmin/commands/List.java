@@ -24,29 +24,33 @@ public class List implements ICommand {
     public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         String players = null;
+        
+        synchronized (AllAdmin.getUserList()) {
+        
+        	final TreeMap<String,IUser> onlinePlayers = new TreeMap<String, IUser>();
+        	onlinePlayers.putAll(AllAdmin.getUserList());
+        
+        	for (String player : onlinePlayers.keySet()) {
 
-        final TreeMap<String,IUser> onlinePlayers = AllAdmin.getUserList();
+        		if (players == null) {
 
-        for (String player : onlinePlayers.keySet()) {
+        			players = "There are " + onlinePlayers.size() + " player online: " + player + ", ";
+        			continue;
 
-            if (players == null) {
+        		}
 
-                players = "There are " + onlinePlayers.size() + " player online: " + player + ", ";
-                continue;
+        		players += player + ", ";
 
-            }
+        	}
 
-            players += player + ", ";
+        	if (players == null) {
+        		sender.sendMessage(ChatColor.RED + "There are no players online!");
+        		return true;
+        	}
 
+        	sender.sendMessage(ChatColor.AQUA + players);
         }
-
-        if (players == null) {
-            sender.sendMessage(ChatColor.RED + "There are no players online!");
-            return true;
-        }
-
-        sender.sendMessage(ChatColor.AQUA + players);
-
+        
         return true;
 
     }

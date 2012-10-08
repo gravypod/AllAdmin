@@ -4,6 +4,7 @@
 package com.gravypod.AllAdmin.commands;
 
 import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.ICommand;
 import com.gravypod.AllAdmin.user.AllAdminUser;
@@ -17,8 +18,9 @@ public class Sethome implements ICommand {
 
     @Override
     public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
-
-        plugin.getCommand("sethome").setExecutor(ch);
+   
+    	if (Settings.useHomes)
+    		plugin.getCommand("sethome").setExecutor(ch);
 
     }
 
@@ -30,7 +32,7 @@ public class Sethome implements ICommand {
             return true;
         }
 
-        final AllAdminUser allAdmin = (AllAdminUser) AllAdmin.getUser(cmd);
+        final AllAdminUser allAdmin = (AllAdminUser) AllAdmin.getUser(sender.getName());
 
         if (!allAdmin.canUseCommand(cmd)) {
             allAdmin.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have permissions to use that command!");

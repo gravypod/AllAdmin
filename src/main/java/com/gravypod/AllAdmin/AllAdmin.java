@@ -41,12 +41,16 @@ public class AllAdmin extends JavaPlugin {
         userdata.mkdirs();
 
         new Startup(this, ch);
-
+        
     }
 
     @Override
     public void onDisable() {
-
+    	
+    	for (IUser user : userList.values()) {
+    		user.saveData();
+    	}
+    	
         userList.clear();
 
     }
@@ -82,8 +86,12 @@ public class AllAdmin extends JavaPlugin {
         return this.getClassLoader().getResourceAsStream(fileName);
     }
 
-    public static final TreeMap<String, IUser> getUserList() {
-        return userList;
+    public static synchronized final TreeMap<String, IUser> getUserList() {
+    	
+    	synchronized (userList) {
+     	   return userList;
+    	}
+    	
     }
 
     public static void removeUser(String name) {

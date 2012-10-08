@@ -8,6 +8,7 @@ import com.gravypod.AllAdmin.utils.PermissionsTesting;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,28 +19,44 @@ import java.io.File;
 import java.io.IOException;
 
 public class AllAdminUser implements IUser {
-
+    
     private final Player bukkitPlayer;
-
+    
     private Location lastLocation;
-
+    
     private final File userDataFile;
 
     private final FileConfiguration userData = new YamlConfiguration();
 
-    public AllAdminUser(Player _bukkitPlayer) {
-
+    public AllAdminUser(final Player _bukkitPlayer) {
+        
         bukkitPlayer = _bukkitPlayer;
-
+        
         userDataFile = new File(AllAdmin.getInstance().getDataFolder(), "userdata/" + bukkitPlayer.getName() + ".yml");
-
-        try {
-
-            userData.load(userDataFile);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
+        AllAdmin plugin = AllAdmin.getInstance();
+        
+        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+            
+        	@Override
+        	public void run() {
+                
+        		try {
+                    
+        			if (userDataFile.exists()) {
+        				userDataFile.createNewFile();
+        			}
+                    
+        			userData.load(userDataFile);
+                    
+        			userData.save(userDataFile);
+                    
+        		} catch (Exception e) {
+        		}
+                
+        	}
+            
+        });
 
     }
 
@@ -113,8 +130,17 @@ public class AllAdminUser implements IUser {
     }
 
     public final Location getHome() {
-
-        return new Location(AllAdmin.getInstance().getServer().getWorld(userData.getString("homes.world")), userData.getDouble("homes.x"), userData.getDouble("homes.y"), userData.getDouble("homes.z"));
+    	
+    	final World world = AllAdmin.getInstance().getServer().getWorld(userData.getString("homes.world"));
+    	final double x = userData.getDouble("homes.x");
+    	final double y = userData.getDouble("homes.y");
+    	final double z = userData.getDouble("homes.z");
+    	
+    	if (world == null || Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z))
+    		return null;
+    	
+    	return new Location(world, x, y, z);
+        
     }
 
     public void updateLastLocation() {
@@ -127,5 +153,17 @@ public class AllAdminUser implements IUser {
 
         this.bukkitPlayer.sendMessage(message);
 
+    }
+
+	@Override
+    public void saveData() {
+		
+		try {
+			
+			userData.save(userDataFile);
+            
+		} catch (Exception e) {
+		}
+		
     }
 }

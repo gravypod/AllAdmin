@@ -18,6 +18,7 @@ public class CommandHandler implements CommandExecutor {
             return ((ICommand) Class.forName("com.gravypod.AllAdmin.commands." + WordUtils.capitalize(cmd.toLowerCase())).newInstance()).doCommand(sender, command, cmd, args);
         } catch (Exception e) {
             AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+            e.printStackTrace();
         }
 
         return false;

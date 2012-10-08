@@ -24,27 +24,35 @@ public class ConfigLoad {
         plugin = _plugin;
         configFile = _configFile;
         warpsList = new File(_plugin.getDataFolder(), "warps.yml");
+        
+        if (!warpsList.exists()) {
+        	try {
+	            warpsList.createNewFile();
+            } catch (IOException e) {
+            }
+        }
+        
         loadData();
 
     }
 
     public static void loadData() {
 
-    	final FileConfiguration cheapConfig = plugin.getConfig();
+    	final FileConfiguration ymlConfig = plugin.getConfig();
 
         try {
 
-            cheapConfig.load(configFile);
+            ymlConfig.load(configFile);
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
 
-            Settings.useHomes = cheapConfig.getBoolean("AllAdmin.use-homes");
-            Settings.useWarps = cheapConfig.getBoolean("AllAdmin.use-warps");
+            Settings.useHomes = ymlConfig.getBoolean("AllAdmin.use-homes");
+            Settings.useWarps = ymlConfig.getBoolean("AllAdmin.use-warps");
 
             try {
-                cheapConfig.save(configFile);
+                ymlConfig.save(configFile);
             } catch (IOException e) {
             }
 
@@ -66,9 +74,15 @@ public class ConfigLoad {
         }
 
         try {
-            config.save(configFile);
+        	ymlConfig.save(configFile);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        
+        try {
+	        warpYamlFile.save(warpsList);
+        } catch (IOException e) {
+	        e.printStackTrace();
         }
 
 
