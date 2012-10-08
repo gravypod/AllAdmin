@@ -27,3 +27,7 @@ commands:
         description: 'Go to your last location.'
         usage: '/back'
         permission: alladmin.commands.back
+    setwarp:
+        description: 'Set a warp.'
+        usage: '/setwarp (WarpName)'
+        permission: alladmin.commands.setwarp
