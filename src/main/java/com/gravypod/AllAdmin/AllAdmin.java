@@ -42,6 +42,10 @@ public class AllAdmin extends JavaPlugin {
 
         new Startup(this, commandHandler);
         
+        for (Player player : getServer().getOnlinePlayers()) {
+        	addUser(player.getName());
+        }
+        
     }
 
     @Override
@@ -66,13 +70,35 @@ public class AllAdmin extends JavaPlugin {
 
             } else {
 
-                userList.put(name, new AllAdminUser(MatchUser.matchOnlineUser(name)));
+                userList.put(name, new AllAdminUser(p));
 
             }
 
         }
 
         return userList.get(name);
+    }
+    
+    public static void addUser(final String name) {
+
+    	synchronized (userList) {
+    	
+    		if (userList.containsKey(name))
+    			return;
+
+    		final Player p = MatchUser.matchOnlineUser(name);
+    		
+    		if (p == null) {
+            	
+    			userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
+                return;
+                
+    		} 
+    		
+    		userList.put(name, new AllAdminUser(p));
+    				
+    	}
+        
     }
 
     /**

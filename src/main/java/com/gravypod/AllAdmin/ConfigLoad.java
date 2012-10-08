@@ -50,7 +50,8 @@ public class ConfigLoad {
 
             Settings.useHomes = ymlConfig.getBoolean("AllAdmin.use-homes");
             Settings.useWarps = ymlConfig.getBoolean("AllAdmin.use-warps");
-
+            Settings.useBack = ymlConfig.getBoolean("AllAdmin.use-back");
+            
             try {
                 ymlConfig.save(configFile);
             } catch (IOException e) {

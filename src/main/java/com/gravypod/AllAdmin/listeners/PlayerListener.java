@@ -4,10 +4,15 @@
 package com.gravypod.AllAdmin.listeners;
 
 import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.user.AllAdminUser;
+
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class PlayerListener implements Listener {
 
@@ -27,6 +32,7 @@ public class PlayerListener implements Listener {
     		}
     		
     	});
+    	
     }
 
     @EventHandler(ignoreCancelled = false)
@@ -46,6 +52,14 @@ public class PlayerListener implements Listener {
     		
     	});
     	
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public static void onTeleportEvent(final PlayerTeleportEvent event) {
+    	
+    	if (event.getPlayer() instanceof Player)
+    		((AllAdminUser) AllAdmin.getUser(event.getPlayer().getName())).updateLastLocation();
+    		
     }
 
 }

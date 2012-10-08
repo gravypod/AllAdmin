@@ -57,6 +57,8 @@ public class AllAdminUser implements IUser {
         	}
             
         });
+        
+        this.updateLastLocation();
 
     }
 
@@ -114,19 +116,51 @@ public class AllAdminUser implements IUser {
 
         return lastLocation;
     }
-
+    
+    public void setData(final String path, final Object data) {
+    	
+    	AllAdmin.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
+    		
+    		@Override
+    		public void run() {
+    			
+    			synchronized (userData) {
+    				userData.set(path, data);
+    			}
+    			
+    		}
+    		
+    	});
+    	
+    }
+    
     public void setHome(final Location loc) {
-
-        userData.set("homes.world", loc.getWorld().getName());
-        userData.set("homes.x", loc.getX());
-        userData.set("homes.y", loc.getY());
-        userData.set("homes.z", loc.getZ());
+    	
+    	AllAdmin.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
+    		
+    		@Override
+    		public void run() {
+    			
+    			synchronized (userData) {
+    			
+    				userData.set("homes.world", loc.getWorld().getName());
+    				userData.set("homes.x", loc.getX());
+    				userData.set("homes.y", loc.getY());
+    				userData.set("homes.z", loc.getZ());
         
-        try {
-            userData.save(userDataFile);
-        } catch (IOException e) {
-        }
-
+    				try {
+    			
+    					userData.save(userDataFile);
+    			
+    				} catch (IOException e) {
+    				}
+    			
+    			}
+    			
+    		}
+    		
+    	});
+    	
     }
 
     public final Location getHome() {
@@ -144,21 +178,26 @@ public class AllAdminUser implements IUser {
     }
 
     public void updateLastLocation() {
-
+    	
         this.lastLocation = this.bukkitPlayer.getLocation();
+        
     }
 
     @Override
     public void sendMessage(final String message) {
-
+    	
         this.bukkitPlayer.sendMessage(message);
-
+        
     }
 
 	@Override
     public void saveData() {
 		
 		try {
+			
+			userData.set("lastLocation.x", this.lastLocation.getBlockX());
+			userData.set("lastLocation.y", this.lastLocation.getBlockY());
+			userData.set("lastLocation.z", this.lastLocation.getBlockZ());
 			
 			userData.save(userDataFile);
             

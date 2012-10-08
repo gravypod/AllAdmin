@@ -1,7 +1,7 @@
 name: AllAdmin
 author: Gravypod
 main: com.gravypod.AllAdmin.AllAdmin
-version: maven-version-number
+version: 1.0
 commands:
     test:
         description: 'A test command.'
@@ -23,3 +23,7 @@ commands:
         description: 'Set a home location.'
         usage: '/sethome'
         permission: alladmin.commands.sethome
+    back:
+        description: 'Go to your last location.'
+        usage: '/back'
+        permission: alladmin.commands.back
