@@ -75,17 +75,17 @@ public class AllAdminUser implements IUser {
         return bukkitPlayer.getInventory();
     }
 
-    public boolean doesHaveItem(final Material m) {
+    public final boolean doesHaveItem(final Material m) {
 
         return getInventory().contains(m);
     }
 
-    public boolean doesHaveItem(final ItemStack m) {
+    public final boolean doesHaveItem(final ItemStack m) {
 
         return getInventory().contains(m);
     }
 
-    public boolean doesHaveItem(final int m) {
+    public final boolean doesHaveItem(final int m) {
 
         return getInventory().contains(m);
     }
@@ -100,7 +100,7 @@ public class AllAdminUser implements IUser {
         return PermissionsTesting.canUseCommand(bukkitPlayer, command);
     }
 
-    public boolean hasPermission(final String permission) {
+    public final boolean hasPermission(final String permission) {
 
         return PermissionsTesting.hasPermission(bukkitPlayer, permission);
     }
@@ -121,7 +121,7 @@ public class AllAdminUser implements IUser {
         userData.set("homes.x", loc.getX());
         userData.set("homes.y", loc.getY());
         userData.set("homes.z", loc.getZ());
-
+        
         try {
             userData.save(userDataFile);
         } catch (IOException e) {

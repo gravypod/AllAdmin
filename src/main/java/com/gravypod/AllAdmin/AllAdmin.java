@@ -24,14 +24,14 @@ public class AllAdmin extends JavaPlugin {
 
     private static AllAdmin instance;
 
-    private static CommandHandler ch;
+    private static CommandHandler commandHandler;
 
     @Override
     public void onEnable() {
 
         instance = this;
 
-        ch = new CommandHandler();
+        commandHandler = new CommandHandler();
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerListener(), this);
@@ -40,7 +40,7 @@ public class AllAdmin extends JavaPlugin {
 
         userdata.mkdirs();
 
-        new Startup(this, ch);
+        new Startup(this, commandHandler);
         
     }
 
@@ -112,7 +112,7 @@ public class AllAdmin extends JavaPlugin {
 
     public static final CommandHandler getCommandHandler() {
 
-        return ch;
+        return commandHandler;
     }
 
 }

@@ -74,13 +74,10 @@ public class ConfigLoad {
         }
 
         try {
+        	
         	ymlConfig.save(configFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        try {
 	        warpYamlFile.save(warpsList);
+	        
         } catch (IOException e) {
 	        e.printStackTrace();
         }

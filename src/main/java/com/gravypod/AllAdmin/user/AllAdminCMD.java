@@ -33,17 +33,17 @@ public class AllAdminCMD implements IUser {
         return null;
     }
 
-    public boolean doesHaveItem(Material m) {
+    public final boolean doesHaveItem(Material m) {
 
         return false;
     }
 
-    public boolean doesHaveItem(ItemStack m) {
+    public final boolean doesHaveItem(ItemStack m) {
 
         return false;
     }
 
-    public boolean doesHaveItem(int m) {
+    public final boolean doesHaveItem(int m) {
 
         return false;
     }

@@ -12,7 +12,7 @@ import java.util.jar.JarInputStream;
 
 public class Startup {
 
-    AllAdmin plugin;
+	final AllAdmin plugin;
 
     public Startup(final AllAdmin _plugin, final CommandHandler ch) {
 
@@ -31,7 +31,7 @@ public class Startup {
 
         try {
 
-            JarInputStream jarFile = new JarInputStream(new FileInputStream(plugin.jarLocation()));
+        	final JarInputStream jarFile = new JarInputStream(new FileInputStream(plugin.jarLocation()));
 
             JarEntry jarEntry;
 

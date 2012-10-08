@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 public class Test implements ICommand {
 
     @Override
-    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 
         plugin.getCommand("Test").setExecutor(ch);
 

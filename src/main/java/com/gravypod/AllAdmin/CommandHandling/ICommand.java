@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 
 public interface ICommand {
 
-    public void registerSelf(final AllAdmin plugin, final CommandHandler ch);
+    public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler);
 
     public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args);
 

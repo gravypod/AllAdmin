@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class List implements ICommand {
 
     @Override
-    public void registerSelf(AllAdmin plugin, CommandHandler ch) {
+    public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
         plugin.getCommand("List").setExecutor(ch);
     }
 
