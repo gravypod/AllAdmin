@@ -30,36 +30,43 @@ public class AllAdmin extends JavaPlugin {
     public void onEnable() {
 
         instance = this;
-
+        
         commandHandler = new CommandHandler();
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerListener(), this);
 
-        File userdata = new File(this.getDataFolder(), "userdata/");
+        final File userdata = new File(this.getDataFolder(), "userdata/");
 
         userdata.mkdirs();
 
         new Startup(this, commandHandler);
         
-        for (Player player : getServer().getOnlinePlayers()) {
-        	addUser(player.getName());
-        }
+        this.getServer().getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
+        	
+        	@Override
+        	public void run() {
+        	
+        		for (final Player player : getServer().getOnlinePlayers()) {
+        			addUser(player.getName());
+        		}
+        	
+        	}
+        	
+        });
         
     }
 
     @Override
     public void onDisable() {
     	
-    	for (IUser user : userList.values()) {
-    		user.saveData();
-    	}
+    	new SaveAll(userList.values());
     	
         userList.clear();
 
     }
 
-    public static final IUser getUser(final String name) {
+    public static synchronized final IUser getUser(final String name) {
 
         if (!userList.containsKey(name)) {
 
@@ -79,7 +86,7 @@ public class AllAdmin extends JavaPlugin {
         return userList.get(name);
     }
     
-    public static void addUser(final String name) {
+    public static synchronized void addUser(final String name) {
 
     	synchronized (userList) {
     	
@@ -120,11 +127,11 @@ public class AllAdmin extends JavaPlugin {
     	
     }
 
-    public static void removeUser(String name) {
+    public static synchronized void removeUser(String name) {
         userList.remove(name);
     }
 
-    public static AllAdmin getInstance() {
+    public static synchronized AllAdmin getInstance() {
 
         return instance;
     }

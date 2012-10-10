@@ -31,3 +31,11 @@ commands:
         description: 'Set a warp.'
         usage: '/setwarp (WarpName)'
         permission: alladmin.commands.setwarp
+    warplist:
+        description: 'Lists all warps.'
+        usage: '/warplist'
+        permission: alladmin.commands.warplist
+    warp:
+        description: 'Warp to a set warp'
+        usage: '/warp (WarpName)'
+        permission: alladmin.commands.warp

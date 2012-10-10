@@ -4,13 +4,38 @@
 package com.gravypod.AllAdmin.utils;
 
 import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 
+/**
+ * A work in progress utils class for EVERYTHING you could need for teleporting. Needs work
+ * @author gravypod
+ *
+ */
 public class TeleportUtils {
-
+	
+	public static Location getLocation(FileConfiguration db, String location, String name) {
+		
+		final double x = Settings.warpsYamlFile.getDouble(location + "." + name + ".x");
+		final double y = Settings.warpsYamlFile.getDouble(location + "." + name + ".y");
+		final double z = Settings.warpsYamlFile.getDouble(location + "." + name + ".z");
+		final float pitch = (float) Settings.warpsYamlFile.get(location + "." + name + ".pitch");
+		final float yaw = (float) Settings.warpsYamlFile.get(location + "." + name + ".yaw");
+		final World world = AllAdmin.getInstance().getServer().getWorld(Settings.warpsYamlFile.getString(location + "." + name + ".world"));
+	
+		if (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z) || world == null || Float.isNaN(pitch) || Float.isNaN(yaw)) {
+			return null;
+		}
+		
+		return new Location(world, x, y, z, yaw, pitch);
+		
+	}
+	
     public static void delayedTeleport(final AllAdminUser player, final Location toGo, final long time) {
 
         player.sendMessage(ChatColor.AQUA + "Do not move for " + time + " seconds");
