@@ -3,20 +3,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.gravypod.AllAdmin.user;
 
-import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.utils.PermissionsTesting;
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
+import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.utils.PermissionsTesting;
+import com.gravypod.AllAdmin.utils.TeleportUtils;
 
 public class AllAdminUser implements IUser {
     
@@ -134,46 +135,26 @@ public class AllAdminUser implements IUser {
     	
     }
     
-    public void setHome(final Location loc) {
+    public void setHome(final Location loc, final String homeName) {
     	
-    	AllAdmin.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
-    		
-    		@Override
-    		public void run() {
+    				
+    	String name = homeName != null ? homeName : "home"; 
+    				
+    	TeleportUtils.setLocation(userData, "homes", name, bukkitPlayer.getLocation());
+    				
+    	try {
     			
-    			synchronized (userData) {
+    		userData.save(userDataFile);
     			
-    				userData.set("homes.world", loc.getWorld().getName());
-    				userData.set("homes.x", loc.getX());
-    				userData.set("homes.y", loc.getY());
-    				userData.set("homes.z", loc.getZ());
-        
-    				try {
+    	} catch (IOException e) {
+    	}
     			
-    					userData.save(userDataFile);
-    			
-    				} catch (IOException e) {
-    				}
-    			
-    			}
-    			
-    		}
-    		
-    	});
     	
     }
 
-    public final Location getHome() {
+    public final Location getHome(String name) {
     	
-    	final World world = AllAdmin.getInstance().getServer().getWorld(userData.getString("homes.world"));
-    	final double x = userData.getDouble("homes.x");
-    	final double y = userData.getDouble("homes.y");
-    	final double z = userData.getDouble("homes.z");
-    	
-    	if (world == null || Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z))
-    		return null;
-    	
-    	return new Location(world, x, y, z);
+    	return TeleportUtils.getLocation(userData, "homes", name != null ? name : "home");
         
     }
 

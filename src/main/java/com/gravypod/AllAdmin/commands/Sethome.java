@@ -39,7 +39,7 @@ public class Sethome implements ICommand {
             return true;
         }
 
-        allAdmin.setHome(((Player) sender).getLocation());
+        allAdmin.setHome(((Player) sender).getLocation(), args.length == 1 ? args[0] : "home");
 
         allAdmin.sendMessage(ChatColor.AQUA + "Your command is done!");
 

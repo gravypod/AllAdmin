@@ -45,14 +45,14 @@ public class Home implements ICommand {
             return true;
         }
 
-        final Location homeLoc = allAdmin.getHome();
+        final Location homeLoc = allAdmin.getHome(args.length == 1 ? args[0] : "home");
 
         if (homeLoc == null) {
             allAdmin.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have a home set yet. Please set it with /sethome!");
             return true;
         }
 
-        allAdmin.getBukkitPlayer().teleport(allAdmin.getHome());
+        allAdmin.getBukkitPlayer().teleport(allAdmin.getHome(args.length == 1 ? args[0] : "home"));
 
         return true;
 

@@ -3,14 +3,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.gravypod.AllAdmin.utils;
 
-import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.Settings;
-import com.gravypod.AllAdmin.user.AllAdminUser;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.user.AllAdminUser;
 
 /**
  * A work in progress utils class for EVERYTHING you could need for teleporting. Needs work
@@ -19,14 +19,34 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class TeleportUtils {
 	
+	public static void setLocation(final FileConfiguration db, final String location, final String name, final Location loc) {
+		
+		AllAdmin.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				db.set(location + "." + name + ".x", loc.getBlockX());
+				db.set(location + "." + name + ".y", loc.getBlockY());
+				db.set(location + "." + name + ".z", loc.getBlockZ());
+				db.set(location + "." + name + ".pitch", loc.getPitch());
+				db.set(location + "." + name + ".yaw", loc.getYaw());
+				db.set(location + "." + name + ".world", loc.getWorld().getName());
+				
+			}
+			
+		});
+				
+	}
+	
 	public static Location getLocation(FileConfiguration db, String location, String name) {
 		
-		final double x = Settings.warpsYamlFile.getDouble(location + "." + name + ".x");
-		final double y = Settings.warpsYamlFile.getDouble(location + "." + name + ".y");
-		final double z = Settings.warpsYamlFile.getDouble(location + "." + name + ".z");
-		final float pitch = (float) Settings.warpsYamlFile.get(location + "." + name + ".pitch");
-		final float yaw = (float) Settings.warpsYamlFile.get(location + "." + name + ".yaw");
-		final World world = AllAdmin.getInstance().getServer().getWorld(Settings.warpsYamlFile.getString(location + "." + name + ".world"));
+		final double x = db.getDouble(location + "." + name + ".x");
+		final double y = db.getDouble(location + "." + name + ".y");
+		final double z = db.getDouble(location + "." + name + ".z");
+		final float pitch = (float) db.getDouble(location + "." + name + ".pitch");
+		final float yaw = (float) db.getDouble(location + "." + name + ".yaw");
+		final World world = AllAdmin.getInstance().getServer().getWorld(db.getString(location + "." + name + ".world"));
 	
 		if (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z) || world == null || Float.isNaN(pitch) || Float.isNaN(yaw)) {
 			return null;
