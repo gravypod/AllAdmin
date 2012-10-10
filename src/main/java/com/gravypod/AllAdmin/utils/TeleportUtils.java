@@ -39,7 +39,7 @@ public class TeleportUtils {
 				
 	}
 	
-	public static Location getLocation(FileConfiguration db, String location, String name) {
+	public static Location getLocation(final FileConfiguration db, final String location, final String name) {
 		
 		final double x = db.getDouble(location + "." + name + ".x");
 		final double y = db.getDouble(location + "." + name + ".y");
