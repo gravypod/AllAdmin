@@ -5,13 +5,37 @@ package com.gravypod.AllAdmin.user;
 
 
 public interface IUser {
-
+	
+	/**
+	 * 
+	 * Has a permission.
+	 * 
+	 * @param node - Permission node
+	 * @return
+	 * 
+	 */
     public boolean hasPermission(String node);
-
+    
+    /**
+     * 
+     * Send a failiure notice.
+     * @param command
+     * 
+     */
     public void sendCommandFaliure(String command);
-
+    
+    /**
+     * 
+     * Send a message to the user.
+     * 
+     * @param message
+     * 
+     */
     public void sendMessage(String message);
     
+    /**
+     * Save the user data.
+     */
     public void saveData();
 
 }
