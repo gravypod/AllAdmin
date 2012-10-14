@@ -47,3 +47,15 @@ commands:
         description: 'Set the spawn for the world you are in'
         usage: '/setspawn'
         permission: alladmin.commands.setspawn
+    fly:
+        description: 'Allow someone, or yourself, to fly!'
+        usage: '/fly [player name]'
+        permission: alladmin.commands.fly
+    feed:
+        description: 'Feed you or another player!'
+        usage: '/feed [player name]'
+        permission: alladmin.commands.feed
+    heal:
+        description: 'Heal you or another player!'
+        usage: '/heal [player name]'
+        permission: alladmin.commands.heal
