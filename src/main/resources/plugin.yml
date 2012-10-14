@@ -39,3 +39,11 @@ commands:
         description: 'Warp to a set warp'
         usage: '/warp (WarpName)'
         permission: alladmin.commands.warp
+    spawn:
+        description: 'Teleport to spawn'
+        usage: '/spawn'
+        permission: alladmin.commands.spawn
+    setspawn:
+        description: 'Set the spawn for the world you are in'
+        usage: '/setspawn'
+        permission: alladmin.commands.setspawn
