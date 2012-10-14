@@ -6,7 +6,6 @@ package com.gravypod.AllAdmin.user;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -93,9 +92,10 @@ public class AllAdminUser implements IUser {
         return getInventory().contains(m);
     }
 
-    public void sendCommandFaliure(final String command) {
+    public void sendCommandFaliure(final String command, String why) {
 
-        bukkitPlayer.sendMessage(ChatColor.RED + "We could not exacute the command " + command + "!");
+        bukkitPlayer.sendMessage(AllAdmin.getMessages(why));
+        
     }
 
     public boolean canUseCommand(final String command) {
@@ -186,4 +186,5 @@ public class AllAdminUser implements IUser {
 		}
 		
     }
+
 }

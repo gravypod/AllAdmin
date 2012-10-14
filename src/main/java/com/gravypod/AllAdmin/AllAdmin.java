@@ -21,10 +21,14 @@ import java.util.TreeMap;
 public class AllAdmin extends JavaPlugin {
 
     private final static TreeMap<String, IUser> userList = new TreeMap<String, IUser>();
-
+    
+    private final static I18N i18n = new I18N();
+    
     private static AllAdmin instance;
 
     private static CommandHandler commandHandler;
+    
+    private final static TreeMap<String, String> messages = new TreeMap<String, String>();
 
     @Override
     public void onEnable() {
@@ -146,6 +150,15 @@ public class AllAdmin extends JavaPlugin {
     public static final CommandHandler getCommandHandler() {
 
         return commandHandler;
+    }
+
+	public static String getMessages(String messageType) {
+		
+		if (!messages.containsKey(messageType)) {
+			messages.put(messageType, i18n.getColoredMessage(messageType));
+		}
+		
+	    return messages.get(messageType);
     }
 
 }

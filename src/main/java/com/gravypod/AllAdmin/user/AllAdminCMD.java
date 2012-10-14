@@ -3,11 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.gravypod.AllAdmin.user;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import com.gravypod.AllAdmin.AllAdmin;
 
 public class AllAdminCMD implements IUser {
 
@@ -48,9 +49,10 @@ public class AllAdminCMD implements IUser {
         return false;
     }
 
-    public void sendCommandFaliure(String command) {
+    public void sendCommandFaliure(String command, String why) {
 
-        sender.sendMessage(ChatColor.RED + "We could not exacute the command " + command + " !");
+        sender.sendMessage(AllAdmin.getMessages(why));
+        
     }
 
     public final boolean canUseCommand(String command) {

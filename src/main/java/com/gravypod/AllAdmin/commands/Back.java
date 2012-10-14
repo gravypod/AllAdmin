@@ -26,14 +26,14 @@ public class Back implements ICommand {
     public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 		
 		if (!(sender instanceof Player)) {
-			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
 			return true;
 		}
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
 	    
 		if (!user.canUseCommand(cmd)) {
-			user.sendCommandFaliure(cmd);
+			user.sendCommandFaliure(cmd, "noPermissions");
 			return true;
 		}
 		

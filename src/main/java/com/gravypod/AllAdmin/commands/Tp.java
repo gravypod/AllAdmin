@@ -27,16 +27,16 @@ public class Tp implements ICommand {
         switch(args.length) {
             case 2:
                 if (!MatchUser.matchOnlineUser(args[0]).teleport(MatchUser.matchOnlineUser(args[1]))) {
-                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "noPlayer");
                 }
                 break;
             case 1:
 
                 if (!(sender instanceof Player))
-                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
 
                 if (!((Player) sender).teleport(MatchUser.matchOnlineUser(args[0]))) {
-                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+                    AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "noPlayer");
                 }
                 break;
             default:

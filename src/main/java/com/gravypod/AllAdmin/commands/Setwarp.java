@@ -28,7 +28,7 @@ public class Setwarp implements ICommand {
 		final IUser user = AllAdmin.getUser(sender.getName());
 		
 		if (!user.hasPermission("alladmin.commands.setwarp")) {
-			user.sendCommandFaliure(cmd);
+			user.sendCommandFaliure(cmd, "noPermissions");
 			return true; 
 		}
 		

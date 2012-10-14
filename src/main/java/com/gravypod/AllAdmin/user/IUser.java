@@ -22,7 +22,7 @@ public interface IUser {
      * @param command
      * 
      */
-    public void sendCommandFaliure(String command);
+    public void sendCommandFaliure(String command, String why);
     
     /**
      * 

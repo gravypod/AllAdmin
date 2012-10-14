@@ -28,7 +28,7 @@ public class Sethome implements ICommand {
     public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 
         if (!(sender instanceof Player)) {
-            AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd);
+            AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
             return true;
         }
 
