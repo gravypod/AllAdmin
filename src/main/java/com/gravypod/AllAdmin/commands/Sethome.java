@@ -29,17 +29,11 @@ public class Sethome extends CommandUtil {
 	@Override
 	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	
-		if (!(sender instanceof Player)) {
-			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
+		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
 		}
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
-		
-		if (!user.canUseCommand(cmd)) {
-			user.sendCommandFaliure(cmd, "noPermissions");
-			return true;
-		}
 		
 		user.setHome(((Player) sender).getLocation(), args.length == 1 ? args[0] : "home");
 		

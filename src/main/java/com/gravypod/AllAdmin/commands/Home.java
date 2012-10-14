@@ -8,7 +8,6 @@ package com.gravypod.AllAdmin.commands;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.Settings;
@@ -30,19 +29,11 @@ public class Home extends CommandUtil {
 	@Override
 	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	
-		if (!(sender instanceof Player)) {
-			
-			sender.sendMessage(AllAdmin.getMessages("mustBePlayer"));
+		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
-			
 		}
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
-		
-		if (!user.canUseCommand(cmd)) {
-			user.getBukkitPlayer().sendMessage(AllAdmin.getMessages("noPermissions"));
-			return true;
-		}
 		
 		String homeName = null;
 		

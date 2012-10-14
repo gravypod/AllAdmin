@@ -22,17 +22,11 @@ public class Setspawn extends CommandUtil {
 	@Override
 	public final boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	
-		if (!(sender instanceof Player)) {
-			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
+		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
 		}
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
-		
-		if (!user.canUseCommand(cmd)) {
-			user.sendCommandFaliure(cmd, "noPermissions");
-			return true;
-		}
 		
 		final Player player = user.getBukkitPlayer();
 		final Location playerLocation = player.getLocation();

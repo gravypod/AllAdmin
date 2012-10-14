@@ -5,6 +5,7 @@
  */
 package com.gravypod.AllAdmin.utils;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PermissionsTesting {
@@ -14,8 +15,19 @@ public class PermissionsTesting {
 		return PermissionsTesting.hasPermission(player, "alladmin.commands." + command);
 	}
 	
+	public static boolean canUseCommand(final CommandSender player, final String command) {
+		
+		return PermissionsTesting.hasPermission(player, "alladmin.commands." + command);
+	}
+	
 	public static boolean hasPermission(final Player player, final String node) {
 	
+		return player.hasPermission(node);
+		
+	}
+	
+	public static boolean hasPermission(final CommandSender player, final String node) {
+		
 		return player.hasPermission(node);
 		
 	}

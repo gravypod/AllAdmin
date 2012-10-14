@@ -8,7 +8,6 @@ import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 import com.gravypod.AllAdmin.user.AllAdminUser;
-import com.gravypod.AllAdmin.user.IUser;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
 public class Setwarp extends CommandUtil {
@@ -23,22 +22,19 @@ public class Setwarp extends CommandUtil {
 	@Override
 	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	
-		final IUser user = AllAdmin.getUser(sender.getName());
-		
-		if (!user.canUseCommand(cmd)) {
-			user.sendCommandFaliure(cmd, "noPermissions");
+		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
 		}
 		
-		if (args.length < 1) {
-			user.sendMessage(commandHelp());
-		}
+		final AllAdminUser bukkitUser = (AllAdminUser) AllAdmin.getUser(sender.getName());
 		
-		final AllAdminUser bukkitUser = (AllAdminUser) user;
+		if (args.length < 1) {
+			bukkitUser.sendMessage(commandHelp());
+		}
 		
 		TeleportUtils.setLocation(Settings.warpsYamlFile, "warps", args[0], bukkitUser.getBukkitPlayer().getLocation());
 		
-		bukkitUser.sendMessage(AllAdmin.getMessages("warpSet"));
+		bukkitUser.sendMessage(AllAdmin.getMessages("warpSet") + args[0]);
 		
 		return true;
 		

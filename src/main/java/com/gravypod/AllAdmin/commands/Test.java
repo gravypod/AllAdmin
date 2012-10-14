@@ -27,6 +27,10 @@ public class Test extends CommandUtil {
 	
 		AllAdmin.getUser(sender.getName()).hasPermission("alladmin.commands." + cmd);
 		
+		if (!canUseCommand(sender, cmd, false, true)) {
+			return true;
+		}
+		
 		sender.sendMessage("Test this is!");
 		
 		return true;

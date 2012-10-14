@@ -50,7 +50,14 @@ public class TeleportUtils {
 		final double z = db.getDouble(location + "." + name + ".z");
 		final float pitch = (float) db.getDouble(location + "." + name + ".pitch");
 		final float yaw = (float) db.getDouble(location + "." + name + ".yaw");
-		final World world = AllAdmin.getInstance().getServer().getWorld(db.getString(location + "." + name + ".world"));
+		
+		String worldName = db.getString(location + "." + name + ".world");
+		
+		if (worldName == null) {
+			worldName = "world";
+		}
+		
+		final World world = AllAdmin.getInstance().getServer().getWorld(worldName);
 		
 		if (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z) || world == null || Float.isNaN(pitch) || Float.isNaN(yaw)) {
 			return null;

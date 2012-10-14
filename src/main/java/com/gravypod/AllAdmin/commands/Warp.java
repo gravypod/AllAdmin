@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.Settings;
@@ -24,18 +23,12 @@ public class Warp extends CommandUtil {
 	
 	@Override
 	public final boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
-	
-		if (!(sender instanceof Player)) {
-			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
+		
+		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
 		}
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
-		
-		if (!user.canUseCommand(cmd)) {
-			user.sendCommandFaliure(cmd, "noPermissions");
-			return true;
-		}
 		
 		if (!(args.length == 1)) {
 			user.sendCommandFaliure(cmd, "noArguments");

@@ -23,8 +23,7 @@ public class Warplist extends CommandUtil {
 	@Override
 	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	
-		if (!AllAdmin.getUser(sender.getName()).canUseCommand(cmd)) {
-			sender.sendMessage(AllAdmin.getMessages("noPermissions"));
+		if (!canUseCommand(sender, cmd, false, true)) {
 			return true;
 		}
 		
