@@ -15,10 +15,6 @@
             <id>bukkit</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>onarandombox</id>
-            <url>http://repo.onarandombox.com/content/groups/public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -29,24 +25,6 @@
             <version>1.3.2-R1.0</version>
             <type>jar</type>
             <scope>compile</scope>
-        </dependency>
-        <!-- PluginBase Dependency -->
-        <dependency>
-            <groupId>com.dumptruckman.minecraft</groupId>
-            <artifactId>BukkitPlugin</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.dumptruckman.minecraft</groupId>
-                    <artifactId>PluginBase</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.dumptruckman.minecraft</groupId>
-                    <artifactId>Plugin</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- Start of Test Dependencies -->
         <dependency>
@@ -198,32 +176,6 @@
                     <enableRulesSummary>true</enableRulesSummary>
                     <configLocation>${project.basedir}/config/checks.xml</configLocation>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>com.dumptruckman.minecraft:BukkitPlugin</include>
-                                </includes>
-                            </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.dumptruckman.minecraft.pluginbase</pattern>
-                                    <shadedPattern>com.gravypod.AllAdmin.pluginbase</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
