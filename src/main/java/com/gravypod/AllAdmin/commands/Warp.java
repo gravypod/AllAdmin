@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
-import com.gravypod.AllAdmin.CommandHandling.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
-public class Warp implements ICommand {
+public class Warp extends CommandUtil {
 	
 	@Override
 	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
@@ -42,7 +42,7 @@ public class Warp implements ICommand {
 			return true;
 		}
 		
-		Location toSend = TeleportUtils.getLocation(Settings.warpsYamlFile, "warps", args[0]);
+		final Location toSend = TeleportUtils.getLocation(Settings.warpsYamlFile, "warps", args[0]);
 		
 		if (toSend == null) {
 			sender.sendMessage(ChatColor.RED + "There is no warp with that name");

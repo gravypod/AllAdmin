@@ -7,10 +7,10 @@ import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
-import com.gravypod.AllAdmin.CommandHandling.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 
-public class Setspawn implements ICommand {
+public class Setspawn extends CommandUtil {
 	
 	@Override
 	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
@@ -29,7 +29,7 @@ public class Setspawn implements ICommand {
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
 		
-		if (!(user.canUseCommand(cmd))) {
+		if (!user.canUseCommand(cmd)) {
 			user.sendCommandFaliure(cmd, "noPermissions");
 			return true;
 		}
@@ -38,6 +38,8 @@ public class Setspawn implements ICommand {
 		final Location playerLocation = player.getLocation();
 		
 		player.getWorld().setSpawnLocation(playerLocation.getBlockX(), playerLocation.getBlockY(), playerLocation.getBlockZ());
+		
+		user.sendMessage(AllAdmin.getMessages("spawnSet"));
 		
 		return true;
 		

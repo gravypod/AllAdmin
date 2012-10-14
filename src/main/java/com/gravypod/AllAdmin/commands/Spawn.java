@@ -6,21 +6,21 @@ import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
-import com.gravypod.AllAdmin.CommandHandling.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 
-public class Spawn implements ICommand {
+public class Spawn extends CommandUtil {
 	
 	@Override
 	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
-		
+	
 		plugin.getCommand("spawn").setExecutor(commandHandler);
 		
 	}
 	
 	@Override
 	public final boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
-		
+	
 		if (!(sender instanceof Player)) {
 			AllAdmin.getUser(sender.getName()).sendCommandFaliure(cmd, "mustBePlayer");
 			return true;
@@ -28,7 +28,7 @@ public class Spawn implements ICommand {
 		
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
 		
-		if (!(user.canUseCommand(cmd))) {
+		if (!user.canUseCommand(cmd)) {
 			user.sendCommandFaliure(cmd, "noPermissions");
 			return true;
 		}
@@ -41,6 +41,7 @@ public class Spawn implements ICommand {
 	
 	@Override
 	public final String commandHelp() {
+	
 		return "/spawn will take you to spawn";
 	}
 	

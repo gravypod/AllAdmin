@@ -9,38 +9,38 @@ import org.bukkit.command.CommandSender;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
-import com.gravypod.AllAdmin.CommandHandling.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 
-public class Warplist implements ICommand {
+public class Warplist extends CommandUtil {
 	
 	@Override
-	public void registerSelf(AllAdmin plugin, CommandHandler commandHandler) {
+	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
 	
 		plugin.getCommand("warplist").setExecutor(commandHandler);
 		
 	}
 	
 	@Override
-	public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
-		
-		if (!AllAdmin.getUser(sender.getName()).hasPermission("alladmin.commnads.warplist")) {
-			sender.sendMessage("You do not have permissions!");
+	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
+	
+		if (!AllAdmin.getUser(sender.getName()).canUseCommand(cmd)) {
+			sender.sendMessage(AllAdmin.getMessages("noPermissions"));
 			return true;
 		}
 		
 		String warps = null;
-		ArrayList<String> warpList = new ArrayList<String>(Settings.warpsYamlFile.getStringList("warps"));
+		final ArrayList<String> warpList = new ArrayList<String>(Settings.warpsYamlFile.getStringList("warps"));
 		
 		for (String warpName : warpList) {
 			
-    		if (warps == null) {
-
-    			warps = "There are " + warpList.size() + " warps, they are: " + warpName;
-    			continue;
-
-    		}
-
-    		warpName += ", " + warpName;
+			if (warps == null) {
+				
+				warps = "There are " + warpList.size() + " warps, they are: " + warpName;
+				continue;
+				
+			}
+			
+			warpName += ", " + warpName;
 			
 		}
 		
@@ -52,6 +52,7 @@ public class Warplist implements ICommand {
 	
 	@Override
 	public String commandHelp() {
+	
 		return "/warplist shows a list of warps";
 	}
 	

@@ -5,7 +5,6 @@
  */
 package com.gravypod.AllAdmin.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,16 +13,17 @@ import org.bukkit.entity.Player;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
-import com.gravypod.AllAdmin.CommandHandling.ICommand;
+import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 
-public class Home implements ICommand {
+public class Home extends CommandUtil {
 	
 	@Override
 	public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 	
-		if (Settings.useHomes)
+		if (Settings.useHomes) {
 			plugin.getCommand("Home").setExecutor(ch);
+		}
 		
 	}
 	
@@ -32,7 +32,7 @@ public class Home implements ICommand {
 	
 		if (!(sender instanceof Player)) {
 			
-			sender.sendMessage(ChatColor.RED + "Could not execurte the command " + cmd);
+			sender.sendMessage(AllAdmin.getMessages("mustBePlayer"));
 			return true;
 			
 		}
@@ -40,21 +40,22 @@ public class Home implements ICommand {
 		final AllAdminUser user = (AllAdminUser) AllAdmin.getUser(sender.getName());
 		
 		if (!user.canUseCommand(cmd)) {
-			user.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have permissions to use that command!");
+			user.getBukkitPlayer().sendMessage(AllAdmin.getMessages("noPermissions"));
 			return true;
 		}
 		
 		String homeName = null;
 		
 		if (user.getBukkitPlayer().hasPermission("alladmin.multihome")) {
-			if (args.length == 1)
+			if (args.length == 1) {
 				homeName = args[0];
+			}
 		}
 		
 		final Location homeLoc = user.getHome(homeName == null ? homeName : "home");
 		
 		if (homeLoc == null) {
-			user.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have a home set yet. Please set it with /sethome!");
+			user.getBukkitPlayer().sendMessage(AllAdmin.getMessages("notSetHome"));
 			return true;
 		}
 		
