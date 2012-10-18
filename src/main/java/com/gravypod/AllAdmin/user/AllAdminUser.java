@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.utils.PermissionsTesting;
@@ -38,7 +39,9 @@ public class AllAdminUser implements IUser {
 		
 		final AllAdmin plugin = AllAdmin.getInstance();
 		
-		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+		BukkitScheduler schedular = plugin.getServer().getScheduler();
+		
+		schedular.scheduleAsyncDelayedTask(plugin, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -60,6 +63,8 @@ public class AllAdminUser implements IUser {
 			
 		});
 		
+		schedular.scheduleAsyncRepeatingTask(plugin, new UpdateInfo(this), 10L, 1000L);
+		
 		updateLastLocation();
 		
 	}
@@ -67,26 +72,31 @@ public class AllAdminUser implements IUser {
 	public final String getUserName() {
 	
 		return bukkitPlayer.getName();
+		
 	}
 	
 	public final String getDisplayName() {
 	
 		return bukkitPlayer.getDisplayName();
+		
 	}
 	
 	public final Inventory getInventory() {
 	
 		return bukkitPlayer.getInventory();
+		
 	}
 	
 	public final boolean doesHaveItem(final Material m) {
 	
 		return getInventory().contains(m);
+		
 	}
 	
 	public final boolean doesHaveItem(final ItemStack m) {
 	
 		return getInventory().contains(m);
+		
 	}
 	
 	public final boolean doesHaveItem(final int m) {
@@ -163,8 +173,12 @@ public class AllAdminUser implements IUser {
 	}
 	
 	public void updateLastLocation() {
-	
-		lastLocation = bukkitPlayer.getLocation();
+		
+		synchronized (bukkitPlayer) {
+		
+			lastLocation = bukkitPlayer.getLocation();
+		
+		}
 		
 	}
 	
@@ -177,16 +191,20 @@ public class AllAdminUser implements IUser {
 	
 	@Override
 	public void saveData() {
-	
-		try {
+		
+		synchronized (userData) {
 			
-			userData.set("lastLocation.x", lastLocation.getBlockX());
-			userData.set("lastLocation.y", lastLocation.getBlockY());
-			userData.set("lastLocation.z", lastLocation.getBlockZ());
+			try {
+				
+				userData.set("lastLocation.x", lastLocation.getBlockX());
+				userData.set("lastLocation.y", lastLocation.getBlockY());
+				userData.set("lastLocation.z", lastLocation.getBlockZ());
+				
+				userData.save(userDataFile);
+				
+			} catch (final Exception e) {
+			}
 			
-			userData.save(userDataFile);
-			
-		} catch (final Exception e) {
 		}
 		
 	}

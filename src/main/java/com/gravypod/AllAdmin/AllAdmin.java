@@ -21,16 +21,28 @@ import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
 import com.gravypod.AllAdmin.utils.MatchUser;
 
+/**
+ * 
+ * AllAdmin plugin
+ * 
+ * @author gravypod
+ *
+ */
 public class AllAdmin extends JavaPlugin {
-	
+
+	/** User list */
 	private final static TreeMap<String, IUser> userList = new TreeMap<String, IUser>();
+
+	/** Translation system instance */
+	private static I18n i18n;
 	
-	private final static I18N i18n = new I18N();
-	
+	/** AllAdmin instance */
 	private static AllAdmin instance;
 	
+	/** Our command handler instance */
 	private static CommandHandler commandHandler;
 	
+	/** Our message map, all things from the message.prop that have been used */
 	private final static TreeMap<String, String> messages = new TreeMap<String, String>();
 	
 	@Override
@@ -49,18 +61,22 @@ public class AllAdmin extends JavaPlugin {
 		
 		new Startup(this, AllAdmin.commandHandler);
 		
+		final Player[] players = getServer().getOnlinePlayers();
+		
 		getServer().getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
 			
 			@Override
 			public void run() {
 			
-				for (final Player player : getServer().getOnlinePlayers()) {
+				for (final Player player : players) {
 					AllAdmin.addUser(player.getName());
 				}
 				
 			}
 			
 		});
+		
+		i18n = new I18n();
 		
 	}
 	
