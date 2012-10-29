@@ -11,6 +11,8 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.gravypod.AllAdmin.listeners.PlayerChat;
+
 public class ConfigLoad {
 	
 	static AllAdmin plugin;
@@ -53,6 +55,12 @@ public class ConfigLoad {
 			Settings.useHomes = ymlConfig.getBoolean("AllAdmin.use-homes");
 			Settings.useWarps = ymlConfig.getBoolean("AllAdmin.use-warps");
 			Settings.useBack = ymlConfig.getBoolean("AllAdmin.use-back");
+			Settings.usePermissions = ymlConfig.getBoolean("AllAdmin.use-permissions");
+			Settings.config = ymlConfig;
+			
+			if (ymlConfig.getBoolean("AllAdmin.Chat.use-chat")) {
+				plugin.getServer().getPluginManager().registerEvents(new PlayerChat(), plugin);
+			}
 			
 			try {
 				ymlConfig.save(ConfigLoad.configFile);

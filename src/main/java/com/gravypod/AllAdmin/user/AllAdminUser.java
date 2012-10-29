@@ -7,6 +7,7 @@ package com.gravypod.AllAdmin.user;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,6 +19,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.permissions.AdminPerms;
+import com.gravypod.AllAdmin.permissions.Group;
+import com.gravypod.AllAdmin.permissions.PermissionData;
 import com.gravypod.AllAdmin.utils.PermissionsTesting;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
@@ -30,6 +34,10 @@ public class AllAdminUser implements IUser {
 	private final File userDataFile;
 	
 	private final FileConfiguration userData = new YamlConfiguration();
+	
+	private boolean canColourChat;
+	
+	private final HashMap<String, Location> userHome = new HashMap<String, Location>();
 	
 	public AllAdminUser(final Player _bukkitPlayer) {
 	
@@ -48,13 +56,19 @@ public class AllAdminUser implements IUser {
 			
 				try {
 					
-					if (userDataFile.exists()) {
+					if (!userDataFile.exists()) {
 						userDataFile.createNewFile();
 					}
 					
 					userData.load(userDataFile);
 					
 					userData.save(userDataFile);
+					
+					synchronized (userHome) {
+						
+						userHome.put("home",  TeleportUtils.getLocation(userData, "homes", "home"));
+						
+					}
 					
 				} catch (final Exception e) {
 				}
@@ -66,6 +80,19 @@ public class AllAdminUser implements IUser {
 		schedular.scheduleAsyncRepeatingTask(plugin, new UpdateInfo(this), 10L, 1000L);
 		
 		updateLastLocation();
+		
+		canColourChat = bukkitPlayer.hasPermission("AllAdmin.chat.colour");
+		
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				AdminPerms.assignPermissions(bukkitPlayer);
+				
+			}
+			
+		}, 1);
 		
 	}
 	
@@ -211,8 +238,38 @@ public class AllAdminUser implements IUser {
 	
 	@Override
 	public boolean isPlayer() {
-	
+		
 		return true;
+		
 	}
+
+	@Override
+    public boolean canColourChat() {
+		
+		synchronized (bukkitPlayer) {
+			
+			canColourChat = bukkitPlayer.hasPermission("AllAdmin.chat.colour");
+			
+			return canColourChat;
+			
+		}
+	    
+    }
+
+	public Group getGroup() {
+		
+		if (!userData.contains("permissions.group")) {
+			userData.set("permissions.group", PermissionData.defaultGroup);
+		}
+		
+		String group = userData.getString("permissioins.group");
+		
+		if (!PermissionData.groups.containsKey(group)) {
+			group = PermissionData.defaultGroup.getName();
+		}
+		
+	    return PermissionData.groups.get(group);
+	    
+    }
 	
 }

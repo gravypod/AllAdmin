@@ -18,7 +18,7 @@ public class I18n {
 	
 	final String country = Locale.getDefault().getCountry();
 	
-	final char colorCode = "&".toCharArray()[0];
+	final char colorCode = (char) 38;
 	
 	final Locale locale = new Locale(language, country);
 	

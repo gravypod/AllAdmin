@@ -21,4 +21,8 @@ public class Settings {
 	
 	public static FileConfiguration warpsYamlFile;
 	
+	public static FileConfiguration config;
+
+	public static boolean usePermissions;
+	
 }

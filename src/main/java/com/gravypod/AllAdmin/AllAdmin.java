@@ -11,11 +11,11 @@ import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.listeners.PlayerListener;
+import com.gravypod.AllAdmin.permissions.AdminPerms;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -26,13 +26,13 @@ import com.gravypod.AllAdmin.utils.MatchUser;
  * AllAdmin plugin
  * 
  * @author gravypod
- *
+ * 
  */
 public class AllAdmin extends JavaPlugin {
-
+	
 	/** User list */
 	private final static TreeMap<String, IUser> userList = new TreeMap<String, IUser>();
-
+	
 	/** Translation system instance */
 	private static I18n i18n;
 	
@@ -40,7 +40,7 @@ public class AllAdmin extends JavaPlugin {
 	private static AllAdmin instance;
 	
 	/** Our command handler instance */
-	private static CommandHandler commandHandler;
+	private CommandHandler commandHandler;
 	
 	/** Our message map, all things from the message.prop that have been used */
 	private final static TreeMap<String, String> messages = new TreeMap<String, String>();
@@ -48,18 +48,17 @@ public class AllAdmin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 	
-		AllAdmin.instance = this;
+		instance = this;
 		
-		AllAdmin.commandHandler = new CommandHandler();
+		commandHandler = new CommandHandler();
 		
-		final PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new PlayerListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		
 		final File userdata = new File(getDataFolder(), "userdata/");
 		
 		userdata.mkdirs();
 		
-		new Startup(this, AllAdmin.commandHandler);
+		new Startup(this, commandHandler);
 		
 		final Player[] players = getServer().getOnlinePlayers();
 		
@@ -72,11 +71,11 @@ public class AllAdmin extends JavaPlugin {
 					AllAdmin.addUser(player.getName());
 				}
 				
+				i18n = new I18n();
+				
 			}
 			
 		});
-		
-		i18n = new I18n();
 		
 	}
 	
@@ -85,7 +84,7 @@ public class AllAdmin extends JavaPlugin {
 	
 		new SaveAll(AllAdmin.userList.values());
 		
-		AllAdmin.userList.clear();
+		userList.clear();
 		
 	}
 	
@@ -100,25 +99,25 @@ public class AllAdmin extends JavaPlugin {
 	 */
 	public static synchronized final IUser getUser(final String name) {
 	
-		synchronized(AllAdmin.userList) {
+		synchronized(userList) {
 			
-			if (!AllAdmin.userList.containsKey(name)) {
+			if (!userList.containsKey(name)) {
 				
 				final Player p = MatchUser.matchOnlineUser(name);
 				
 				if (p == null) {
 					
-					AllAdmin.userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
+					userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
 					
 				} else {
 					
-					AllAdmin.userList.put(name, new AllAdminUser(p));
+					userList.put(name, new AllAdminUser(p));
 					
 				}
 				
 			}
 			
-			return AllAdmin.userList.get(name);
+			return userList.get(name);
 			
 		}
 		
@@ -132,10 +131,10 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized void addUser(final String name) {
-	
-		synchronized(AllAdmin.userList) {
+		
+		synchronized(userList) {
 			
-			if (AllAdmin.userList.containsKey(name)) {
+			if (userList.containsKey(name)) {
 				return;
 			}
 			
@@ -143,12 +142,12 @@ public class AllAdmin extends JavaPlugin {
 			
 			if (p == null) {
 				
-				AllAdmin.userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
+				userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
 				return;
 				
 			}
 			
-			AllAdmin.userList.put(name, new AllAdminUser(p));
+			userList.put(name, new AllAdminUser(p));
 			
 		}
 		
@@ -161,7 +160,7 @@ public class AllAdmin extends JavaPlugin {
 	 * @return
 	 */
 	public final InputStream getResourceAsStream(final String fileName) {
-	
+		
 		return getClassLoader().getResourceAsStream(fileName);
 		
 	}
@@ -174,9 +173,9 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized final TreeMap<String, IUser> getUserList() {
-	
-		synchronized(AllAdmin.userList) {
-			return AllAdmin.userList;
+		
+		synchronized(userList) {
+			return userList;
 		}
 		
 	}
@@ -189,18 +188,20 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized void removeUser(final String name) {
-	
-		synchronized(AllAdmin.userList) {
+		
+		synchronized(userList) {
 			
-			if (!AllAdmin.userList.containsKey(name)) {
+			if (!userList.containsKey(name)) {
 				return;
 			}
 			
-			AllAdmin.userList.get(name).saveData();
+			userList.get(name).saveData();
 			
-			AllAdmin.userList.remove(name);
+			userList.remove(name);
 			
 		}
+		
+		AdminPerms.removeAttachment(name);
 		
 	}
 	
@@ -212,8 +213,8 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized AllAdmin getInstance() {
-	
-		return AllAdmin.instance;
+		
+		return instance;
 		
 	}
 	
@@ -225,21 +226,8 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public File jarLocation() {
-	
-		return new File(getFile().getAbsolutePath());
 		
-	}
-	
-	/**
-	 * 
-	 * The instance of our command handler
-	 * 
-	 * @return
-	 * 
-	 */
-	public static final CommandHandler getCommandHandler() {
-	
-		return AllAdmin.commandHandler;
+		return new File(getFile().getAbsolutePath());
 		
 	}
 	
@@ -253,12 +241,12 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static String getMessages(final String messageType) {
-	
-		if (!AllAdmin.messages.containsKey(messageType)) {
-			AllAdmin.messages.put(messageType, AllAdmin.i18n.getColoredMessage(messageType));
+		
+		if (!messages.containsKey(messageType)) {
+			messages.put(messageType, AllAdmin.i18n.getColoredMessage(messageType));
 		}
 		
-		return AllAdmin.messages.get(messageType);
+		return messages.get(messageType);
 		
 	}
 	

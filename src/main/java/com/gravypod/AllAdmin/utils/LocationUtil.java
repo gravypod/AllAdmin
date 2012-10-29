@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 
 public class LocationUtil {
@@ -55,6 +56,62 @@ public class LocationUtil {
 	
 		final Block block = entity.getTargetBlock(dontCount, 300);
 		return block.getLocation();
+		
+	}
+	
+	/**
+	 * Makes a safe location, only searches up and down.
+	 * 
+	 * @param locatin
+	 * @return Modified location so you are not buried.
+	 * 
+	 */
+	public static Location safeYLocation(final Location locatin) {
+		
+		final Location blockLocation = locatin;
+		double yLoc = blockLocation.getY();
+		
+		//find the first non air block below us
+		while (blockLocation.getBlock().getType() != Material.AIR) {
+		    blockLocation.setY(yLoc + 1);
+		}
+		
+		// set to 1 block up so we are not sunk in the ground
+		blockLocation.setY(yLoc + 1);
+		
+		return blockLocation;
+		
+	}
+	
+	public static Location safeLocation(final Location location) {
+		
+		final Location blockLocation = location;
+		
+		double yLoc = blockLocation.getY();
+		
+		Block checkedBlock = blockLocation.getBlock();
+		
+		//find the first non air block below us
+		while (checkedBlock.getType() != Material.AIR) {
+			
+			for (BlockFace bf : BlockFace.values()) {
+				
+				if (checkedBlock.getRelative(bf).getType() == Material.AIR){
+					
+					return checkedBlock.getRelative(bf).getLocation();
+					
+				}
+				
+			}
+			
+			blockLocation.setY(yLoc + 1);
+			
+		}
+		
+		// set to 1 block up so we are not sunk in the ground
+		blockLocation.setY(yLoc + 1);
+		
+		return blockLocation;
 		
 	}
 	

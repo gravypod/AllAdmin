@@ -1,0 +1,5 @@
+groups:
+  Default:
+    default: true
+    permissions:
+      - test.permissions

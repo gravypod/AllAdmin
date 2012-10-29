@@ -59,4 +59,11 @@ public interface IUser {
 	 */
 	public boolean isPlayer();
 	
+	/**
+	 * Checks if the user can colour chat.
+	 * 
+	 * @return
+	 */
+	public boolean canColourChat();
+	
 }

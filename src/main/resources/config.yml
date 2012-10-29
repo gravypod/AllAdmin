@@ -2,4 +2,8 @@ AllAdmin:
   use-homes: true
   use-warps: true
   use-back: true
-  
+  use-permissions: true
+  Chat:
+    use-chat: false
+    bad-words:
+      - fuck
