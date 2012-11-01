@@ -59,3 +59,11 @@ commands:
         description: 'Heal you or another player!'
         usage: '/heal [player name]'
         permission: alladmin.commands.heal
+    groups:
+        description: 'Commands dealing with our perms system!'
+        usage: '/groups'
+        permission: alladmin.commands.groups
+    permissions:
+        description: permissions node testing command!'
+        usage: '/permissions [node]'
+        permission: alladmin.commands.permissions

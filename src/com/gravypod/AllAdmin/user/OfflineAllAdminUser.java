@@ -10,24 +10,20 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.permissions.AdminPerms;
 import com.gravypod.AllAdmin.permissions.Group;
 import com.gravypod.AllAdmin.permissions.PermissionData;
 import com.gravypod.AllAdmin.utils.PermissionsTesting;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
-public class AllAdminUser implements IUser {
+public class OfflineAllAdminUser implements IUser {
 	
-	private final Player bukkitPlayer;
+	private final OfflinePlayer bukkitPlayer;
 	
 	private Location lastLocation;
 	
@@ -35,11 +31,9 @@ public class AllAdminUser implements IUser {
 	
 	private final FileConfiguration userData = new YamlConfiguration();
 	
-	private boolean canColourChat;
-	
 	private final HashMap<String, Location> userHome = new HashMap<String, Location>();
 	
-	public AllAdminUser(final Player _bukkitPlayer) {
+	public OfflineAllAdminUser(final OfflinePlayer _bukkitPlayer) {
 	
 		bukkitPlayer = _bukkitPlayer;
 		
@@ -64,9 +58,9 @@ public class AllAdminUser implements IUser {
 					
 					userData.save(userDataFile);
 					
-					synchronized (userHome) {
+					synchronized(userHome) {
 						
-						userHome.put("home",  TeleportUtils.getLocation(userData, "homes", "home"));
+						userHome.put("home", TeleportUtils.getLocation(userData, "homes", "home"));
 						
 					}
 					
@@ -77,23 +71,6 @@ public class AllAdminUser implements IUser {
 			
 		});
 		
-		schedular.scheduleAsyncRepeatingTask(plugin, new UpdateInfo(this), 10L, 1000L);
-		
-		updateLastLocation();
-		
-		canColourChat = bukkitPlayer.hasPermission("AllAdmin.chat.colour");
-		
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				AdminPerms.assignPermissions(bukkitPlayer);
-				
-			}
-			
-		}, 1);
-		
 	}
 	
 	public final String getUserName() {
@@ -102,56 +79,24 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
-	public final String getDisplayName() {
-	
-		return bukkitPlayer.getDisplayName();
-		
-	}
-	
-	public final Inventory getInventory() {
-	
-		return bukkitPlayer.getInventory();
-		
-	}
-	
-	public final boolean doesHaveItem(final Material m) {
-	
-		return getInventory().contains(m);
-		
-	}
-	
-	public final boolean doesHaveItem(final ItemStack m) {
-	
-		return getInventory().contains(m);
-		
-	}
-	
-	public final boolean doesHaveItem(final int m) {
-	
-		return getInventory().contains(m);
-	}
-	
 	@Override
 	public void sendCommandFaliure(final String command, final String why) {
 	
-		bukkitPlayer.sendMessage(AllAdmin.getMessages(why));
-		
 	}
 	
 	@Override
 	public boolean canUseCommand(final String command) {
 	
-		return PermissionsTesting.canUseCommand(bukkitPlayer, command);
-		
+		return false;
 	}
 	
 	@Override
 	public final boolean hasPermission(final String permission) {
 	
-		return PermissionsTesting.hasPermission(bukkitPlayer, permission);
+		return PermissionsTesting.hasPermission(this, permission);
 	}
 	
-	public final Player getBukkitPlayer() {
+	public final OfflinePlayer getBukkitPlayer() {
 	
 		return bukkitPlayer;
 	}
@@ -182,7 +127,7 @@ public class AllAdminUser implements IUser {
 	
 		final String name = homeName != null ? homeName : "home";
 		
-		TeleportUtils.setLocation(userData, "homes", name, bukkitPlayer.getLocation());
+		TeleportUtils.setLocation(userData, "homes", name, loc);
 		
 		try {
 			
@@ -199,27 +144,15 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
-	public void updateLastLocation() {
-		
-		synchronized (bukkitPlayer) {
-		
-			lastLocation = bukkitPlayer.getLocation();
-		
-		}
-		
-	}
-	
 	@Override
 	public void sendMessage(final String message) {
 	
-		bukkitPlayer.sendMessage(message);
-		
 	}
 	
 	@Override
 	public void saveData() {
-		
-		synchronized (userData) {
+	
+		synchronized(userData) {
 			
 			try {
 				
@@ -238,35 +171,19 @@ public class AllAdminUser implements IUser {
 	
 	@Override
 	public boolean isPlayer() {
-		
+	
 		return true;
 		
 	}
-
-	@Override
-    public boolean canColourChat() {
-		
-		synchronized (bukkitPlayer) {
-			
-			canColourChat = bukkitPlayer.hasPermission("AllAdmin.chat.colour");
-			
-			return canColourChat;
-			
-		}
-	    
-    }
 	
-	public void setGroup(String groupName) {
-		userData.set("permissions.group", groupName);
-		try {
-	        userData.save(userDataFile);
-        } catch (IOException e) {
-	        e.printStackTrace();
-        }
+	@Override
+	public boolean canColourChat() {
+	
+		return false;
 	}
 	
 	public Group getGroup() {
-		
+	
 		if (!userData.contains("permissions.group")) {
 			userData.set("permissions.group", PermissionData.getDefaultGroup().getName());
 		}
@@ -277,8 +194,8 @@ public class AllAdminUser implements IUser {
 			group = PermissionData.getDefaultGroup().getName();
 		}
 		
-	    return PermissionData.getGroups().get(group);
-	    
-    }
+		return PermissionData.getGroups().get(group);
+		
+	}
 	
 }
