@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,6 +20,12 @@ public class LoadPermissions {
 	
 	public LoadPermissions() {
 	
+		File permissionsFolder = new File(plugin.getDataFolder(), "permissions/");
+		
+		if (!permissionsFolder.exists()) {
+			permissionsFolder.mkdirs();
+		}
+		
 		permissionsFile = new File(plugin.getDataFolder(), "permissions/permissions.yml");
 		
 		if (!permissionsFile.exists()) {
@@ -39,9 +46,11 @@ public class LoadPermissions {
 		
 		final HashMap<String, Group> groups = new HashMap<String, Group>();
 		
-		final List<String> groupNames = permissionsYaml.getStringList("groups");
+		final Set<String> groupNames = permissionsYaml.getConfigurationSection("groups").getKeys(false);
 		
 		for (String groupName : groupNames) {
+			
+			System.out.println(groupNames);
 			
 			boolean isDefault = permissionsYaml.getBoolean("groups." + groupName + ".default");
 			
@@ -50,12 +59,14 @@ public class LoadPermissions {
 			Group group = new Group(groupName, isDefault, permissions);
 			
 			if (isDefault) {
-				PermissionData.defaultGroup = group;
+				PermissionData.setDefaultGroup(group);
 			}
 			
 			groups.put(groupName, group);
 			
 		}
+		
+		PermissionData.setGroups(groups);
 		
 	}
 	

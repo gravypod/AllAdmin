@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.listeners.PlayerListener;
 import com.gravypod.AllAdmin.permissions.AdminPerms;
+import com.gravypod.AllAdmin.permissions.LoadPermissions;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -47,7 +48,7 @@ public class AllAdmin extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-	
+		
 		instance = this;
 		
 		commandHandler = new CommandHandler();
@@ -76,6 +77,10 @@ public class AllAdmin extends JavaPlugin {
 			}
 			
 		});
+		
+		AdminPerms.initialize(this);
+		
+		new LoadPermissions();
 		
 	}
 	

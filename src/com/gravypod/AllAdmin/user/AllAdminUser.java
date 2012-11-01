@@ -259,16 +259,16 @@ public class AllAdminUser implements IUser {
 	public Group getGroup() {
 		
 		if (!userData.contains("permissions.group")) {
-			userData.set("permissions.group", PermissionData.defaultGroup);
+			userData.set("permissions.group", PermissionData.getDefaultGroup().getName());
 		}
 		
 		String group = userData.getString("permissioins.group");
 		
-		if (!PermissionData.groups.containsKey(group)) {
-			group = PermissionData.defaultGroup.getName();
+		if (!PermissionData.getGroups().containsKey(group)) {
+			group = PermissionData.getDefaultGroup().getName();
 		}
 		
-	    return PermissionData.groups.get(group);
+	    return PermissionData.getGroups().get(group);
 	    
     }
 	
