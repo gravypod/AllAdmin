@@ -148,7 +148,8 @@ public class AllAdminUser implements IUser {
 	@Override
 	public final boolean hasPermission(final String permission) {
 	
-		return PermissionsTesting.hasPermission(bukkitPlayer, permission);
+		return PermissionsTesting.internalHasPermissions(this, permission);
+		
 	}
 	
 	public final Player getBukkitPlayer() {

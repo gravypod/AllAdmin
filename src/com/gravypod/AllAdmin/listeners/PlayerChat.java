@@ -32,24 +32,6 @@ public class PlayerChat implements Listener {
 			event.setMessage(ChatColor.translateAlternateColorCodes(colorCode, event.getMessage()));
 		}
 		
-		final String message = event.getMessage();
-		
-		for (String word : message.split(" ")) {
-			
-			if (badWords.contains(word)) {
-				
-				String newWord = word;
-				
-				for (int i = 0; i < word.length(); i++) {
-					newWord += (char) r.nextInt();
-				}
-				
-				message.replace(word, newWord);
-				
-			}
-			
-		}
-		
 	}
 	
 }

@@ -5,22 +5,18 @@
  */
 package com.gravypod.AllAdmin.utils;
 
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.gravypod.AllAdmin.user.AllAdminUser;
-import com.gravypod.AllAdmin.user.OfflineAllAdminUser;
 
 public class PermissionsTesting {
 	
-	public static boolean canUseCommand(final OfflineAllAdminUser player, final String command) {
-	
-		return player.getGroup().getPermissions().contains("alladmin.commands." + command);
-	}
-	
 	public static boolean canUseCommand(final AllAdminUser player, final String command) {
 	
-		return player.getGroup().getPermissions().contains("alladmin.commands." + command) ? true : hasPermission(player.getBukkitPlayer(), "alladmin.commands." + command);
+		return internalHasPermissions(player, "alladmin.commands." + command);
 	}
 	
 	public static boolean canUseCommand(final Player player, final String command) {
@@ -29,29 +25,39 @@ public class PermissionsTesting {
 	}
 	
 	public static boolean canUseCommand(final CommandSender player, final String command) {
-	
 		return PermissionsTesting.hasPermission(player, "alladmin.commands." + command);
 	}
 	
-	public static boolean hasPermission(final OfflineAllAdminUser player, final String node) {
+	public static boolean internalHasPermissions(final AllAdminUser player, final String node) {
+	
+		StringBuilder sb = new StringBuilder();
+		
+		List<String> playerPermissions = player.getGroup().getPermissions();
+		
+		for (String s : node.split(".")) {
+			System.out.println(sb.toString());
+			sb.append("*");
+			
+			if (playerPermissions.contains(sb.toString()))
+				return true;
+			
+			sb.deleteCharAt(sb.length() - 1);
+			
+			sb.append(s).append(".");
+			
+		}
+		
+		return hasPermission(player.getBukkitPlayer(), node);
+		
+	}
+	
+	private static boolean hasPermission(final Player player, final String node) {
 	
 		return player.hasPermission(node);
 		
 	}
 	
-	public static boolean hasPermission(final AllAdminUser player, final String node) {
-	
-		return player.hasPermission(node);
-		
-	}
-	
-	public static boolean hasPermission(final Player player, final String node) {
-	
-		return player.hasPermission(node);
-		
-	}
-	
-	public static boolean hasPermission(final CommandSender player, final String node) {
+	private static boolean hasPermission(final CommandSender player, final String node) {
 	
 		return player.hasPermission(node);
 		

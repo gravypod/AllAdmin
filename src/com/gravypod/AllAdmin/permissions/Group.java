@@ -10,11 +10,14 @@ public class Group {
 	
 	private final String name;
 	
-	public Group(String _name, boolean _isDefault, List<String> _permissions) {
+	private final String tag;
+	
+	public Group(String _name, String _tag, boolean _isDefault, List<String> _permissions) {
 	
 		name = _name;
 		isDefault = _isDefault;
 		permissions = _permissions;
+		tag = _tag;
 	}
 	
 	public boolean isDefault() {
@@ -31,6 +34,11 @@ public class Group {
 	public String getName() {
 	
 		return name;
+	}
+	
+	public String getTag() {
+	
+		return tag;
 	}
 	
 }

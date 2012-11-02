@@ -18,9 +18,17 @@ import org.bukkit.scheduler.BukkitScheduler;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.permissions.Group;
 import com.gravypod.AllAdmin.permissions.PermissionData;
-import com.gravypod.AllAdmin.utils.PermissionsTesting;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
+/**
+ * 
+ * Not to be used untill utils are safe for it.
+ * 
+ * 
+ * 
+ * @author gravypod
+ * 
+ */
 public class OfflineAllAdminUser implements IUser {
 	
 	private final OfflinePlayer bukkitPlayer;
@@ -93,7 +101,8 @@ public class OfflineAllAdminUser implements IUser {
 	@Override
 	public final boolean hasPermission(final String permission) {
 	
-		return PermissionsTesting.hasPermission(this, permission);
+		return false;
+		// return PermissionsTesting.hasPermission(this, permission);
 	}
 	
 	public final OfflinePlayer getBukkitPlayer() {

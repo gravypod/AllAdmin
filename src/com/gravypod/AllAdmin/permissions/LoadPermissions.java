@@ -2,6 +2,7 @@ package com.gravypod.AllAdmin.permissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -50,19 +51,28 @@ public class LoadPermissions {
 		
 		for (String groupName : groupNames) {
 			
-			System.out.println(groupNames);
-			
 			boolean isDefault = permissionsYaml.getBoolean("groups." + groupName + ".default");
 			
 			List<String> permissions = permissionsYaml.getStringList("groups." + groupName + ".permissions");
 			
-			Group group = new Group(groupName, isDefault, permissions);
+			List<String> tempPerms = new ArrayList<String>();
+			
+			for (String permission : permissions) {
+				tempPerms.add(permission.toLowerCase());
+			}
+			
+			String tag = permissionsYaml.getString("groups." + groupName + ".tag");
+			
+			Group group = new Group(groupName.toLowerCase(), tag, isDefault, tempPerms);
+			
+			permissions.clear();
+			tempPerms.clear();
 			
 			if (isDefault) {
 				PermissionData.setDefaultGroup(group);
 			}
 			
-			groups.put(groupName, group);
+			groups.put(groupName.toLowerCase(), group);
 			
 		}
 		

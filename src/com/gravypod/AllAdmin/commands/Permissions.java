@@ -33,7 +33,7 @@ public class Permissions extends CommandUtil {
 		
 		sender.sendMessage("It is " + sender.hasPermission(args[0]) + " that you have the permission " + args[0]);
 		
-		sender.sendMessage("It is " + ((AllAdminUser) AllAdmin.getUser(sender.getName())).getGroup().getPermissions().contains(args[0]) + " that you have the permission " + args[0]);
+		sender.sendMessage("It is " + ((AllAdminUser) AllAdmin.getUser(sender.getName())).hasPermission(args[0]) + " that you have the permission " + args[0]);
 		
 		sender.sendMessage("group: " + group.getName());
 		sender.sendMessage("isDefault: " + group.isDefault());

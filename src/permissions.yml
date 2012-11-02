@@ -1,5 +1,6 @@
 groups:
-  Default:
+  default:
+    tag: 'Default'
     default: true
     permissions:
       - test.permissions
