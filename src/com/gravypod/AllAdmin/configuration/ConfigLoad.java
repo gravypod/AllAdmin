@@ -12,42 +12,44 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.listeners.PlayerChat;
 
+/**
+ * 
+ * Loads a config file.
+ * 
+ */
 public class ConfigLoad {
 	
-	static AllAdmin plugin;
+	private final transient AllAdmin plugin;
 	
-	static FileConfiguration config;
+	private final transient File configFile;
 	
-	static File configFile;
-	
-	static File warpsList;
+	private final transient File warpsList;
 	
 	public ConfigLoad(final AllAdmin _plugin, final File _warpFile) {
 	
-		ConfigLoad.plugin = _plugin;
-		ConfigLoad.configFile = _warpFile;
-		ConfigLoad.warpsList = new File(_plugin.getDataFolder(), "warps.yml");
+		plugin = _plugin;
+		configFile = _warpFile;
+		warpsList = new File(_plugin.getDataFolder(), "warps.yml");
 		
-		if (!ConfigLoad.warpsList.exists()) {
+		if (!warpsList.exists()) {
 			try {
-				ConfigLoad.warpsList.createNewFile();
+				warpsList.createNewFile();
 			} catch (final IOException e) {
 			}
 		}
 		
-		ConfigLoad.loadData();
+		loadData();
 		
 	}
 	
-	public static void loadData() {
+	public void loadData() {
 	
-		final FileConfiguration ymlConfig = ConfigLoad.plugin.getConfig();
+		final FileConfiguration ymlConfig = plugin.getConfig();
 		
 		try {
 			
-			ymlConfig.load(ConfigLoad.configFile);
+			ymlConfig.load(configFile);
 			
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -59,12 +61,8 @@ public class ConfigLoad {
 			Settings.setUseBack(ymlConfig.getBoolean(Configuration.USE_BACK.getPath()));
 			Settings.setUsePermissions(ymlConfig.getBoolean(Configuration.USE_PERMISSIONS.getPath()));
 			
-			if (ymlConfig.getBoolean(Configuration.USE_CHAT.getPath())) {
-				ConfigLoad.plugin.getServer().getPluginManager().registerEvents(new PlayerChat(), ConfigLoad.plugin);
-			}
-			
 			try {
-				ymlConfig.save(ConfigLoad.configFile);
+				ymlConfig.save(configFile);
 			} catch (final IOException e) {
 			}
 			
@@ -74,21 +72,21 @@ public class ConfigLoad {
 		
 		try {
 			
-			warpYamlFile.load(ConfigLoad.warpsList);
+			warpYamlFile.load(warpsList);
 			
 		} catch (final Exception e) {
 			e.printStackTrace();
 		} finally {
 			
 			Settings.setWarpsYamlFile(warpYamlFile);
-			Settings.setWarpsList(ConfigLoad.warpsList);
+			Settings.setWarpsList(warpsList);
 			
 		}
 		
 		try {
 			
-			ymlConfig.save(ConfigLoad.configFile);
-			warpYamlFile.save(ConfigLoad.warpsList);
+			ymlConfig.save(configFile);
+			warpYamlFile.save(warpsList);
 			
 		} catch (final IOException e) {
 			e.printStackTrace();

@@ -14,20 +14,34 @@ import org.bukkit.ChatColor;
 
 public class I18n {
 	
-	final String language = Locale.getDefault().getLanguage();
+	/** Our native language */
+	private final String language = Locale.getDefault().getLanguage();
 	
-	final String country = Locale.getDefault().getCountry();
+	/** Out country */
+	private final String country = Locale.getDefault().getCountry();
 	
-	final char colorCode = (char) 38;
+	/** Registered permission nodes */
+	private final char colorCode = (char) 38;
 	
-	final Locale locale = new Locale(language, country);
+	/** Our native local */
+	private final Locale locale = new Locale(language, country);
 	
-	final ResourceBundle messages = ResourceBundle.getBundle("Messages", locale);
+	/** default messages file */
+	private final ResourceBundle messages = ResourceBundle.getBundle("Messages", locale);
 	
-	final ResourceBundle defaultBundle = ResourceBundle.getBundle("Messages", Locale.ENGLISH);
+	/** backup file. Messages_eu.prop */
+	private final ResourceBundle defaultBundle = ResourceBundle.getBundle("Messages", Locale.ENGLISH);
 	
-	final ResourceBundle customMessages = ResourceBundle.getBundle("Messages", locale, new FileResClassLoader(I18n.class.getClassLoader(), AllAdmin.getInstance()));
+	/** Messages in our plugin.DataFolder() */
+	private final ResourceBundle customMessages = ResourceBundle.getBundle("Messages", locale, new FileResClassLoader(I18n.class.getClassLoader(), AllAdmin.getInstance()));
 	
+	/**
+	 * Get a message from out I18n data file.
+	 * 
+	 * @param message - message title. Such as 'noPlayer'
+	 * @return - What the set message really is
+	 * 
+	 */
 	public String getColoredMessage(final String message) {
 	
 		try {

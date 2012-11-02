@@ -11,6 +11,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.gravypod.AllAdmin.AllAdmin;
 
+/**
+ * 
+ * All of the AllAdmin plugin settings.
+ *
+ */
 public class Settings {
 	
 	private static File warpsList;

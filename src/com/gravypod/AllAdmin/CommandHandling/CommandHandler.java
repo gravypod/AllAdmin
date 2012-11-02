@@ -12,6 +12,11 @@ import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
 
+/**
+ * 
+ * Our command handler.
+ * 
+ */
 public class CommandHandler implements CommandExecutor {
 	
 	@Override

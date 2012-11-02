@@ -16,6 +16,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 
+/**
+ * 
+ * Player Listener for creating/maintainting/destroying out AllAdminUser objects
+ *
+ */
 public class PlayerListener implements Listener {
 	
 	@EventHandler(ignoreCancelled = true)

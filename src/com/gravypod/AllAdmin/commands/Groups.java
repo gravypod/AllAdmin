@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import com.gravypod.AllAdmin.AllAdmin;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
+import com.gravypod.AllAdmin.permissions.LoadPermissions;
 import com.gravypod.AllAdmin.permissions.PermissionData;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -15,7 +16,7 @@ import com.gravypod.AllAdmin.user.IUser;
 public class Groups extends CommandUtil {
 	
 	enum arguments {
-		promote, change, check;
+		promote, change, check, reload;
 	}
 	
 	@Override
@@ -46,6 +47,10 @@ public class Groups extends CommandUtil {
 		}
 		
 		switch(arg) {
+			case reload:
+				new LoadPermissions();
+				sender.sendMessage("Permissions was reloaded.");
+				break;
 			case change:
 			case promote:
 				if (!(args.length >= 3)) {
@@ -64,16 +69,30 @@ public class Groups extends CommandUtil {
 				final IUser user = AllAdmin.getUser(userName);
 				
 				if (!(user instanceof AllAdminUser)) {
-					sender.sendMessage("That is not a real player!"); // TODO:
-																	  // Update
-																	  // for the
-																	  // OfflineAllAdminPlayer
+					sender.sendMessage("That is not a real player!"); // TODO: update for the OfflineAllAdminPlayer
 					return true;
 				}
 				
 				((AllAdminUser) user).setGroup(groupName);
 				
 				sender.sendMessage("You have changed the group of that player!");
+				
+				break;
+			case check:
+				
+				if (!(args.length >= 2)) {
+					incorrectUsage(sender);
+					return true;
+				}
+				
+				IUser secifiedUser = AllAdmin.getUser(args[0]);
+				
+				if (!(secifiedUser instanceof AllAdminUser)) {
+					incorrectUsage(sender);
+					return true;
+				}
+				
+				sender.sendMessage("That user is in " + ((AllAdminUser)secifiedUser).getGroup().getName());
 				
 				break;
 		}

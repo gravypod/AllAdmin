@@ -12,6 +12,11 @@ import java.util.jar.JarInputStream;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.ICommand;
 
+/**
+ * 
+ * Initiates anything that is needed. Currently commands
+ * 
+ */
 public class Startup {
 	
 	final AllAdmin plugin;

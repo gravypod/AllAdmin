@@ -15,9 +15,9 @@ import com.gravypod.AllAdmin.configuration.ConfigHandle;
 
 public class LoadPermissions {
 	
-	final AllAdmin plugin = AllAdmin.getInstance();
+	private final AllAdmin plugin = AllAdmin.getInstance();
 	
-	final File permissionsFile;
+	private final File permissionsFile;
 	
 	public LoadPermissions() {
 	

@@ -30,12 +30,14 @@ public class TeleportUtils {
 			@Override
 			public void run() {
 			
-				db.set(location + "." + name + ".x", loc.getBlockX());
-				db.set(location + "." + name + ".y", loc.getBlockY());
-				db.set(location + "." + name + ".z", loc.getBlockZ());
-				db.set(location + "." + name + ".pitch", loc.getPitch());
-				db.set(location + "." + name + ".yaw", loc.getYaw());
-				db.set(location + "." + name + ".world", loc.getWorld().getName());
+				final String path = location + "." + name;
+				
+				db.set(path + ".x", loc.getBlockX());
+				db.set(path + ".y", loc.getBlockY());
+				db.set(path + ".z", loc.getBlockZ());
+				db.set(path + ".pitch", loc.getPitch());
+				db.set(path + ".yaw", loc.getYaw());
+				db.set(path + ".world", loc.getWorld().getName());
 				
 			}
 			
@@ -45,13 +47,15 @@ public class TeleportUtils {
 	
 	public static Location getLocation(final FileConfiguration db, final String location, final String name) {
 	
-		final double x = db.getDouble(location + "." + name + ".x");
-		final double y = db.getDouble(location + "." + name + ".y");
-		final double z = db.getDouble(location + "." + name + ".z");
-		final float pitch = (float) db.getDouble(location + "." + name + ".pitch");
-		final float yaw = (float) db.getDouble(location + "." + name + ".yaw");
+		final String path = location + "." + name;
 		
-		String worldName = db.getString(location + "." + name + ".world");
+		final double x = db.getDouble(path + ".x");
+		final double y = db.getDouble(path + ".y");
+		final double z = db.getDouble(path + ".z");
+		final float pitch = (float) db.getDouble(path + ".pitch");
+		final float yaw = (float) db.getDouble(path + ".yaw");
+		
+		String worldName = db.getString(path + ".world");
 		
 		if (worldName == null) {
 			worldName = "world";

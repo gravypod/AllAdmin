@@ -32,8 +32,10 @@ import com.gravypod.AllAdmin.user.AllAdminUser;
  */
 public class AdminPerms {
 	
+	/** Registered permission nodes */
 	protected final static LinkedHashMap<String, Permission> registeredPermissions = new LinkedHashMap<String, Permission>();
 	
+	/** Permission attachments */
 	protected final static HashMap<String, PermissionAttachment> attachments = new HashMap<String, PermissionAttachment>();
 	
 	private static AllAdmin plugin;
@@ -76,9 +78,9 @@ public class AdminPerms {
 			return;
 		}
 		
-		World World = null;
+		World world = null;
 		
-		World = player.getWorld();
+		world = player.getWorld();
 		
 		if (AdminPerms.attachments.containsKey(player.getName())) {
 			
@@ -100,7 +102,7 @@ public class AdminPerms {
 			 */
 			orig.clear();
 			
-			orig.putAll(AdminPerms.getPlayerPermissions(player, World.getName()));
+			orig.putAll(AdminPerms.getPlayerPermissions(player, world.getName()));
 			
 			/*
 			 * Tell bukkit to update it's permissions

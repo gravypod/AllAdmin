@@ -13,6 +13,11 @@ import java.io.OutputStream;
 
 import com.gravypod.AllAdmin.AllAdmin;
 
+/**
+ * 
+ * Make sure all of our configs are in their respective places.
+ *
+ */
 public class ConfigHandle {
 	
 	private final File configFile;

@@ -13,6 +13,7 @@ public class LocationUtil {
 	private static final HashSet<Byte> dontCount = new HashSet<Byte>();
 	
 	static {
+		
 		LocationUtil.dontCount.add((byte) Material.AIR.getId());
 		LocationUtil.dontCount.add((byte) Material.WATER_LILY.getId());
 		LocationUtil.dontCount.add((byte) Material.WATER.getId());
@@ -49,7 +50,7 @@ public class LocationUtil {
 		LocationUtil.dontCount.add((byte) Material.MELON_STEM.getId());
 		LocationUtil.dontCount.add((byte) Material.VINE.getId());
 		LocationUtil.dontCount.add((byte) Material.NETHER_WARTS.getId());
-		System.out.println("Added materials");
+		
 	}
 	
 	public static Location getTarget(final LivingEntity entity) {

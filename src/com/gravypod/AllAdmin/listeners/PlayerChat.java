@@ -7,10 +7,14 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.gravypod.AllAdmin.AllAdmin;
 
+/**
+ * 
+ * Player chat listener
+ *
+ */
 public class PlayerChat implements Listener {
 	
-	final char colorCode = "&".toCharArray()[0];
-	
+	private final char colorCode = (char) 38;;
 	
 	@EventHandler()
 	public void chatEvent(final AsyncPlayerChatEvent event) {

@@ -152,6 +152,13 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
+	/**
+	 * 
+	 * To be removed and replaced with internal methods
+	 * 
+	 * @return
+	 * 
+	 */
 	public final Player getBukkitPlayer() {
 	
 		return bukkitPlayer;
@@ -162,6 +169,14 @@ public class AllAdminUser implements IUser {
 		return lastLocation;
 	}
 	
+	/**
+	 * 
+	 * Set data into the users data file
+	 * 
+	 * @param path - Yaml path
+	 * @param data - Yaml data
+	 * 
+	 */
 	public void setData(final String path, final Object data) {
 	
 		AllAdmin.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AllAdmin.getInstance(), new Runnable() {
@@ -179,6 +194,14 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
+	/**
+	 * 
+	 * Set a home location.
+	 * 
+	 * @param loc - Location of the home.
+	 * @param homeName - Name to save under [ Or null for default ]
+	 * 
+	 */
 	public void setHome(final Location loc, final String homeName) {
 	
 		final String name = homeName != null ? homeName : "home";
@@ -194,12 +217,25 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
+	/**
+	 * 
+	 * Get the users home location
+	 * 
+	 * @param name - null or the name of the home. [Null is default home]
+	 * @return
+	 * 
+	 */
 	public final Location getHome(final String name) {
 	
 		return TeleportUtils.getLocation(userData, "homes", name != null ? name : "home");
 		
 	}
 	
+	/**
+	 * 
+	 * Update their last location.
+	 * 
+	 */
 	public void updateLastLocation() {
 	
 		synchronized(bukkitPlayer) {
@@ -257,6 +293,13 @@ public class AllAdminUser implements IUser {
 		
 	}
 	
+	/**
+	 * 
+	 * Set the group the player is in.
+	 * 
+	 * @param groupName
+	 * 
+	 */
 	public void setGroup(final String groupName) {
 	
 		userData.set("permissions.group", groupName);
@@ -267,6 +310,13 @@ public class AllAdminUser implements IUser {
 		}
 	}
 	
+	/**
+	 * 
+	 * Get the group this player is in.
+	 * 
+	 * @return
+	 * 
+	 */
 	public Group getGroup() {
 	
 		if (!userData.contains("permissions.group")) {
