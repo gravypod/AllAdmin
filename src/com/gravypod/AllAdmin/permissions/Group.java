@@ -12,7 +12,7 @@ public class Group {
 	
 	private final String tag;
 	
-	public Group(String _name, String _tag, boolean _isDefault, List<String> _permissions) {
+	public Group(final String _name, final String _tag, final boolean _isDefault, final List<String> _permissions) {
 	
 		name = _name;
 		isDefault = _isDefault;

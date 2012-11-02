@@ -12,21 +12,21 @@ import com.gravypod.AllAdmin.permissions.PermissionData;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
 
-
 public class Groups extends CommandUtil {
 	
 	enum arguments {
 		promote, change, check;
 	}
-
+	
 	@Override
-    public void registerSelf(AllAdmin plugin, CommandHandler commandHandler) {
+	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
+	
 		plugin.getCommand("groups").setExecutor(commandHandler);
-    }
-
+	}
+	
 	@Override
-    public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
-		
+	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
+	
 		if (!canUseCommand(sender, cmd, false, true)) {
 			return true;
 		}
@@ -40,14 +40,12 @@ public class Groups extends CommandUtil {
 		
 		try {
 			arg = arguments.valueOf(args[0]);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			incorrectUsage(sender);
 			return true;
 		}
 		
-		
-		
-		switch (arg) {
+		switch(arg) {
 			case change:
 			case promote:
 				if (!(args.length >= 3)) {
@@ -55,43 +53,49 @@ public class Groups extends CommandUtil {
 					return true;
 				}
 				
-				String groupName = args[1];
-				String userName = args[2];
+				final String groupName = args[1];
+				final String userName = args[2];
 				
 				if (PermissionData.getGroups().containsKey(groupName)) {
 					sender.sendMessage("That is not a real group!");
 					return true;
 				}
 				
-				IUser user = AllAdmin.getUser(userName);
+				final IUser user = AllAdmin.getUser(userName);
 				
 				if (!(user instanceof AllAdminUser)) {
-					sender.sendMessage("That is not a real player!"); // TODO: Update for the OfflineAllAdminPlayer
+					sender.sendMessage("That is not a real player!"); // TODO:
+																	  // Update
+																	  // for the
+																	  // OfflineAllAdminPlayer
 					return true;
 				}
 				
 				((AllAdminUser) user).setGroup(groupName);
 				
-				sender.sendMessage("You have changed the group of that player!"); 
+				sender.sendMessage("You have changed the group of that player!");
 				
 				break;
 		}
 		
 		return true;
-    }
+	}
 	
 	private String ourArguments() {
+	
 		return Arrays.toString(arguments.values());
 	}
 	
-	private void incorrectUsage(CommandSender sender) {
+	private void incorrectUsage(final CommandSender sender) {
+	
 		sender.sendMessage("That was incorrect useage of the Groups command.");
 		sender.sendMessage("You can yes it correctly like this: " + commandHelp());
 	}
-
+	
 	@Override
-    public String commandHelp() {
-	    return "/groups " + ourArguments();
-    }
+	public String commandHelp() {
+	
+		return "/groups " + ourArguments();
+	}
 	
 }

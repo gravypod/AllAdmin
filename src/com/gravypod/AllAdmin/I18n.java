@@ -36,13 +36,13 @@ public class I18n {
 				
 				return ChatColor.translateAlternateColorCodes(colorCode, customMessages.getString(message));
 				
-			} catch (MissingResourceException ex) {
+			} catch (final MissingResourceException ex) {
 				
 				return ChatColor.translateAlternateColorCodes(colorCode, messages.getString(message));
 				
 			}
 			
-		} catch (MissingResourceException ex) {
+		} catch (final MissingResourceException ex) {
 			return defaultBundle.getString(message);
 		}
 		
@@ -58,7 +58,7 @@ public class I18n {
 		public FileResClassLoader(final ClassLoader classLoader, final AllAdmin allAdmin) {
 		
 			super(classLoader);
-			this.dataFolder = allAdmin.getDataFolder();
+			dataFolder = allAdmin.getDataFolder();
 			
 		}
 		
@@ -69,7 +69,7 @@ public class I18n {
 			if (file.exists()) {
 				try {
 					return file.toURI().toURL();
-				} catch (MalformedURLException ex) {
+				} catch (final MalformedURLException ex) {
 				}
 			}
 			return super.getResource(string);
@@ -83,7 +83,7 @@ public class I18n {
 			if (file.exists()) {
 				try {
 					return new FileInputStream(file);
-				} catch (FileNotFoundException ex) {
+				} catch (final FileNotFoundException ex) {
 				}
 			}
 			

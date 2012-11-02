@@ -6,7 +6,7 @@ import com.gravypod.AllAdmin.user.AllAdminUser;
 
 public class PersonPermissions {
 	
-	public static List<String> getPerms(AllAdminUser player) {
+	public static List<String> getPerms(final AllAdminUser player) {
 	
 		return player.getGroup().getPermissions();
 		

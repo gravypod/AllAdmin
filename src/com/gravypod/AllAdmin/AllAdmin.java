@@ -16,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.listeners.PlayerListener;
 import com.gravypod.AllAdmin.permissions.AdminPerms;
-import com.gravypod.AllAdmin.permissions.LoadPermissions;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.user.IUser;
@@ -48,8 +47,8 @@ public class AllAdmin extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		
-		instance = this;
+	
+		AllAdmin.instance = this;
 		
 		commandHandler = new CommandHandler();
 		
@@ -72,15 +71,13 @@ public class AllAdmin extends JavaPlugin {
 					AllAdmin.addUser(player.getName());
 				}
 				
-				i18n = new I18n();
+				AllAdmin.i18n = new I18n();
 				
 			}
 			
 		});
 		
-		AdminPerms.initialize(this);
-		
-		new LoadPermissions();
+		AdminPerms.initialize(AllAdmin.instance);
 		
 	}
 	
@@ -89,7 +86,7 @@ public class AllAdmin extends JavaPlugin {
 	
 		new SaveAll(AllAdmin.userList.values());
 		
-		userList.clear();
+		AllAdmin.userList.clear();
 		
 	}
 	
@@ -104,25 +101,25 @@ public class AllAdmin extends JavaPlugin {
 	 */
 	public static synchronized final IUser getUser(final String name) {
 	
-		synchronized(userList) {
+		synchronized(AllAdmin.userList) {
 			
-			if (!userList.containsKey(name)) {
+			if (!AllAdmin.userList.containsKey(name)) {
 				
 				final Player p = MatchUser.matchOnlineUser(name);
 				
 				if (p == null) {
 					
-					userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
+					AllAdmin.userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
 					
 				} else {
 					
-					userList.put(name, new AllAdminUser(p));
+					AllAdmin.userList.put(name, new AllAdminUser(p));
 					
 				}
 				
 			}
 			
-			return userList.get(name);
+			return AllAdmin.userList.get(name);
 			
 		}
 		
@@ -136,10 +133,10 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized void addUser(final String name) {
-		
-		synchronized(userList) {
+	
+		synchronized(AllAdmin.userList) {
 			
-			if (userList.containsKey(name)) {
+			if (AllAdmin.userList.containsKey(name)) {
 				return;
 			}
 			
@@ -147,12 +144,12 @@ public class AllAdmin extends JavaPlugin {
 			
 			if (p == null) {
 				
-				userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
+				AllAdmin.userList.put(name, new AllAdminCMD(Bukkit.getConsoleSender()));
 				return;
 				
 			}
 			
-			userList.put(name, new AllAdminUser(p));
+			AllAdmin.userList.put(name, new AllAdminUser(p));
 			
 		}
 		
@@ -165,7 +162,7 @@ public class AllAdmin extends JavaPlugin {
 	 * @return
 	 */
 	public final InputStream getResourceAsStream(final String fileName) {
-		
+	
 		return getClassLoader().getResourceAsStream(fileName);
 		
 	}
@@ -178,9 +175,9 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized final TreeMap<String, IUser> getUserList() {
-		
-		synchronized(userList) {
-			return userList;
+	
+		synchronized(AllAdmin.userList) {
+			return AllAdmin.userList;
 		}
 		
 	}
@@ -193,16 +190,16 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized void removeUser(final String name) {
-		
-		synchronized(userList) {
+	
+		synchronized(AllAdmin.userList) {
 			
-			if (!userList.containsKey(name)) {
+			if (!AllAdmin.userList.containsKey(name)) {
 				return;
 			}
 			
-			userList.get(name).saveData();
+			AllAdmin.userList.get(name).saveData();
 			
-			userList.remove(name);
+			AllAdmin.userList.remove(name);
 			
 		}
 		
@@ -218,8 +215,8 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static synchronized AllAdmin getInstance() {
-		
-		return instance;
+	
+		return AllAdmin.instance;
 		
 	}
 	
@@ -231,7 +228,7 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public File jarLocation() {
-		
+	
 		return new File(getFile().getAbsolutePath());
 		
 	}
@@ -246,12 +243,12 @@ public class AllAdmin extends JavaPlugin {
 	 * 
 	 */
 	public static String getMessages(final String messageType) {
-		
-		if (!messages.containsKey(messageType)) {
-			messages.put(messageType, AllAdmin.i18n.getColoredMessage(messageType));
+	
+		if (!AllAdmin.messages.containsKey(messageType)) {
+			AllAdmin.messages.put(messageType, AllAdmin.i18n.getColoredMessage(messageType));
 		}
 		
-		return messages.get(messageType);
+		return AllAdmin.messages.get(messageType);
 		
 	}
 	

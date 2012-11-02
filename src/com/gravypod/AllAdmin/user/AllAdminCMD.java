@@ -87,10 +87,11 @@ public class AllAdminCMD implements IUser {
 	
 		return false;
 	}
-
+	
 	@Override
-    public boolean canColourChat() {
-	    return true;
-    }
+	public boolean canColourChat() {
+	
+		return true;
+	}
 	
 }

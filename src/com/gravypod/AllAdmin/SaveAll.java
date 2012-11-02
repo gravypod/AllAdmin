@@ -3,6 +3,7 @@ package com.gravypod.AllAdmin;
 import java.io.IOException;
 import java.util.Collection;
 
+import com.gravypod.AllAdmin.configuration.Settings;
 import com.gravypod.AllAdmin.user.IUser;
 
 public class SaveAll {
@@ -20,7 +21,7 @@ public class SaveAll {
 		}
 		
 		try {
-			Settings.warpsYamlFile.save(Settings.warpsList);
+			Settings.getWarpsYamlFile().save(Settings.getWarpsList());
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}

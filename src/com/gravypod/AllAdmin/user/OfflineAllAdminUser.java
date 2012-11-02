@@ -49,7 +49,7 @@ public class OfflineAllAdminUser implements IUser {
 		
 		final AllAdmin plugin = AllAdmin.getInstance();
 		
-		BukkitScheduler schedular = plugin.getServer().getScheduler();
+		final BukkitScheduler schedular = plugin.getServer().getScheduler();
 		
 		schedular.scheduleAsyncDelayedTask(plugin, new Runnable() {
 			

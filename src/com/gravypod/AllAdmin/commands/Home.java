@@ -10,9 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
+import com.gravypod.AllAdmin.configuration.Settings;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 
 public class Home extends CommandUtil {
@@ -20,7 +20,7 @@ public class Home extends CommandUtil {
 	@Override
 	public void registerSelf(final AllAdmin plugin, final CommandHandler ch) {
 	
-		if (Settings.useHomes) {
+		if (Settings.isUseHomes()) {
 			plugin.getCommand("Home").setExecutor(ch);
 		}
 		

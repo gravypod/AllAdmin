@@ -26,32 +26,36 @@ import com.gravypod.AllAdmin.user.AllAdminUser;
 /**
  * 
  * All of this code is taken from towny with permissions of ElgarL
+ * 
  * @author ElgarL
  * 
  */
 public class AdminPerms {
-
+	
 	protected final static LinkedHashMap<String, Permission> registeredPermissions = new LinkedHashMap<String, Permission>();
+	
 	protected final static HashMap<String, PermissionAttachment> attachments = new HashMap<String, PermissionAttachment>();
+	
 	private static AllAdmin plugin;
 	
 	public static void initialize(final AllAdmin _plugin) {
-		plugin = _plugin;
+	
+		AdminPerms.plugin = _plugin;
 	}
 	
 	private static Field permissions;
-
+	
 	static {
 		try {
-			permissions = PermissionAttachment.class.getDeclaredField("permissions");
-			permissions.setAccessible(true);
-		} catch (SecurityException e) {
+			AdminPerms.permissions = PermissionAttachment.class.getDeclaredField("permissions");
+			AdminPerms.permissions.setAccessible(true);
+		} catch (final SecurityException e) {
 			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
+		} catch (final NoSuchFieldException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Pushes respective permissions to superperms.
 	 * 
@@ -59,54 +63,55 @@ public class AdminPerms {
 	 * 
 	 */
 	public static void assignPermissions(final Player player) {
-		
+	
 		PermissionAttachment playersAttachment = null;
 		
 		/*
-		 * Find the current attachment
-		 * or create a new one (if the player is online)
+		 * Find the current attachment or create a new one (if the player is
+		 * online)
 		 */
-
-		if ((player == null) || !player.isOnline()) {
-			attachments.remove(player.getName());
+		
+		if (player == null || !player.isOnline()) {
+			AdminPerms.attachments.remove(player.getName());
 			return;
 		}
 		
 		World World = null;
-
+		
 		World = player.getWorld();
 		
-		if (attachments.containsKey(player.getName())) {
+		if (AdminPerms.attachments.containsKey(player.getName())) {
 			
-			playersAttachment = attachments.get(player.getName());
+			playersAttachment = AdminPerms.attachments.get(player.getName());
 			
 		} else {
 			
-			playersAttachment = Bukkit.getPlayer(player.getName()).addAttachment(plugin);
+			playersAttachment = Bukkit.getPlayer(player.getName()).addAttachment(AdminPerms.plugin);
 			
 		}
 		
 		try {
 			
 			@SuppressWarnings("unchecked")
-			Map<String, Boolean> orig = (Map<String, Boolean>) permissions.get(playersAttachment);
+			final Map<String, Boolean> orig = (Map<String, Boolean>) AdminPerms.permissions.get(playersAttachment);
 			/*
-			 *  Clear the map (faster than removing the attachment and recalculating)
+			 * Clear the map (faster than removing the attachment and
+			 * recalculating)
 			 */
 			orig.clear();
 			
 			orig.putAll(AdminPerms.getPlayerPermissions(player, World.getName()));
-				
+			
 			/*
 			 * Tell bukkit to update it's permissions
 			 */
 			playersAttachment.getPermissible().recalculatePermissions();
 			
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			
 			e.printStackTrace();
 			
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			
 			e.printStackTrace();
 			
@@ -115,7 +120,7 @@ public class AdminPerms {
 		/*
 		 * Store the attachment for future reference
 		 */
-		attachments.put(player.getName(), playersAttachment);
+		AdminPerms.attachments.put(player.getName(), playersAttachment);
 		
 	}
 	
@@ -126,9 +131,10 @@ public class AdminPerms {
 	 * 
 	 */
 	public static void removeAttachment(final String name) {
-		
-		if (attachments.containsKey(name))
-			attachments.remove(name);
+	
+		if (AdminPerms.attachments.containsKey(name)) {
+			AdminPerms.attachments.remove(name);
+		}
 		
 	}
 	
@@ -141,42 +147,41 @@ public class AdminPerms {
 	 * 
 	 */
 	public static LinkedHashMap<String, Boolean> getPlayerPermissions(final Player player, final String world) {
+	
+		final Set<String> permList = new HashSet<String>();
 		
-		Set<String> permList = new HashSet<String>();
+		permList.addAll(PersonPermissions.getPerms((AllAdminUser) AllAdmin.getUser(player.getName())));
 		
-		permList.addAll(PersonPermissions.getPerms((AllAdminUser)AllAdmin.getUser(player.getName())));
-		
-		final List<String> playerPermArray = sort(new ArrayList<String>(permList));
+		final List<String> playerPermArray = AdminPerms.sort(new ArrayList<String>(permList));
 		final LinkedHashMap<String, Boolean> newPerms = new LinkedHashMap<String, Boolean>();
-
+		
 		Boolean value = false;
 		
-		for (String permission : playerPermArray) {
-			value = (!permission.startsWith("-"));
-			newPerms.put((value ? permission : permission.substring(1)), value);
+		for (final String permission : playerPermArray) {
+			value = !permission.startsWith("-");
+			newPerms.put(value ? permission : permission.substring(1), value);
 		}
-		
-		
 		
 		return newPerms;
 		
 	}
-
+	
 	/*
-	 * Permission utility functions taken from GroupManager (which I wrote anyway).
+	 * Permission utility functions taken from GroupManager (which I wrote
+	 * anyway).
 	 */
 	
 	/**
 	 * Update the list of permissions registered with bukkit
 	 */
 	public static void collectPermissions() {
-
-		registeredPermissions.clear();
-
-		for (Permission perm : Bukkit.getPluginManager().getPermissions()) {
-			registeredPermissions.put(perm.getName().toLowerCase(), perm);
+	
+		AdminPerms.registeredPermissions.clear();
+		
+		for (final Permission perm : Bukkit.getPluginManager().getPermissions()) {
+			AdminPerms.registeredPermissions.put(perm.getName().toLowerCase(), perm);
 		}
-
+		
 	}
 	
 	/**
@@ -186,20 +191,20 @@ public class AdminPerms {
 	 * @return List sorted for priority
 	 */
 	private static List<String> sort(final List<String> permList) {
+	
+		final List<String> result = new ArrayList<String>();
 		
-		List<String> result = new ArrayList<String>();
-
-		for (String key : permList) {
-			String a = key.charAt(0) == '-' ? key.substring(1) : key;
-			Map<String, Boolean> allchildren = getAllChildren(a, new HashSet<String>());
+		for (final String key : permList) {
+			final String a = key.charAt(0) == '-' ? key.substring(1) : key;
+			final Map<String, Boolean> allchildren = AdminPerms.getAllChildren(a, new HashSet<String>());
 			if (allchildren != null) {
-
-				ListIterator<String> itr = result.listIterator();
-
-				while (itr.hasNext()) {
-					String node = (String) itr.next();
-					String b = node.charAt(0) == '-' ? node.substring(1) : node;
-
+				
+				final ListIterator<String> itr = result.listIterator();
+				
+				while(itr.hasNext()) {
+					final String node = itr.next();
+					final String b = node.charAt(0) == '-' ? node.substring(1) : node;
+					
 					// Insert the parent node before the child
 					if (allchildren.containsKey(b)) {
 						itr.set(key);
@@ -208,65 +213,68 @@ public class AdminPerms {
 					}
 				}
 			}
-			if (!result.contains(key))
+			if (!result.contains(key)) {
 				result.add(key);
+			}
 		}
-
+		
 		return result;
 	}
-
+	
 	/**
-	 * Fetch all permissions which are registered with superperms.
-	 * {can include child nodes)
+	 * Fetch all permissions which are registered with superperms. {can include
+	 * child nodes)
 	 * 
 	 * @param includeChildren
 	 * @return List of all permission nodes
 	 */
 	public List<String> getAllRegisteredPermissions(final boolean includeChildren) {
-
-		List<String> perms = new ArrayList<String>();
-
-		for (String key : registeredPermissions.keySet()) {
+	
+		final List<String> perms = new ArrayList<String>();
+		
+		for (final String key : AdminPerms.registeredPermissions.keySet()) {
 			if (!perms.contains(key)) {
 				perms.add(key);
-
+				
 				if (includeChildren) {
-					Map<String, Boolean> children = getAllChildren(key, new HashSet<String>());
+					final Map<String, Boolean> children = AdminPerms.getAllChildren(key, new HashSet<String>());
 					if (children != null) {
-						for (String node : children.keySet())
-							if (!perms.contains(node))
+						for (final String node : children.keySet()) {
+							if (!perms.contains(node)) {
 								perms.add(node);
+							}
+						}
 					}
 				}
 			}
-
+			
 		}
 		return perms;
 	}
-
+	
 	/**
-	 * Returns a map of ALL child permissions registered with bukkit
-	 * null is empty
+	 * Returns a map of ALL child permissions registered with bukkit null is
+	 * empty
 	 * 
 	 * @param node
-	 * @param playerPermArray current list of perms to check against for
-	 *            negations
+	 * @param playerPermArray
+	 *            current list of perms to check against for negations
 	 * @return Map of child permissions
 	 */
 	public static Map<String, Boolean> getAllChildren(final String node, final Set<String> playerPermArray) {
-
+	
 		final LinkedList<String> stack = new LinkedList<String>();
 		final Map<String, Boolean> alreadyVisited = new HashMap<String, Boolean>();
 		stack.push(node);
 		alreadyVisited.put(node, true);
-
-		while (!stack.isEmpty()) {
+		
+		while(!stack.isEmpty()) {
 			final String now = stack.pop();
-
-			final Map<String, Boolean> children = getChildren(now);
-
-			if ((children != null) && (!playerPermArray.contains("-" + now))) {
-				for (String childName : children.keySet()) {
+			
+			final Map<String, Boolean> children = AdminPerms.getChildren(now);
+			
+			if (children != null && !playerPermArray.contains("-" + now)) {
+				for (final String childName : children.keySet()) {
 					if (!alreadyVisited.containsKey(childName)) {
 						stack.push(childName);
 						alreadyVisited.put(childName, children.get(childName));
@@ -275,28 +283,29 @@ public class AdminPerms {
 			}
 		}
 		alreadyVisited.remove(node);
-		if (!alreadyVisited.isEmpty())
+		if (!alreadyVisited.isEmpty()) {
 			return alreadyVisited;
-
+		}
+		
 		return null;
 	}
 	
 	/**
 	 * Returns a map of the child permissions (1 node deep) as registered with
-	 * Bukkit.
-	 * null is empty
+	 * Bukkit. null is empty
 	 * 
 	 * @param node
 	 * @return Map of child permissions
 	 */
 	public static Map<String, Boolean> getChildren(final String node) {
-
-		Permission perm = registeredPermissions.get(node.toLowerCase());
-		if (perm == null)
+	
+		final Permission perm = AdminPerms.registeredPermissions.get(node.toLowerCase());
+		if (perm == null) {
 			return null;
-
+		}
+		
 		return perm.getChildren();
-
+		
 	}
-
+	
 }

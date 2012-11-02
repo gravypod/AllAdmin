@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.ConfigHandle;
+import com.gravypod.AllAdmin.configuration.ConfigHandle;
 
 public class LoadPermissions {
 	
@@ -21,7 +21,7 @@ public class LoadPermissions {
 	
 	public LoadPermissions() {
 	
-		File permissionsFolder = new File(plugin.getDataFolder(), "permissions/");
+		final File permissionsFolder = new File(plugin.getDataFolder(), "permissions/");
 		
 		if (!permissionsFolder.exists()) {
 			permissionsFolder.mkdirs();
@@ -32,7 +32,7 @@ public class LoadPermissions {
 		if (!permissionsFile.exists()) {
 			try {
 				ConfigHandle.copy(plugin.getResourceAsStream("permissions.yml"), permissionsFile);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -41,7 +41,7 @@ public class LoadPermissions {
 		
 		try {
 			permissionsYaml.load(permissionsFile);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new IllegalStateException("Can't load permissions file!");
 		}
 		
@@ -49,21 +49,21 @@ public class LoadPermissions {
 		
 		final Set<String> groupNames = permissionsYaml.getConfigurationSection("groups").getKeys(false);
 		
-		for (String groupName : groupNames) {
+		for (final String groupName : groupNames) {
 			
-			boolean isDefault = permissionsYaml.getBoolean("groups." + groupName + ".default");
+			final boolean isDefault = permissionsYaml.getBoolean("groups." + groupName + ".default");
 			
-			List<String> permissions = permissionsYaml.getStringList("groups." + groupName + ".permissions");
+			final List<String> permissions = permissionsYaml.getStringList("groups." + groupName + ".permissions");
 			
-			List<String> tempPerms = new ArrayList<String>();
+			final List<String> tempPerms = new ArrayList<String>();
 			
-			for (String permission : permissions) {
+			for (final String permission : permissions) {
 				tempPerms.add(permission.toLowerCase());
 			}
 			
-			String tag = permissionsYaml.getString("groups." + groupName + ".tag");
+			final String tag = permissionsYaml.getString("groups." + groupName + ".tag");
 			
-			Group group = new Group(groupName.toLowerCase(), tag, isDefault, tempPerms);
+			final Group group = new Group(groupName.toLowerCase(), tag, isDefault, tempPerms);
 			
 			permissions.clear();
 			tempPerms.clear();

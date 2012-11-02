@@ -44,13 +44,13 @@ public class Feed extends CommandUtil {
 				return true;
 			}
 			
-			feedPlayer(toHeal);
+			Feed.feedPlayer(toHeal);
 			
 			return true;
 			
 		}
 		
-		feedPlayer(((AllAdminUser) AllAdmin.getUser(sender.getName())).getBukkitPlayer());
+		Feed.feedPlayer(((AllAdminUser) AllAdmin.getUser(sender.getName())).getBukkitPlayer());
 		
 		return true;
 		

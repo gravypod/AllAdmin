@@ -26,7 +26,7 @@ public class List extends CommandUtil {
 	
 	@Override
 	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
-		
+	
 		if (!canUseCommand(sender, cmd, false, true)) {
 			return true;
 		}

@@ -16,7 +16,7 @@ public class PermissionsTesting {
 	
 	public static boolean canUseCommand(final AllAdminUser player, final String command) {
 	
-		return internalHasPermissions(player, "alladmin.commands." + command);
+		return PermissionsTesting.internalHasPermissions(player, "alladmin.commands." + command);
 	}
 	
 	public static boolean canUseCommand(final Player player, final String command) {
@@ -25,21 +25,23 @@ public class PermissionsTesting {
 	}
 	
 	public static boolean canUseCommand(final CommandSender player, final String command) {
+	
 		return PermissionsTesting.hasPermission(player, "alladmin.commands." + command);
 	}
 	
 	public static boolean internalHasPermissions(final AllAdminUser player, final String node) {
 	
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		
-		List<String> playerPermissions = player.getGroup().getPermissions();
+		final List<String> playerPermissions = player.getGroup().getPermissions();
 		
-		for (String s : node.split(".")) {
+		for (final String s : node.split(".")) {
 			System.out.println(sb.toString());
 			sb.append("*");
 			
-			if (playerPermissions.contains(sb.toString()))
+			if (playerPermissions.contains(sb.toString())) {
 				return true;
+			}
 			
 			sb.deleteCharAt(sb.length() - 1);
 			
@@ -47,7 +49,7 @@ public class PermissionsTesting {
 			
 		}
 		
-		return hasPermission(player.getBukkitPlayer(), node);
+		return PermissionsTesting.hasPermission(player.getBukkitPlayer(), node);
 		
 	}
 	

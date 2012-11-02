@@ -47,7 +47,7 @@ public class AllAdminUser implements IUser {
 		
 		final AllAdmin plugin = AllAdmin.getInstance();
 		
-		BukkitScheduler schedular = plugin.getServer().getScheduler();
+		final BukkitScheduler schedular = plugin.getServer().getScheduler();
 		
 		schedular.scheduleAsyncDelayedTask(plugin, new Runnable() {
 			
@@ -64,9 +64,9 @@ public class AllAdminUser implements IUser {
 					
 					userData.save(userDataFile);
 					
-					synchronized (userHome) {
+					synchronized(userHome) {
 						
-						userHome.put("home",  TeleportUtils.getLocation(userData, "homes", "home"));
+						userHome.put("home", TeleportUtils.getLocation(userData, "homes", "home"));
 						
 					}
 					
@@ -87,7 +87,7 @@ public class AllAdminUser implements IUser {
 			
 			@Override
 			public void run() {
-				
+			
 				AdminPerms.assignPermissions(bukkitPlayer);
 				
 			}
@@ -201,11 +201,11 @@ public class AllAdminUser implements IUser {
 	}
 	
 	public void updateLastLocation() {
-		
-		synchronized (bukkitPlayer) {
-		
+	
+		synchronized(bukkitPlayer) {
+			
 			lastLocation = bukkitPlayer.getLocation();
-		
+			
 		}
 		
 	}
@@ -219,8 +219,8 @@ public class AllAdminUser implements IUser {
 	
 	@Override
 	public void saveData() {
-		
-		synchronized (userData) {
+	
+		synchronized(userData) {
 			
 			try {
 				
@@ -239,35 +239,36 @@ public class AllAdminUser implements IUser {
 	
 	@Override
 	public boolean isPlayer() {
-		
+	
 		return true;
 		
 	}
-
+	
 	@Override
-    public boolean canColourChat() {
-		
-		synchronized (bukkitPlayer) {
+	public boolean canColourChat() {
+	
+		synchronized(bukkitPlayer) {
 			
 			canColourChat = bukkitPlayer.hasPermission("AllAdmin.chat.colour");
 			
 			return canColourChat;
 			
 		}
-	    
-    }
+		
+	}
 	
-	public void setGroup(String groupName) {
+	public void setGroup(final String groupName) {
+	
 		userData.set("permissions.group", groupName);
 		try {
-	        userData.save(userDataFile);
-        } catch (IOException e) {
-	        e.printStackTrace();
-        }
+			userData.save(userDataFile);
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Group getGroup() {
-		
+	
 		if (!userData.contains("permissions.group")) {
 			userData.set("permissions.group", PermissionData.getDefaultGroup().getName());
 		}
@@ -278,8 +279,8 @@ public class AllAdminUser implements IUser {
 			group = PermissionData.getDefaultGroup().getName();
 		}
 		
-	    return PermissionData.getGroups().get(group);
-	    
-    }
+		return PermissionData.getGroups().get(group);
+		
+	}
 	
 }

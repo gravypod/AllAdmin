@@ -4,9 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
+import com.gravypod.AllAdmin.configuration.Settings;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
@@ -32,7 +32,7 @@ public class Setwarp extends CommandUtil {
 			bukkitUser.sendMessage(commandHelp());
 		}
 		
-		TeleportUtils.setLocation(Settings.warpsYamlFile, "warps", args[0], bukkitUser.getBukkitPlayer().getLocation());
+		TeleportUtils.setLocation(Settings.getWarpsYamlFile(), "warps", args[0], bukkitUser.getBukkitPlayer().getLocation());
 		
 		bukkitUser.sendMessage(AllAdmin.getMessages("warpSet") + args[0]);
 		

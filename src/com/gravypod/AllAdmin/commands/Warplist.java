@@ -7,9 +7,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
+import com.gravypod.AllAdmin.configuration.Settings;
 
 public class Warplist extends CommandUtil {
 	
@@ -28,7 +28,7 @@ public class Warplist extends CommandUtil {
 		}
 		
 		String warps = null;
-		final ArrayList<String> warpList = new ArrayList<String>(Settings.warpsYamlFile.getStringList("warps"));
+		final ArrayList<String> warpList = new ArrayList<String>(Settings.getWarpsYamlFile().getStringList("warps"));
 		
 		for (String warpName : warpList) {
 			

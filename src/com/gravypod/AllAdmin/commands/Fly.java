@@ -12,13 +12,14 @@ import com.gravypod.AllAdmin.utils.MatchUser;
 public class Fly extends CommandUtil {
 	
 	@Override
-	public void registerSelf(AllAdmin plugin, CommandHandler commandHandler) {
+	public void registerSelf(final AllAdmin plugin, final CommandHandler commandHandler) {
+	
 		plugin.getCommand("fly").setExecutor(commandHandler);
 	}
 	
 	@Override
-	public boolean doCommand(CommandSender sender, Command command, String cmd, String[] args) {
-		
+	public boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
+	
 		if (!canUseCommand(sender, cmd, false, true)) {
 			return true;
 		}
@@ -48,9 +49,9 @@ public class Fly extends CommandUtil {
 		
 	}
 	
-	public void setFly(Player player) {
-		
-		boolean toSet = !player.getAllowFlight();
+	public void setFly(final Player player) {
+	
+		final boolean toSet = !player.getAllowFlight();
 		
 		player.setAllowFlight(toSet);
 		
@@ -60,6 +61,7 @@ public class Fly extends CommandUtil {
 	
 	@Override
 	public String commandHelp() {
+	
 		return "/fly turns your flymode on";
 	}
 	

@@ -9,8 +9,8 @@ import com.gravypod.AllAdmin.utils.PermissionsTesting;
 public abstract class CommandUtil implements ICommand {
 	
 	public final boolean canUseCommand(final CommandSender sender, final String command, final boolean checkPlayer, final boolean checkPermissions) {
-		
-		if (checkPermissions && !(PermissionsTesting.canUseCommand(sender, command))) {
+	
+		if (checkPermissions && !PermissionsTesting.canUseCommand(sender, command)) {
 			AllAdmin.getUser(sender.getName()).sendCommandFaliure(command, "noPermissions");
 			return false;
 		}

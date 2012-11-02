@@ -20,8 +20,6 @@ public class Startup {
 	
 		plugin = _plugin;
 		
-		new ConfigHandle(_plugin);
-		
 		loadCommands(ch);
 		
 	}

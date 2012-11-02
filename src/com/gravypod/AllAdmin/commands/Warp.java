@@ -6,9 +6,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.gravypod.AllAdmin.AllAdmin;
-import com.gravypod.AllAdmin.Settings;
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
 import com.gravypod.AllAdmin.CommandHandling.CommandUtil;
+import com.gravypod.AllAdmin.configuration.Settings;
 import com.gravypod.AllAdmin.user.AllAdminUser;
 import com.gravypod.AllAdmin.utils.TeleportUtils;
 
@@ -23,7 +23,7 @@ public class Warp extends CommandUtil {
 	
 	@Override
 	public final boolean doCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
-		
+	
 		if (!canUseCommand(sender, cmd, true, true)) {
 			return true;
 		}
@@ -35,7 +35,7 @@ public class Warp extends CommandUtil {
 			return true;
 		}
 		
-		final Location toSend = TeleportUtils.getLocation(Settings.warpsYamlFile, "warps", args[0]);
+		final Location toSend = TeleportUtils.getLocation(Settings.getWarpsYamlFile(), "warps", args[0]);
 		
 		if (toSend == null) {
 			sender.sendMessage(ChatColor.RED + "There is no warp with that name");

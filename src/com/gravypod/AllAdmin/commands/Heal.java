@@ -44,13 +44,13 @@ public class Heal extends CommandUtil {
 				return true;
 			}
 			
-			heal(toHeal);
+			Heal.heal(toHeal);
 			
 			return true;
 			
 		}
 		
-		heal(((AllAdminUser) AllAdmin.getUser(sender.getName())).getBukkitPlayer());
+		Heal.heal(((AllAdminUser) AllAdmin.getUser(sender.getName())).getBukkitPlayer());
 		
 		return true;
 		
