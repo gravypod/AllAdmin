@@ -173,8 +173,10 @@ public class AllAdminUser implements IUser {
 	 * 
 	 * Set data into the users data file
 	 * 
-	 * @param path - Yaml path
-	 * @param data - Yaml data
+	 * @param path
+	 *            - Yaml path
+	 * @param data
+	 *            - Yaml data
 	 * 
 	 */
 	public void setData(final String path, final Object data) {
@@ -198,8 +200,10 @@ public class AllAdminUser implements IUser {
 	 * 
 	 * Set a home location.
 	 * 
-	 * @param loc - Location of the home.
-	 * @param homeName - Name to save under [ Or null for default ]
+	 * @param loc
+	 *            - Location of the home.
+	 * @param homeName
+	 *            - Name to save under [ Or null for default ]
 	 * 
 	 */
 	public void setHome(final Location loc, final String homeName) {
@@ -221,7 +225,8 @@ public class AllAdminUser implements IUser {
 	 * 
 	 * Get the users home location
 	 * 
-	 * @param name - null or the name of the home. [Null is default home]
+	 * @param name
+	 *            - null or the name of the home. [Null is default home]
 	 * @return
 	 * 
 	 */

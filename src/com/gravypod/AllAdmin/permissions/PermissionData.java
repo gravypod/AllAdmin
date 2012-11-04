@@ -29,8 +29,7 @@ public class PermissionData {
 	
 	/**
 	 * 
-	 * Set the default group to set a user to.
-	 * [On first connect]
+	 * Set the default group to set a user to. [On first connect]
 	 * 
 	 * @param defaultGroup
 	 * 
@@ -68,9 +67,10 @@ public class PermissionData {
 	 * 
 	 */
 	public static void addGroups(final Map<String, Group> groups) {
-		
-		if (PermissionData.groups == null)
+	
+		if (PermissionData.groups == null) {
 			PermissionData.groups = new HashMap<String, Group>();
+		}
 		
 		PermissionData.groups.putAll(groups);
 		

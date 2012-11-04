@@ -19,6 +19,12 @@ import com.gravypod.AllAdmin.AllAdmin;
  */
 public class CommandHandler implements CommandExecutor {
 	
+	public CommandHandler(final AllAdmin plugin) {
+	
+		new RegisterCommands(plugin, this);
+		
+	}
+	
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String cmd, final String[] args) {
 	

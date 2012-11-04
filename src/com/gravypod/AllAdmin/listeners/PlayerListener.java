@@ -19,7 +19,7 @@ import com.gravypod.AllAdmin.user.AllAdminUser;
 /**
  * 
  * Player Listener for creating/maintainting/destroying out AllAdminUser objects
- *
+ * 
  */
 public class PlayerListener implements Listener {
 	

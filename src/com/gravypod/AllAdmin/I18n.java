@@ -38,7 +38,8 @@ public class I18n {
 	/**
 	 * Get a message from out I18n data file.
 	 * 
-	 * @param message - message title. Such as 'noPlayer'
+	 * @param message
+	 *            - message title. Such as 'noPlayer'
 	 * @return - What the set message really is
 	 * 
 	 */

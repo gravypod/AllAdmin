@@ -40,9 +40,10 @@ public class AdminPerms {
 	
 	private static AllAdmin plugin;
 	
-	public static void initialize(final AllAdmin _plugin) {
-	
-		AdminPerms.plugin = _plugin;
+	static {
+		
+		AdminPerms.plugin = AllAdmin.getInstance();
+		
 	}
 	
 	private static Field permissions;

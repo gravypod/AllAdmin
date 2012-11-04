@@ -69,7 +69,7 @@ public class Groups extends CommandUtil {
 				final IUser user = AllAdmin.getUser(userName);
 				
 				if (!(user instanceof AllAdminUser)) {
-					sender.sendMessage("That is not a real player!"); // TODO: update for the OfflineAllAdminPlayer
+					sender.sendMessage("That is not a real player!"); 
 					return true;
 				}
 				
@@ -85,14 +85,14 @@ public class Groups extends CommandUtil {
 					return true;
 				}
 				
-				IUser secifiedUser = AllAdmin.getUser(args[0]);
+				final IUser secifiedUser = AllAdmin.getUser(args[1]);
 				
 				if (!(secifiedUser instanceof AllAdminUser)) {
 					incorrectUsage(sender);
 					return true;
 				}
 				
-				sender.sendMessage("That user is in " + ((AllAdminUser)secifiedUser).getGroup().getName());
+				sender.sendMessage("That user is in " + ((AllAdminUser) secifiedUser).getGroup().getName());
 				
 				break;
 		}

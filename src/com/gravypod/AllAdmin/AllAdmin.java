@@ -11,9 +11,11 @@ import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gravypod.AllAdmin.CommandHandling.CommandHandler;
+import com.gravypod.AllAdmin.listeners.PlayerChat;
 import com.gravypod.AllAdmin.listeners.PlayerListener;
 import com.gravypod.AllAdmin.permissions.AdminPerms;
 import com.gravypod.AllAdmin.user.AllAdminCMD;
@@ -39,9 +41,6 @@ public class AllAdmin extends JavaPlugin {
 	/** AllAdmin instance */
 	private static AllAdmin instance;
 	
-	/** Our command handler instance */
-	private CommandHandler commandHandler;
-	
 	/** Our message map, all things from the message.prop that have been used */
 	private final static TreeMap<String, String> messages = new TreeMap<String, String>();
 	
@@ -50,15 +49,15 @@ public class AllAdmin extends JavaPlugin {
 	
 		AllAdmin.instance = this;
 		
-		commandHandler = new CommandHandler();
+		new CommandHandler(this);
 		
-		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+		final PluginManager pm = getServer().getPluginManager();
 		
-		final File userdata = new File(getDataFolder(), "userdata/");
+		pm.registerEvents(new PlayerListener(), this);
 		
-		userdata.mkdirs();
+		pm.registerEvents(new PlayerChat(), this);
 		
-		new Startup(this, commandHandler);
+		new File(getDataFolder(), "userdata/").mkdirs();
 		
 		final Player[] players = getServer().getOnlinePlayers();
 		
@@ -67,17 +66,15 @@ public class AllAdmin extends JavaPlugin {
 			@Override
 			public void run() {
 			
+				AllAdmin.i18n = new I18n();
+				
 				for (final Player player : players) {
 					AllAdmin.addUser(player.getName());
 				}
 				
-				AllAdmin.i18n = new I18n();
-				
 			}
 			
 		});
-		
-		AdminPerms.initialize(AllAdmin.instance);
 		
 	}
 	

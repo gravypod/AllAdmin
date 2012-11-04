@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 
  * Our permissions system group object.
- *
+ * 
  */
 public class Group {
 	
@@ -40,6 +40,7 @@ public class Group {
 	/**
 	 * 
 	 * Gets a list of the groups permissions.
+	 * 
 	 * @return
 	 * 
 	 */

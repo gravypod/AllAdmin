@@ -14,7 +14,7 @@ import com.gravypod.AllAdmin.AllAdmin;
 /**
  * 
  * All of the AllAdmin plugin settings.
- *
+ * 
  */
 public class Settings {
 	

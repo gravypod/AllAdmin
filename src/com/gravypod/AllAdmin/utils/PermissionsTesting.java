@@ -36,7 +36,7 @@ public class PermissionsTesting {
 		final List<String> playerPermissions = player.getGroup().getPermissions();
 		
 		for (final String s : node.split(".")) {
-			System.out.println(sb.toString());
+			
 			sb.append("*");
 			
 			if (playerPermissions.contains(sb.toString())) {
@@ -49,7 +49,7 @@ public class PermissionsTesting {
 			
 		}
 		
-		return PermissionsTesting.hasPermission(player.getBukkitPlayer(), node);
+		return player.getBukkitPlayer().isOp() ? true : PermissionsTesting.hasPermission(player.getBukkitPlayer(), node);
 		
 	}
 	

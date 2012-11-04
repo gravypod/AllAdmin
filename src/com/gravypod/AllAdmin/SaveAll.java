@@ -15,6 +15,7 @@ public class SaveAll {
 	
 	/**
 	 * Saves all the user inside a collection
+	 * 
 	 * @param users
 	 */
 	public SaveAll(final Collection<IUser> users) {
