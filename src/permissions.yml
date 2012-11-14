@@ -4,3 +4,5 @@ groups:
     default: true
     permissions:
       - test.permissions
+    flags:
+      - testFlag:true
