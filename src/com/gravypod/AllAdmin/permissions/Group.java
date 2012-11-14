@@ -1,5 +1,6 @@
 package com.gravypod.AllAdmin.permissions;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,16 +14,20 @@ public class Group {
 	
 	private final List<String> permissions;
 	
+	private final HashMap<String, Boolean> flags;
+	
 	private final String name;
 	
 	private final String tag;
 	
-	public Group(final String _name, final String _tag, final boolean _isDefault, final List<String> _permissions) {
+	
+	public Group(final String _name, final String _tag, final boolean _isDefault, final List<String> _permissions, final HashMap<String, Boolean> _flags) {
 	
 		name = _name;
 		isDefault = _isDefault;
 		permissions = _permissions;
 		tag = _tag;
+		flags = _flags;
 	}
 	
 	/**
@@ -72,6 +77,17 @@ public class Group {
 	public String getTag() {
 	
 		return tag;
+	}
+	/**
+	 * 
+	 * Changes the flag for a group
+	 * 
+	 * @return - A map of flag names and boolean values for 
+	 * 
+	 */
+	public HashMap<String, Boolean> getFlags() {
+		
+		return flags;
 	}
 	
 }

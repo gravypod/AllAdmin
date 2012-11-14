@@ -55,18 +55,28 @@ public class LoadPermissions {
 			
 			final List<String> permissions = permissionsYaml.getStringList("groups." + groupName + ".permissions");
 			
+			final List<String> flags = permissionsYaml.getStringList("groups." + groupName + ".flags");
+			
 			final List<String> tempPerms = new ArrayList<String>();
+			
+			final HashMap<String, Boolean> tempflags = new HashMap<String, Boolean>();
 			
 			for (final String permission : permissions) {
 				tempPerms.add(permission.toLowerCase());
 			}
+			for (final String flag : flags) {
+				String[] tempArray = flag.split(":");
+				tempflags.put(tempArray[0], Boolean.parseBoolean(tempArray[1]));
+			}
 			
 			final String tag = permissionsYaml.getString("groups." + groupName + ".tag");
 			
-			final Group group = new Group(groupName.toLowerCase(), tag, isDefault, tempPerms);
+			final Group group = new Group(groupName.toLowerCase(), tag, isDefault, tempPerms, tempflags);
 			
 			permissions.clear();
 			tempPerms.clear();
+			flags.clear();
+			tempflags.clear();
 			
 			if (isDefault) {
 				PermissionData.setDefaultGroup(group);
