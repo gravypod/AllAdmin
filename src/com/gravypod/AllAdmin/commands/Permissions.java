@@ -37,7 +37,8 @@ public class Permissions extends CommandUtil {
 		
 		sender.sendMessage("group: " + group.getName());
 		sender.sendMessage("isDefault: " + group.isDefault());
-		
+		sender.sendMessage("has testFlag: " + group.hasFlag("testFlag"));
+		sender.sendMessage("testFlag is: " + group.getFlag("testFlag"));
 		return true;
 		
 	}

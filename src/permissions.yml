@@ -5,4 +5,4 @@ groups:
     permissions:
       - test.permissions
     flags:
-      - testFlag:true
+      testFlag: true
