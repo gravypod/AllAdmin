@@ -29,8 +29,8 @@ public abstract class CommandUtil implements ICommand {
 	 * 
 	 */
 	public final boolean canUseCommand(final CommandSender sender, final String command, final boolean checkPlayer, final boolean checkPermissions) {
-		
-		IUser user = AllAdmin.getUser(sender.getName());
+	
+		final IUser user = AllAdmin.getUser(sender.getName());
 		
 		if (checkPermissions && !user.canUseCommand(command)) {
 			user.sendCommandFaliure(command, "noPermissions");
@@ -40,7 +40,7 @@ public abstract class CommandUtil implements ICommand {
 		if (checkPlayer && !(sender instanceof Player)) {
 			user.sendCommandFaliure(command, "mustBePlayer");
 			return false;
-		} 
+		}
 		
 		return true;
 		

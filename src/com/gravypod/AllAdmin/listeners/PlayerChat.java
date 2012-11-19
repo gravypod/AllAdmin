@@ -14,7 +14,7 @@ import com.gravypod.AllAdmin.AllAdmin;
  */
 public class PlayerChat implements Listener {
 	
-	private final char colorCode = (char) 38;;
+	private final char colorCode = '&';
 	
 	@EventHandler()
 	public void chatEvent(final AsyncPlayerChatEvent event) {

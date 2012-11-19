@@ -14,20 +14,20 @@ public class Group {
 	
 	private final List<String> permissions;
 	
-	private final HashMap<String, Boolean> flags;
+	private final HashMap<String, Object> flags = new HashMap<String, Object>();
 	
 	private final String name;
 	
 	private final String tag;
 	
-	
-	public Group(final String _name, final String _tag, final boolean _isDefault, final List<String> _permissions, final HashMap<String, Boolean> _flags) {
+	public Group(final String _name, final String _tag, final boolean _isDefault, final List<String> _permissions, final HashMap<String, Object> tempflags) {
 	
 		name = _name;
 		isDefault = _isDefault;
 		permissions = _permissions;
 		tag = _tag;
-		flags = _flags;
+		flags.putAll(tempflags);
+		
 	}
 	
 	/**
@@ -77,17 +77,62 @@ public class Group {
 	public String getTag() {
 	
 		return tag;
-	}
-	/**
-	 * 
-	 * Changes the flag for a group
-	 * 
-	 * @return - A map of flag names and boolean values for 
-	 * 
-	 */
-	public HashMap<String, Boolean> getFlags() {
 		
-		return flags;
+	}
+	
+	public boolean hasFlag(final String flag) {
+	
+		return flags.containsKey(flag);
+		
+	}
+	
+	public Object getFlag(final String flag) {
+	
+		return flags.get(flag);
+		
+	}
+	
+	public String getFlagString(final String flag) {
+	
+		if (hasFlag(flag)) {
+			return "";
+		}
+		
+		final Object taken = flags.get(flag);
+		
+		if (!(taken instanceof String)) {
+			return "";
+		}
+		
+		return (String) taken;
+		
+	}
+	
+	public boolean getFlagBoolean(final String flag) {
+	
+		if (hasFlag(flag)) {
+			return false;
+		}
+		
+		final Object taken = flags.get(flag);
+		
+		if (!(taken instanceof Boolean)) {
+			return false;
+		}
+		
+		return (boolean) taken;
+		
+	}
+	
+	public void removeFlag(final String string) {
+	
+		flags.remove(string);
+	}
+	
+	public void addFlag(final String string, final Object tempValue) {
+	
+		flags.put(string, tempValue);
+		
 	}
 	
 }

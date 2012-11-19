@@ -21,7 +21,7 @@ public class I18n {
 	private final String country = Locale.getDefault().getCountry();
 	
 	/** Registered permission nodes */
-	private final char colorCode = (char) 38;
+	private final char colorCode = '&';
 	
 	/** Our native local */
 	private final Locale locale = new Locale(language, country);

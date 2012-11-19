@@ -107,7 +107,7 @@ public class Groups extends CommandUtil {
 					boolean tempValue;
 					if (tempValue = Boolean.parseBoolean(args[3])) {
 						
-						Group playerGroup = ((AllAdminUser) fromUser).getGroup();
+						final Group playerGroup = ((AllAdminUser) fromUser).getGroup();
 						
 						if (((AllAdminUser) fromUser).getGroup().hasFlag(args[2])) {
 							
@@ -118,8 +118,9 @@ public class Groups extends CommandUtil {
 							}
 						}
 					}
-				} else
+				} else {
 					break;
+				}
 			case add:
 				// TODO figure out how to add a group in YMAL format
 				break;
