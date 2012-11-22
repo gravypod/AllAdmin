@@ -10,6 +10,7 @@ import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.gravypod.AllAdmin.AllAdmin;
+import com.gravypod.AllAdmin.WorldEditing.PrepUsage;
 
 /**
  * 
@@ -107,5 +108,13 @@ public class Settings {
 	
 		Settings.usePermissions = usePermissions;
 	}
+
+	public static void setUseWorldEditing(boolean useWorldEditing, int itemID) {
+		
+		if (useWorldEditing) {
+			new PrepUsage(itemID);
+		}
+		
+    }
 	
 }

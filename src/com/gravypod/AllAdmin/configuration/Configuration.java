@@ -7,7 +7,13 @@ package com.gravypod.AllAdmin.configuration;
  */
 public enum Configuration {
 	
-	USE_HOME("AllAdmin.use-homes"), USE_WARPS("AllAdmin.use-warps"), USE_BACK("AllAdmin.use-back"), USE_PERMISSIONS("AllAdmin.use-permissions"), USE_CHAT("AllAdmin.Chat.use-chat");
+	USE_HOME("AllAdmin.use-homes"), 
+	USE_WARPS("AllAdmin.use-warps"), 
+	USE_BACK("AllAdmin.use-back"), 
+	USE_PERMISSIONS("AllAdmin.use-permissions"), 
+	USE_CHAT("AllAdmin.Chat.use-chat"),
+	USE_WORLDEDITING("AllAdmin.WorldEditing.use"),
+	WORLDEDITING_ITEM("AllAdmin.WorldEditing.item");
 	
 	private final String path;
 	

@@ -3,3 +3,6 @@ AllAdmin:
   use-warps: true
   use-back: true
   use-permissions: true
+  WorldEditing:
+    use: true
+    item: 271

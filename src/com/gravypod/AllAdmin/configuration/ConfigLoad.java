@@ -60,7 +60,7 @@ public class ConfigLoad {
 			Settings.setUseWarps(ymlConfig.getBoolean(Configuration.USE_WARPS.getPath()));
 			Settings.setUseBack(ymlConfig.getBoolean(Configuration.USE_BACK.getPath()));
 			Settings.setUsePermissions(ymlConfig.getBoolean(Configuration.USE_PERMISSIONS.getPath()));
-			
+			Settings.setUseWorldEditing(ymlConfig.getBoolean(Configuration.USE_WORLDEDITING.getPath()), ymlConfig.getInt(Configuration.WORLDEDITING_ITEM.getPath()));
 			try {
 				ymlConfig.save(configFile);
 			} catch (final IOException e) {
