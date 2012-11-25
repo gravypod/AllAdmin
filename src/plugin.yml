@@ -64,6 +64,10 @@ commands:
         usage: '/groups'
         permission: alladmin.commands.groups
     permissions:
-        description: permissions node testing command!'
+        description: 'permissions node testing command!'
         usage: '/permissions [node]'
         permission: alladmin.commands.permissions
+    item:
+        description: 'Spawn Items!'
+        usage: '/spawn [item]'
+        permission: alladmin.commands.item

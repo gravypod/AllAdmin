@@ -35,7 +35,7 @@ public class EditingObjects {
 		playerClicks.put(player, action);
 	}
 	
-	public static int getIdlist(String name) {
+	public static int geItemId(String name) {
 	
 		if (!itemIDs.containsKey(name)) {
 			
