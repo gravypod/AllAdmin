@@ -32,7 +32,7 @@ public class ItemI18n {
 	private final ResourceBundle defaultBundle = ResourceBundle.getBundle("Items", Locale.ENGLISH);
 	
 	/** Messages in our plugin.DataFolder() */
-	private final ResourceBundle customMessages = ResourceBundle.getBundle("Items", locale, new FileResClassLoader(ItemI18n.class.getClassLoader(), AllAdmin.getInstance()));
+	private final ResourceBundle customMessages = ResourceBundle.getBundle("Items", locale, new ItemNameClassLoader(ItemI18n.class.getClassLoader(), AllAdmin.getInstance()));
 	
 	public int getItem(final String message) {
 	
@@ -78,11 +78,11 @@ public class ItemI18n {
 	/**
 	 * Taken from essentials
 	 */
-	private static class FileResClassLoader extends ClassLoader {
+	private static class ItemNameClassLoader extends ClassLoader {
 		
 		private final transient File dataFolder;
 		
-		public FileResClassLoader(final ClassLoader classLoader, final AllAdmin allAdmin) {
+		public ItemNameClassLoader(final ClassLoader classLoader, final AllAdmin allAdmin) {
 		
 			super(classLoader);
 			dataFolder = allAdmin.getDataFolder();

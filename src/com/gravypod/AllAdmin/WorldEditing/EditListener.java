@@ -34,7 +34,7 @@ public class EditListener implements Listener {
 		if (EditingObjects.containsPlayer(playerName)) {
 			currentAction = EditingObjects.getPlayer(playerName);
 		} else {
-			currentAction = new EditAction();
+			currentAction = new EditAction(player);
 		}
 		
 		switch(event.getAction()) {
