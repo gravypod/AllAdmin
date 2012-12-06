@@ -16,6 +16,14 @@ import com.gravypod.AllAdmin.AllAdmin;
 
 public class ItemI18n {
 	
+	/*
+	 * 
+	 * Replace with : http://supercsv.sourceforge.net/examples_reading.html for data vals to work
+	 * 
+	 * 
+	 * 
+	 */
+	
 	/** Our native language */
 	private final String language = Locale.getDefault().getLanguage();
 	

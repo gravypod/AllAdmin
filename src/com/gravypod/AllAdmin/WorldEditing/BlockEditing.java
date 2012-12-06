@@ -74,17 +74,7 @@ public class BlockEditing {
 			
 			for (int z = startZ; x < endZ; z++) {
 				
-				int y;
-				
-				for (y = 0; world.getBlockAt(x, y, z).getType() != Material.AIR; y++); // TODO:
-				                                                                       // This
-				                                                                       // is
-				                                                                       // ugly
-				                                                                       // and
-				                                                                       // bad,
-				                                                                       // redo
-				
-				world.getBlockAt(x, y, z).setType(replaceWith);
+				world.getHighestBlockAt(x, z).setType(replaceWith);
 				
 			}
 			
