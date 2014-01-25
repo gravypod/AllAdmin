@@ -52,16 +52,21 @@ public class Group {
 	}
 	
 	private boolean selfHasPermission(String s) {
-
+		
 		if (permissions.contains(s)) {
 			return true;
 		}
 		
 		String[] parts = s.split("\\.");
-		System.out.println(Arrays.toString(parts));
+		
 		StringBuilder builder = new StringBuilder();
 
 		for (String part : parts) {
+			
+			if (permissions.contains(builder.toString() + "*")) {
+				return true;
+			}
+			
 			builder.append(part);
 
 			if (permissions.contains(builder.toString())) {
@@ -70,15 +75,13 @@ public class Group {
 
 			builder.append(".");
 
-			if (permissions.contains(builder.toString() + "*")) {
-				return true;
-			}
 
 		}
 
 		return false;
 
 	}
+	
 	public SerializedGroup serializeGroup() {
 		SerializedGroup groups = new SerializedGroup();
 		groups.name = getName();
@@ -86,6 +89,7 @@ public class Group {
 		groups.messageFormat = this.messageFormat;
 		return groups;
 	}
+	
 	public String getName() {
 		return name;
 	}

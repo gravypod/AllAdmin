@@ -35,6 +35,7 @@ public class AllAdminUser implements IUser {
 	private final String name;
 	private Group group;
 	private SerializedUser serializedUser;
+	private boolean isInvisible;
 	private final HashMap<String, SerializedLocation> homes = new HashMap<String, SerializedLocation>();
 	private boolean muted;
 	
@@ -43,8 +44,9 @@ public class AllAdminUser implements IUser {
 		this.sender = sender;
 		this.name = sender.getCommandSenderName();
 		this.serializedUser = UserFiles.loadUser(name);
-		this.group = Permissions.findUser(name);
+		this.group = Permissions.getGroup(serializedUser.rank);
 		this.muted = serializedUser.isMuted;
+		this.isInvisible = serializedUser.isInvisible;
 		
 		if (serializedUser.homes != null) {
 			homes.putAll(serializedUser.homes);
@@ -95,6 +97,7 @@ public class AllAdminUser implements IUser {
 			this.serializedUser.rank = getRank().getName();
 			this.serializedUser.homes = getHomes();
 			this.serializedUser.isMuted = isMute();
+			this.serializedUser.isInvisible = isInvisible();
 			UserFiles.unloadUser(name, this.serializedUser);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -122,6 +125,7 @@ public class AllAdminUser implements IUser {
 		location.z = coords.posZ;
 		location.pitch = sender.cameraPitch;
 		location.yaw = sender.cameraYaw;
+		location.dim = getDimension();
 		
 		homes.put(name, location);
 	}
@@ -137,6 +141,10 @@ public class AllAdminUser implements IUser {
 		
 		if (location == null) {
 			return;
+		}
+		
+		if (location.dim != getDimension()) {
+			changeDimension(location.dim);
 		}
 		
 		teleport(location.x, location.y, location.z, location.pitch, location.yaw);
@@ -204,6 +212,31 @@ public class AllAdminUser implements IUser {
 	@Override
 	public ICommandSender getICommandSender() {
 		return sender;
+	}
+
+	@Override
+	public boolean isInvisible() {
+		return isInvisible;
+	}
+
+	@Override
+	public void setInvisible(boolean on) {
+		this.isInvisible = on;
+	}
+
+	@Override
+	public String getUsername() {
+		return sender.username;
+	}
+
+	@Override
+	public void changeDimension(int dim) {
+		sender.travelToDimension(dim);
+	}
+
+	@Override
+	public int getDimension() {
+		return sender.worldObj.provider.dimensionId;
 	}
 	
 

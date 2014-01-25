@@ -26,7 +26,9 @@ public class Permissions {
 		WORKBENCH("alladmin.command.workbench"), 
 		FEED("alladmin.command.feed"),
 		MUTE("alladmin.admin.mute"),
-		ENCHANT("alladmin.command.enchant");
+		ENCHANT("alladmin.command.enchant"),
+		STOP_LAG("alladmin.admin.stoplag"),
+		INVISIBLE("alladmin.admin.invisible");
 		
 		private final String permission;
 		
@@ -54,7 +56,7 @@ public class Permissions {
 
 	public static Group findUser(String name) {
 		SerializedUser user = UserFiles.loadUser(name);
-		if (!(user.rank == null) || !groups.containsKey(user.rank)) {
+		if (user.rank == null || !groups.containsKey(user.rank)) {
 			user.rank = defaultGroup;
 		}
 		return groups.get(user.rank);

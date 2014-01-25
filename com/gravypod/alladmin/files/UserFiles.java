@@ -58,8 +58,11 @@ public class UserFiles {
 	}
 	
 	public static void unloadUser(String name, SerializedUser serializedUser) throws FileNotFoundException, IOException {
-		
 		File userFile = new File(userDir, name + ".yml");
+		
+		if (props.remove(name).equals(serializedUser) && userFile.exists()) {
+			return;
+		}
 		
 		if (!userFile.exists()) {
 			userFile.createNewFile();
@@ -67,6 +70,7 @@ public class UserFiles {
 		YamlWriter writer = new YamlWriter(new FileWriter(userFile));
 		writer.write(serializedUser);
 		writer.close();
+		
 	}
 	
 	

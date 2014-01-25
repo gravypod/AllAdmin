@@ -28,6 +28,7 @@ public class CommandHeal extends AllAdminCommand {
 			mp = sender;
 		} else {
 			mp = AllAdmin.getUser(args[0]);
+			sender.translate("healeduser", mp.getUsername());
 		}
 
 		mp.heal();

@@ -37,7 +37,7 @@ public class CommandMute extends AllAdminCommand {
 		user.toggleMute();
 		
 		
-		sender.translate("mutedplayer");
+		sender.translate("mutedplayer", user.getUsername());
 		user.translate("muted");
 	}
 	

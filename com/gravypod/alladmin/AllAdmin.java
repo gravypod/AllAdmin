@@ -33,9 +33,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @Mod(modid = "AllAdmin", name = "AllAdmin", version = AllAdmin.version)
 @NetworkMod(clientSideRequired = false)
 public class AllAdmin {
+	
 	public static final String version = "0.0.0";
+	
 	public static boolean running;
-
+	
 	public static HashMap<String, IUser> users = new HashMap<String, IUser>();
 	
 	public static final I18n localization = new I18n();

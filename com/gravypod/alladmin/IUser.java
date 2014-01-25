@@ -138,5 +138,14 @@ public interface IUser {
 
 	public ICommandSender getICommandSender();
 	
+	public boolean isInvisible();
+	
+	public void setInvisible(boolean on);
+
+	public String getUsername();
+	
+	public void changeDimension(int dim);
+	
+	public int getDimension();
 	
 }

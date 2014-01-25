@@ -2,6 +2,7 @@ package com.gravypod.alladmin.commands;
 
 import net.minecraft.command.ICommand;
 
+import com.gravypod.alladmin.Command;
 import com.gravypod.alladmin.permissions.Permissions;
 
 import static com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
@@ -16,7 +17,9 @@ public enum Commands {
 	WORKBENCH(new CommandWorkbench(CommandPermissions.WORKBENCH, "workbench")),
 	FEED(new CommandFeed(CommandPermissions.FEED, "feed")),
 	ENCHANT(new CommandEnchant(CommandPermissions.ENCHANT, "enchant")),
-	MUTE(new CommandMute(CommandPermissions.MUTE, "mute"));
+	MUTE(new CommandMute(CommandPermissions.MUTE, "mute")),
+	INVISIBLE(new CommandInvisible(CommandPermissions.INVISIBLE, "invisible", "vanish")),
+	STOP_LAG(new CommandStopLag(CommandPermissions.STOP_LAG, "stoplag"));
 	
 	private final ICommand command;
 

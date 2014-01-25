@@ -30,7 +30,7 @@ public class CommandFeed extends AllAdminCommand {
 			}
 			
 			user.feed();
-			sender.translate("feeduser");
+			sender.translate("feeduser", user.getUsername());
 			user.translate("feed");
 		}
 	}

@@ -14,19 +14,9 @@ public class CommandSetHome extends AllAdminCommand {
 		
 		if (args.length == 0) {
 			
-			if (!sender.getHomes().containsKey("default")) {
-				sender.translate("nodefaulthome");
-				return;
-			}
-			
 			sender.setHome();
 			
 		} else {
-			
-			if (!sender.getHomes().containsKey(args[0])) {
-				sender.translate("nohome", args[0]);
-				return;
-			}
 			
 			sender.setHome(args[0]);
 			
