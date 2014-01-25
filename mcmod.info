@@ -1,0 +1,16 @@
+[
+{
+  "modid": "AllAdmin",
+  "name": "AllAdmin",
+  "description": "Basic server administration commands",
+  "version": "${version}",
+  "mcversion": "${minecraft_version}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["gravypod"],
+  "credits": "Forge, FML, and MCP for making this project possible",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
