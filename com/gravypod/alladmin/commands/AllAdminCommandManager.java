@@ -9,8 +9,9 @@ import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.ServerCommandManager;
 
-public class AllAdminCommandManager extends CommandHandler {
+public class AllAdminCommandManager extends ServerCommandManager {
 
 	private final CommandHandler original;
 

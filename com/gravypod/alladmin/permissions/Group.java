@@ -88,6 +88,7 @@ public class Group {
 		SerializedGroup groups = new SerializedGroup();
 		groups.name = getName();
 		groups.permissions = getPermissions();
+		groups.subgroups = this.subgroups;
 		groups.messageFormat = this.messageFormat;
 		return groups;
 	}

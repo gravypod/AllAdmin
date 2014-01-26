@@ -21,6 +21,7 @@ import net.minecraftforge.event.ServerChatEvent;
 import com.gravypod.alladmin.commands.AllAdminCommandManager;
 import com.gravypod.alladmin.commands.Commands;
 import com.gravypod.alladmin.files.PermissionFiles;
+import com.gravypod.alladmin.taskmanager.TaskScheduler;
 import com.gravypod.alladmin.user.AllAdminConsole;
 import com.gravypod.alladmin.user.AllAdminUser;
 
@@ -37,7 +38,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class AllAdmin {
 	
 	public static final String version = "0.0.0";
-	
 	public static boolean running;
 	
 	public static HashMap<String, IUser> users = new HashMap<String, IUser>();
@@ -52,6 +52,27 @@ public class AllAdmin {
 		if (!running) {
 			return;
 		}
+		/*TaskScheduler.getAsyncExecutor().submit(new Runnable() {
+			
+			private final String versionURL = "http://www.gravypod.com/alladmin/versions/" + MinecraftForge.getBrandingVersion() + "/version.txt";
+			
+			@Override
+			public void run() {
+				
+				String page = version;
+				
+				try {
+					page = Utils.getPageText(versionURL);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				if (!page.equals(version)) {
+					System.out.println("You may need to upgade AllAdmin, your version does not match the latest version for your copy of FML.");
+				}
+				
+			}
+		});*/
 		
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		

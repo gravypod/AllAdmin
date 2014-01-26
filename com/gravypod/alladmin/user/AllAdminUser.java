@@ -19,6 +19,7 @@ import net.minecraft.network.packet.Packet100OpenWindow;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.ChunkCoordIntPair;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
@@ -40,7 +41,7 @@ public class AllAdminUser implements IUser {
 	private boolean isInvisible;
 	private final HashMap<String, SerializedLocation> homes = new HashMap<String, SerializedLocation>();
 	private boolean muted;
-	
+
 	public AllAdminUser(EntityPlayerMP sender) {
 
 		this.sender = sender;
@@ -49,7 +50,7 @@ public class AllAdminUser implements IUser {
 		this.group = Permissions.getGroup(serializedUser.rank);
 		this.muted = serializedUser.isMuted;
 		this.isInvisible = serializedUser.isInvisible;
-		
+
 		if (serializedUser.homes != null) {
 			homes.putAll(serializedUser.homes);
 		}
@@ -85,11 +86,12 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void send(String message) {
-		getHandle().sendChatToPlayer(ChatMessageComponent.createFromText(message));
+		getHandle().sendChatToPlayer(
+				ChatMessageComponent.createFromText(message));
 	}
 
 	@Override
-	public void translate(String key, Object ... args) {
+	public void translate(String key, Object... args) {
 		send(String.format(AllAdmin.getString(key), args));
 	}
 
@@ -128,7 +130,7 @@ public class AllAdminUser implements IUser {
 		location.pitch = getHandle().cameraPitch;
 		location.yaw = getHandle().cameraYaw;
 		location.dim = getDimension();
-		
+
 		homes.put(name, location);
 	}
 
@@ -140,17 +142,18 @@ public class AllAdminUser implements IUser {
 	@Override
 	public void sendHome(String name) {
 		SerializedLocation location = homes.get(name);
-		
+
 		if (location == null) {
 			return;
 		}
-		
+
 		if (location.dim != getDimension()) {
 			changeDimension(location.dim);
 		}
-		
-		teleport(location.x, location.y, location.z, location.pitch, location.yaw);
-		
+
+		teleport(location.x, location.y, location.z, location.pitch,
+				location.yaw);
+
 	}
 
 	@Override
@@ -160,7 +163,8 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public HashMap<String, SerializedLocation> getHomes() {
-		return homes == null ? new HashMap<String, SerializedLocation>() : homes;
+		return homes == null ? new HashMap<String, SerializedLocation>()
+				: homes;
 	}
 
 	@Override
@@ -177,19 +181,26 @@ public class AllAdminUser implements IUser {
 	public void openEnderChest() {
 		InventoryEnderChest chest = this.getHandle().getInventoryEnderChest();
 		getHandle().incrementWindowID();
-        getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 0, chest.getInvName(), chest.getSizeInventory(), chest.isInvNameLocalized()));
-        getHandle().openContainer = new ContainerChest(getHandle().inventory, chest);
-        getHandle().openContainer.windowId = getHandle().currentWindowId;
-        getHandle().openContainer.addCraftingToCrafters(sender);
+		getHandle().playerNetServerHandler
+				.sendPacketToPlayer(new Packet100OpenWindow(
+						getHandle().currentWindowId, 0, chest.getInvName(),
+						chest.getSizeInventory(), chest.isInvNameLocalized()));
+		getHandle().openContainer = new ContainerChest(getHandle().inventory,
+				chest);
+		getHandle().openContainer.windowId = getHandle().currentWindowId;
+		getHandle().openContainer.addCraftingToCrafters(sender);
 	}
 
 	@Override
 	public void openWorkbench() {
-        getHandle().incrementWindowID();
-        getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 1, "Crafting", 9, true));
-        getHandle().openContainer = new FakeCrafting(getHandle().inventory, getHandle().worldObj);
-        getHandle().openContainer.windowId = getHandle().currentWindowId;
-        getHandle().openContainer.addCraftingToCrafters(sender);
+		getHandle().incrementWindowID();
+		getHandle().playerNetServerHandler
+				.sendPacketToPlayer(new Packet100OpenWindow(
+						getHandle().currentWindowId, 1, "Crafting", 9, true));
+		getHandle().openContainer = new FakeCrafting(getHandle().inventory,
+				getHandle().worldObj);
+		getHandle().openContainer.windowId = getHandle().currentWindowId;
+		getHandle().openContainer.addCraftingToCrafters(sender);
 	}
 
 	@Override
@@ -205,12 +216,16 @@ public class AllAdminUser implements IUser {
 	@Override
 	public void openEnchantment() {
 		getHandle().incrementWindowID();
-		getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 4, "Enchanting Table - " + getHandle().username, 9, false));
-		getHandle().openContainer = new FakeEnchantment(getHandle().inventory, getHandle().worldObj);
+		getHandle().playerNetServerHandler
+				.sendPacketToPlayer(new Packet100OpenWindow(
+						getHandle().currentWindowId, 4, "Enchanting Table - "
+								+ getHandle().username, 9, false));
+		getHandle().openContainer = new FakeEnchantment(getHandle().inventory,
+				getHandle().worldObj);
 		getHandle().openContainer.windowId = getHandle().currentWindowId;
 		getHandle().openContainer.addCraftingToCrafters(sender);
 	}
-	
+
 	@Override
 	public ICommandSender getICommandSender() {
 		return getHandle();
@@ -257,5 +272,5 @@ public class AllAdminUser implements IUser {
 	public EntityPlayerMP getHandle() {
 		return sender;
 	}
- 	
+
 }
