@@ -37,7 +37,9 @@ public class Group {
 		
 		boolean has = selfHasPermission(s);
 		
-		if (!has) {
+		if (selfHasPermission("-" + s)) {
+			has = false;
+		} else if (!has) {
 			for (String group : subgroups) {
 				Group g = Permissions.getGroup(group);
 				if (g != null && g.hasPermission(s)) {
@@ -57,7 +59,7 @@ public class Group {
 			return true;
 		}
 		
-		String[] parts = s.split("\\.");
+		String[] parts = s.toLowerCase().split("\\.");
 		
 		StringBuilder builder = new StringBuilder();
 

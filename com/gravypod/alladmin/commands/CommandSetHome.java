@@ -18,6 +18,11 @@ public class CommandSetHome extends AllAdminCommand {
 			
 		} else {
 			
+			
+			if (!sender.hasPermission(CommandPermissions.MULTI_SET_HOME)) {
+				sender.translate("nomultihomeperms");
+				return;
+			}
 			sender.setHome(args[0]);
 			
 		}

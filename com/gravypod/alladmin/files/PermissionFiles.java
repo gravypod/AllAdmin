@@ -65,7 +65,7 @@ public class PermissionFiles {
 			Permissions.CommandPermissions.SET_HOME.getPermission(),
 			Permissions.CommandPermissions.CHEST.getPermission(),
 			Permissions.CommandPermissions.WORKBENCH.getPermission(),
-			Permissions.CommandPermissions.ENCHANT.getPermission(),
+			Permissions.CommandPermissions.ENCHANT_TABLE.getPermission(),
 		});
 		
 		Group adminGroup = new Group("admin", new String[] {

@@ -3,9 +3,11 @@ package com.gravypod.alladmin;
 import java.util.HashMap;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 
 import com.gravypod.alladmin.files.SerializedLocation;
 import com.gravypod.alladmin.permissions.Group;
+import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
 
 public interface IUser {
 	
@@ -147,5 +149,11 @@ public interface IUser {
 	public void changeDimension(int dim);
 	
 	public int getDimension();
+
+	public boolean hasPermission(CommandPermissions multiSetHome);
+
+	public void allowFlight();
+	
+	public EntityPlayer getHandle();
 	
 }

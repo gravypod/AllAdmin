@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
@@ -28,6 +29,7 @@ import com.gravypod.alladmin.minecraft.FakeCrafting;
 import com.gravypod.alladmin.minecraft.FakeEnchantment;
 import com.gravypod.alladmin.permissions.Group;
 import com.gravypod.alladmin.permissions.Permissions;
+import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
 
 public class AllAdminUser implements IUser {
 
@@ -42,7 +44,7 @@ public class AllAdminUser implements IUser {
 	public AllAdminUser(EntityPlayerMP sender) {
 
 		this.sender = sender;
-		this.name = sender.getCommandSenderName();
+		this.name = getHandle().getCommandSenderName();
 		this.serializedUser = UserFiles.loadUser(name);
 		this.group = Permissions.getGroup(serializedUser.rank);
 		this.muted = serializedUser.isMuted;
@@ -78,12 +80,12 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void setHealth(int h) {
-		sender.setHealth(h);
+		getHandle().setHealth(h);
 	}
 
 	@Override
 	public void send(String message) {
-		sender.sendChatToPlayer(ChatMessageComponent.createFromText(message));
+		getHandle().sendChatToPlayer(ChatMessageComponent.createFromText(message));
 	}
 
 	@Override
@@ -113,18 +115,18 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void teleport(int x, int y, int z, float pitch, float yaw) {
-		sender.setPositionAndRotation(x, y, z, pitch, yaw);
+		getHandle().setPositionAndRotation(x, y, z, pitch, yaw);
 	}
 
 	@Override
 	public void setHome(String name) {
 		SerializedLocation location = new SerializedLocation();
-		ChunkCoordinates coords = sender.getPlayerCoordinates();
+		ChunkCoordinates coords = getHandle().getPlayerCoordinates();
 		location.x = coords.posX;
 		location.y = coords.posY;
 		location.z = coords.posZ;
-		location.pitch = sender.cameraPitch;
-		location.yaw = sender.cameraYaw;
+		location.pitch = getHandle().cameraPitch;
+		location.yaw = getHandle().cameraYaw;
 		location.dim = getDimension();
 		
 		homes.put(name, location);
@@ -168,26 +170,26 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void feed(int food) {
-		sender.getFoodStats().addStats(food, food);
+		getHandle().getFoodStats().addStats(food, food);
 	}
 
 	@Override
 	public void openEnderChest() {
-		InventoryEnderChest chest = this.sender.getInventoryEnderChest();
-		sender.incrementWindowID();
-        sender.playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(sender.currentWindowId, 0, chest.getInvName(), chest.getSizeInventory(), chest.isInvNameLocalized()));
-        sender.openContainer = new ContainerChest(sender.inventory, chest);
-        sender.openContainer.windowId = sender.currentWindowId;
-        sender.openContainer.addCraftingToCrafters(sender);
+		InventoryEnderChest chest = this.getHandle().getInventoryEnderChest();
+		getHandle().incrementWindowID();
+        getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 0, chest.getInvName(), chest.getSizeInventory(), chest.isInvNameLocalized()));
+        getHandle().openContainer = new ContainerChest(getHandle().inventory, chest);
+        getHandle().openContainer.windowId = getHandle().currentWindowId;
+        getHandle().openContainer.addCraftingToCrafters(sender);
 	}
 
 	@Override
 	public void openWorkbench() {
-        sender.incrementWindowID();
-        sender.playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(sender.currentWindowId, 1, "Crafting", 9, true));
-        sender.openContainer = new FakeCrafting(sender.inventory, sender.worldObj);
-        sender.openContainer.windowId = sender.currentWindowId;
-        sender.openContainer.addCraftingToCrafters(sender);
+        getHandle().incrementWindowID();
+        getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 1, "Crafting", 9, true));
+        getHandle().openContainer = new FakeCrafting(getHandle().inventory, getHandle().worldObj);
+        getHandle().openContainer.windowId = getHandle().currentWindowId;
+        getHandle().openContainer.addCraftingToCrafters(sender);
 	}
 
 	@Override
@@ -202,16 +204,16 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void openEnchantment() {
-		sender.incrementWindowID();
-		sender.playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(sender.currentWindowId, 4, "Enchanting Table - " + sender.username, 9, false));
-		sender.openContainer = new FakeEnchantment(sender.inventory, sender.worldObj);
-		sender.openContainer.windowId = sender.currentWindowId;
-		sender.openContainer.addCraftingToCrafters(sender);
+		getHandle().incrementWindowID();
+		getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, 4, "Enchanting Table - " + getHandle().username, 9, false));
+		getHandle().openContainer = new FakeEnchantment(getHandle().inventory, getHandle().worldObj);
+		getHandle().openContainer.windowId = getHandle().currentWindowId;
+		getHandle().openContainer.addCraftingToCrafters(sender);
 	}
 	
 	@Override
 	public ICommandSender getICommandSender() {
-		return sender;
+		return getHandle();
 	}
 
 	@Override
@@ -226,18 +228,34 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public String getUsername() {
-		return sender.username;
+		return getHandle().username;
 	}
 
 	@Override
 	public void changeDimension(int dim) {
-		sender.travelToDimension(dim);
+		getHandle().travelToDimension(dim);
 	}
 
 	@Override
 	public int getDimension() {
-		return sender.worldObj.provider.dimensionId;
+		return getHandle().worldObj.provider.dimensionId;
 	}
-	
 
+	@Override
+	public boolean hasPermission(CommandPermissions perm) {
+		return hasPermission(perm.getPermission());
+	}
+
+	@Override
+	public void allowFlight() {
+		boolean currentToggle = getHandle().capabilities.allowFlying;
+		getHandle().capabilities.allowFlying = !currentToggle;
+		getHandle().sendPlayerAbilities();
+	}
+
+	@Override
+	public EntityPlayerMP getHandle() {
+		return sender;
+	}
+ 	
 }

@@ -2,6 +2,7 @@ package com.gravypod.alladmin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import net.minecraft.command.CommandHandler;
@@ -17,6 +18,7 @@ import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.ServerChatEvent;
 
+import com.gravypod.alladmin.commands.AllAdminCommandManager;
 import com.gravypod.alladmin.commands.Commands;
 import com.gravypod.alladmin.files.PermissionFiles;
 import com.gravypod.alladmin.user.AllAdminConsole;
@@ -56,12 +58,35 @@ public class AllAdmin {
 		System.out.println("[AllAdmin] Starting! Created by gravypod. Version " + version);
 		if (getDataDir().exists() || !getDataDir().isDirectory()) {
 			getDataDir().mkdirs();
+			try {
+				PermissionFiles.save();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		CommandHandler ch = (CommandHandler) MinecraftServer.getServer().getCommandManager();
+		AllAdminCommandManager manager = new AllAdminCommandManager(ch);
+		
+		for (Field f : MinecraftServer.class.getFields()) {
+			
+			if (f.getType().isInstance(ch)) {
+				try {
+					System.out.println("AllAdmin has found the command handler and is now wrapping it. Any errors after this point should be sent to gravypod.");
+					f.setAccessible(true);
+					f.set(MinecraftServer.getServer(), manager);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
 		
 		for (Commands commands : Commands.values()) {
-			ch.registerCommand(commands.getCommand());
+			manager.registerCommand(commands.getCommand());
 		}
 		GameRegistry.registerPlayerTracker(new IPlayerTracker() {
 			
@@ -71,7 +96,7 @@ public class AllAdmin {
 			
 			@Override
 			public void onPlayerLogout(EntityPlayer player) {
-				IUser user = users.remove(player.getEntityName());
+				IUser user = users.remove(player.username);
 				user.logout();
 			}
 			
@@ -105,7 +130,7 @@ public class AllAdmin {
 	
 	
 	public static File getDataDir() {
-		return new File("AllAdmin");
+		return new File("config/AllAdmin");
 	}
 	
 	/**

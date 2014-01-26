@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ServerCommandScoreboard;
 import net.minecraft.scoreboard.ServerCommandTestFor;
 import net.minecraft.server.MinecraftServer;
@@ -14,6 +15,7 @@ import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.files.SerializedLocation;
 import com.gravypod.alladmin.permissions.Group;
 import com.gravypod.alladmin.permissions.Permissions;
+import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
 
 public class AllAdminConsole implements IUser {
 	
@@ -137,6 +139,21 @@ public class AllAdminConsole implements IUser {
 	@Override
 	public int getDimension() {
 		return 0;
+	}
+
+	@Override
+	public boolean hasPermission(CommandPermissions multiSetHome) {
+		return true;
+	}
+
+	@Override
+	public void allowFlight() {
+		
+	}
+
+	@Override
+	public EntityPlayer getHandle() {
+		return null;
 	}
 
 }
