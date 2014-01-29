@@ -14,5 +14,6 @@ public class SpawnCommand extends AllAdminCommand {
 	@Override
 	void execute(IUser sender, String[] args) {
 		sender.teleport(MinecraftServer.getServer().worldServerForDimension(sender.getDimension()).getSpawnPoint());
+		sender.translate("senttospawn");
 	}
 }

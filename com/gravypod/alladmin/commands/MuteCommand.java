@@ -31,13 +31,15 @@ public class MuteCommand extends AllAdminCommand {
 			return;
 		}
 		
-		
-		
 		user.toggleMute();
 		
-		
-		sender.translate("mutedplayer", user.getUsername());
-		user.translate("muted");
+		if (user.isMute()) {
+			sender.translate("mutedplayer", user.getUsername());
+			user.translate("muted");
+		} else {
+			sender.translate("unmutedplayer", user.getUsername());
+			user.translate("unmuted");
+		}
 	}
 	
 }

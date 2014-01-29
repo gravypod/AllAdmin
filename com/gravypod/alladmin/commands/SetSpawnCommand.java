@@ -19,7 +19,6 @@ public class SetSpawnCommand extends AllAdminCommand {
 		if (args.length == 0) {
 			
 			SerializedLocation location = sender.getLocation();
-			
 			MinecraftServer.getServer().worldServerForDimension(sender.getDimension()).provider.setSpawnPoint((int)location.x, (int)location.y, (int)location.z);
 			
 			sender.translate("spawnset");

@@ -43,8 +43,8 @@ public class AllAdminUser implements IUser {
 	private final HashMap<String, SerializedLocation> homes = new HashMap<String, SerializedLocation>();
 	private boolean muted;
 	private boolean godemode;
+	
 	public AllAdminUser(EntityPlayerMP sender) {
-
 		this.sender = sender;
 		this.name = getHandle().getCommandSenderName();
 		SerializedUser serializedUser = UserFiles.loadUser(name);
@@ -62,7 +62,7 @@ public class AllAdminUser implements IUser {
 		if (!PermissionManager.groupExists(group.getName())) {
 			setRank(PermissionManager.getDefaultRank());
 		}
-		return MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(getUsername()) || group.hasPermission(permission);
+		return group.hasPermission(permission) || MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(getUsername());
 
 	}
 
@@ -102,6 +102,7 @@ public class AllAdminUser implements IUser {
 	@Override
 	public void logout() {
 		try {
+			System.out.println("Logging out");
 			SerializedUser user = new SerializedUser();
 			user.rank = getRank().getName();
 			user.homes = getHomes();
@@ -241,6 +242,11 @@ public class AllAdminUser implements IUser {
 	public void toggleFlight() {
 		boolean currentToggle = getHandle().capabilities.allowFlying;
 		getHandle().capabilities.allowFlying = !currentToggle;
+		
+		if (!currentToggle && getHandle().capabilities.isFlying) {
+			getHandle().capabilities.isFlying = false;
+		}
+		
 		getHandle().sendPlayerAbilities();
 	}
 
@@ -299,12 +305,10 @@ public class AllAdminUser implements IUser {
 	public void clearInventory() {
 		InventoryPlayer inv = getHandle().inventory;
 		for (int i = 0; i < inv.mainInventory.length; i++) {
-			ItemStack stack = inv.mainInventory[i];
-			if (stack != null) {
-				stack.stackSize = 0;
-			}
+			inv.mainInventory[i] = null;
 		}
 		inv.onInventoryChanged();
+		
 	}
 
 	@Override
@@ -342,5 +346,15 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void sendJail() {
+	}
+
+	@Override
+	public void setFire() {
+		setFire(60);
+	}
+	
+	@Override
+	public void setFire(int seconds) {
+		getHandle().setFire(seconds);
 	}
 }

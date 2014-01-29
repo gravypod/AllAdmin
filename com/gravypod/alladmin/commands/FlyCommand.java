@@ -9,7 +9,12 @@ public class FlyCommand extends AllAdminCommand {
 	public FlyCommand(CommandPermissions perm, String name, String ... alias) {
 		super(perm, name, alias);
 	}
-
+	
+	@Override
+	public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2) {
+		return par2 == 1;
+	}
+	
 	@Override
 	void execute(IUser sender, String[] args) {
 		

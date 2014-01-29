@@ -11,22 +11,44 @@ public class ClearInventoryCommand extends AllAdminCommand {
 	}
 	
 	@Override
+	public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2) {
+		return par2 == 1;
+	}
+	
+	@Override
 	void execute(IUser sender, String[] args) {
 		
-		if (args.length != 1) {
+		if (args.length == 1) {
+			
+			
+			if (!sender.hasPermission(CommandPermissions.CLEAR_INVENTORY_OTHER)) {
+				sender.translate("nopermissions");
+				return;
+			}
+			
+			IUser user = AllAdmin.getUser(args[0]);
+			
+			if (user == null) {
+				
+				sender.translate("playernotfound", args[0]);
+				return;
+				
+			}
+			
+			user.clearInventory();
+			
+			sender.translate("invcleared", args[0]);
+			
+			user.translate("cleared");
+			
+		} else if (args.length == 0) {
+			
+			sender.clearInventory();
+			sender.translate("cleared");
+			
+		} else {
 			sender.send(getCommandUsage(sender));
-			return;
 		}
-		
-		IUser user = AllAdmin.getUser(args[0]);
-		
-		if (user == null) {
-			sender.translate("playernotfound", args[0]);
-			return;
-		}
-		
-		user.clearInventory();
-		
 	}
 	
 }

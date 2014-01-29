@@ -214,19 +214,8 @@ public class PermissionCommand extends AllAdminCommand {
 		
 	}
 	public void sendHelp(IUser user, String command) {
-		if (command.equalsIgnoreCase("setg")) {
-			
-		} else if (command.equalsIgnoreCase("addp")) {
-			user.translate(command + "usage");
-		} else if (command.equalsIgnoreCase("remp")) {
-			user.translate(command + "usage");
-		} else if (command.equalsIgnoreCase("addg")) {
-			user.translate(command + "usage");
-		} else if (command.equalsIgnoreCase("remg")) {
-			user.translate(command + "usage");
-		} else if (command.equalsIgnoreCase("addsub")) {
-			user.translate(command + "usage");
-		} else if (command.equalsIgnoreCase("remsub")) {
+		String c = command.toLowerCase();
+		if (c.equals("addsub") || c.equals("setg") || c.equals("addp") || c.equals("addp") || c.equals("addg") || c.equals("remg")) {
 			user.translate(command + "usage");
 		} else {
 			user.send(getCommandUsage(user));

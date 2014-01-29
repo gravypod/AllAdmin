@@ -14,8 +14,12 @@ public class SerializedUser {
 		if (obj instanceof SerializedUser) {
 			SerializedUser u = (SerializedUser) obj;
 			boolean homesEqual =  u.homes.entrySet().containsAll(homes.entrySet());
-			
-			return u.name.equals(name) && u.rank.equals(rank) && homesEqual && u.isInvisible == isInvisible && u.isMuted == isMuted && u.godmode == godmode;
+			boolean usernameEqual = u.name.equals(name);
+			boolean rankEqual = u.rank.equals(rank);
+			boolean invisEqual = u.isInvisible == isInvisible;
+			boolean muteEqual = u.isMuted == isMuted;
+			boolean godEqual = u.godmode == godmode;
+			return usernameEqual && rankEqual && homesEqual && invisEqual && muteEqual && godEqual;
 		}
 		return super.equals(obj);
 	}

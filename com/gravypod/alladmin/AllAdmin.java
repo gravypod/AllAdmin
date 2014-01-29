@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.PlayerSelector;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -50,6 +51,7 @@ import com.gravypod.alladmin.commands.wrapped.WhitelistCommand;
 import com.gravypod.alladmin.commands.wrapped.XPCommand;
 import com.gravypod.alladmin.files.ConfigFiles;
 import com.gravypod.alladmin.files.PermissionFiles;
+import com.gravypod.alladmin.files.UserFiles;
 import com.gravypod.alladmin.files.WarpFiles;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 import com.gravypod.alladmin.user.AllAdminConsole;
@@ -67,7 +69,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @NetworkMod(clientSideRequired = false)
 public class AllAdmin {
 	
-	public static final String version = "0.0.0";
+	public static final String version = "0.0.1a";
 	public static boolean running;
 	
 	public static HashMap<String, IUser> users = new HashMap<String, IUser>();
@@ -88,7 +90,7 @@ public class AllAdmin {
 		
 		System.out.println("[AllAdmin] Starting! Created by gravypod. Version " + version);
 		
-		if (getDataDir().exists() || !getDataDir().isDirectory()) {
+		if (!getDataDir().exists() || !getDataDir().isDirectory()) {
 			getDataDir().mkdirs();
 			saveConfigs();
 		}
@@ -155,7 +157,8 @@ public class AllAdmin {
 			public void onPlayerRespawn(EntityPlayer player) {}
 			@Override
 			public void onPlayerLogout(EntityPlayer player) {
-				IUser user = users.remove(player.username);
+				IUser user = getUser(player.username);
+				removeUser(player.username);
 				if (user != null) {
 					user.logout();
 				}
@@ -168,6 +171,10 @@ public class AllAdmin {
 		
 	}
 	
+	protected static void removeUser(String username) {
+		users.remove(username.toLowerCase());
+	}
+
 	@Mod.EventHandler
 	public static void stopping(FMLServerStoppingEvent event) {
 		if (!running) {
@@ -201,7 +208,11 @@ public class AllAdmin {
 			name = ((EntityPlayerMP) sender).getCommandSenderName();
 		} else if (sender instanceof String) {
 			name = (String) sender;
+		} else {
+			name = "CONSOLE_USER";
 		}
+		
+		name = name.toLowerCase();
 		
 		if (!users.containsKey(name)) {
 			if (sender instanceof EntityPlayerMP) {

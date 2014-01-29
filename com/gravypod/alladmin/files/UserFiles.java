@@ -27,7 +27,7 @@ public class UserFiles {
 	}
 	
 	public static SerializedUser loadUser(String name) {
-		
+		name = name.toLowerCase();
 		if (props.containsKey(name)) {
 			return props.get(name);
 		}
@@ -61,9 +61,11 @@ public class UserFiles {
 	}
 	
 	public static void unloadUser(String name, SerializedUser serializedUser) throws FileNotFoundException, IOException {
+		name = name.toLowerCase();
 		File userFile = new File(userDir, name + ".yml");
-		System.out.println(name + " " + serializedUser.name);
-		if (props.remove(name).equals(serializedUser) && userFile.exists()) {
+		SerializedUser user = props.remove(name);
+		
+		if (user.equals(serializedUser) && userFile.exists()) {
 			return;
 		}
 		

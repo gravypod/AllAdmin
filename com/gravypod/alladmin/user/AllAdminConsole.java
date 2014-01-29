@@ -215,5 +215,17 @@ public class AllAdminConsole implements IUser {
 	public void sendJail() {
 	}
 
+	@Override
+	public void setFire() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFire(int seconds) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

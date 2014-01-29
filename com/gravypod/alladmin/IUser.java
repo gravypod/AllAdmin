@@ -139,18 +139,38 @@ public interface IUser {
 	 */
 	public boolean isMute();
 	
+	/**
+	 * Open an enchantment table
+	 */
 	public void openEnchantment();
 
+	/**
+	 * Get the command sender related to this user
+	 * @return
+	 */
 	public ICommandSender getICommandSender();
+	
 	
 	public boolean isInvisible();
 	
 	public void setInvisible(boolean on);
 
+	/**
+	 * Get the username of the player
+	 * @return
+	 */
 	public String getUsername();
 	
+	/**
+	 * Teleport this user to a different world
+	 * @param dim
+	 */
 	public void changeDimension(int dim);
 	
+	/**
+	 * Get the dimension id of the world the user is in
+	 * @return
+	 */
 	public int getDimension();
 
 	public boolean hasPermission(CommandPermissions multiSetHome);
@@ -182,5 +202,9 @@ public interface IUser {
 	public boolean isJailed();
 	
 	public void sendJail();
+
+	public void setFire();
+
+	void setFire(int seconds);
 	
 }

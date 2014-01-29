@@ -26,7 +26,7 @@ public class BroadcastCommand extends AllAdminCommand {
 			}
 			
 			String serverMessage = Utils.translateAlternateColorCodes(ConfigFiles.broadcastFormat.replace("{MESSAGE}", message.trim()));
-			MinecraftServer.getServer().sendChatToPlayer(ChatMessageComponent.createFromText(serverMessage));
+			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(ChatMessageComponent.createFromText(serverMessage));
 			
 		} else {
 			sender.send(this.getCommandUsage(sender));

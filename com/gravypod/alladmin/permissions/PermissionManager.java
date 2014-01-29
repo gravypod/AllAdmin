@@ -6,6 +6,8 @@ import java.util.HashMap;
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.files.PermissionFiles;
+import com.gravypod.alladmin.files.SerializedGroup;
+import com.gravypod.alladmin.files.SerializedPermissionConfigs;
 import com.gravypod.alladmin.files.SerializedUser;
 import com.gravypod.alladmin.files.UserFiles;
 
@@ -68,7 +70,8 @@ public class PermissionManager {
 		SPAWN("alladmin.command.spawn"),
 		SET_SPAWN("alladmin.command.setspawn"), 
 		INVSEE("alladmin.command.invsee"),
-		CLEAR_INVENTORY("alladmin.command.clearinventory"), 
+		CLEAR_INVENTORY("alladmin.command.clearinventory"),
+		CLEAR_INVENTORY_OTHER("alladmin.command.clearinventory.other"),
 		GET_POS("alladmin.command.getpos"),
 		BROADCAST("alladmin.command.broadcast"),
 		BLOCK("alladmin.blocks.") {
@@ -85,6 +88,7 @@ public class PermissionManager {
 		GAME_RULE("alladmin.command.gamerule"), 
 		TIMEOUT("alladmin.command.timeout"), 
 		TIME("alladmin.command.time"),
+		BURN("alladmin.command.burn"),
 		;
 		
 		private final String permission;
@@ -158,6 +162,25 @@ public class PermissionManager {
 			group.getSubgroups().add(newSubGroup.getName());
 		}
 		return groupadded;
+	}
+	
+	public static SerializedPermissionConfigs serialize() {
+		SerializedPermissionConfigs permissions = new SerializedPermissionConfigs();
+		permissions.defaultGroup = defaultGroup;
+		Group[] memGroups = groups.values().toArray(new Group[0]);
+		SerializedGroup[] groupArray = new SerializedGroup[memGroups.length];
+		for (int i = 0; i < groupArray.length; i++) {
+			Group g = memGroups[i];
+			SerializedGroup group = new SerializedGroup();
+			group.messageFormat = g.getMessageFormat();
+			group.name = g.getName();
+			group.permissions = g.getPermissions();
+			group.subgroups = g.getSubgroups();
+			groupArray[i] = group;
+		}
+		permissions.groups = groupArray;
+		return permissions;
+		
 	}
 
 }
