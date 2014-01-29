@@ -19,8 +19,10 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.ServerChatEvent;
 
 import com.gravypod.alladmin.commands.AllAdminCommandManager;
-import com.gravypod.alladmin.commands.Commands;
+import com.gravypod.alladmin.commands.CommandRegistry;
+import com.gravypod.alladmin.files.ConfigFiles;
 import com.gravypod.alladmin.files.PermissionFiles;
+import com.gravypod.alladmin.files.WarpFiles;
 import com.gravypod.alladmin.taskmanager.TaskScheduler;
 import com.gravypod.alladmin.user.AllAdminConsole;
 import com.gravypod.alladmin.user.AllAdminUser;
@@ -52,83 +54,48 @@ public class AllAdmin {
 		if (!running) {
 			return;
 		}
-		/*TaskScheduler.getAsyncExecutor().submit(new Runnable() {
-			
-			private final String versionURL = "http://www.gravypod.com/alladmin/versions/" + MinecraftForge.getBrandingVersion() + "/version.txt";
-			
-			@Override
-			public void run() {
-				
-				String page = version;
-				
-				try {
-					page = Utils.getPageText(versionURL);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				if (!page.equals(version)) {
-					System.out.println("You may need to upgade AllAdmin, your version does not match the latest version for your copy of FML.");
-				}
-				
-			}
-		});*/
 		
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		
 		System.out.println("[AllAdmin] Starting! Created by gravypod. Version " + version);
 		if (getDataDir().exists() || !getDataDir().isDirectory()) {
 			getDataDir().mkdirs();
-			try {
-				PermissionFiles.save();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			saveConfigs();
 		}
 		
 		CommandHandler ch = (CommandHandler) MinecraftServer.getServer().getCommandManager();
 		AllAdminCommandManager manager = new AllAdminCommandManager(ch);
 		
 		for (Field f : MinecraftServer.class.getFields()) {
-			
 			if (f.getType().isInstance(ch)) {
 				try {
 					System.out.println("AllAdmin has found the command handler and is now wrapping it. Any errors after this point should be sent to gravypod.");
 					f.setAccessible(true);
 					f.set(MinecraftServer.getServer(), manager);
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			
 		}
 		
-		
-		for (Commands commands : Commands.values()) {
-			manager.registerCommand(commands.getCommand());
-		}
 		GameRegistry.registerPlayerTracker(new IPlayerTracker() {
-			
 			@Override
-			public void onPlayerRespawn(EntityPlayer player) {
-			}
+			public void onPlayerRespawn(EntityPlayer player) {}
 			
 			@Override
 			public void onPlayerLogout(EntityPlayer player) {
 				IUser user = users.remove(player.username);
-				user.logout();
+				if (users != null) {
+					user.logout();
+				}
 			}
 			
 			@Override
-			public void onPlayerLogin(EntityPlayer player) {
-			}
-			
+			public void onPlayerLogin(EntityPlayer player) {}
 			@Override
-			public void onPlayerChangedDimension(EntityPlayer player) {
-			}
+			public void onPlayerChangedDimension(EntityPlayer player) {}
 		});
+		
 	}
 	
 	@Mod.EventHandler
@@ -141,12 +108,7 @@ public class AllAdmin {
 			user.logout();
 		}
 		
-		try {
-			PermissionFiles.save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		saveConfigs();
 	}
 	
 	
@@ -189,6 +151,16 @@ public class AllAdmin {
 
 	public static String getString(String name) {
 		return localization.getColoredMessage(name);
+	}
+	
+	public static void saveConfigs() {
+		try {
+			PermissionFiles.save();
+			WarpFiles.save();
+			ConfigFiles.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

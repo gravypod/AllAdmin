@@ -12,7 +12,7 @@ import com.esotericsoftware.yamlbeans.YamlReader;
 import com.esotericsoftware.yamlbeans.YamlWriter;
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.permissions.Group;
-import com.gravypod.alladmin.permissions.Permissions;
+import com.gravypod.alladmin.permissions.PermissionManager;
 
 public class PermissionFiles {
 	
@@ -61,11 +61,12 @@ public class PermissionFiles {
 		permissonConfigs = new SerializedPermissionConfigs();
 		
 		Group defaultGroup = new Group("default", new String[] {
-			Permissions.CommandPermissions.HOME.getPermission(),
-			Permissions.CommandPermissions.SET_HOME.getPermission(),
-			Permissions.CommandPermissions.CHEST.getPermission(),
-			Permissions.CommandPermissions.WORKBENCH.getPermission(),
-			Permissions.CommandPermissions.ENCHANT_TABLE.getPermission(),
+			PermissionManager.CommandPermissions.HOME.getPermission(),
+			PermissionManager.CommandPermissions.SET_HOME.getPermission(),
+			PermissionManager.CommandPermissions.CHEST.getPermission(),
+			PermissionManager.CommandPermissions.WORKBENCH.getPermission(),
+			PermissionManager.CommandPermissions.ENCHANT_TABLE.getPermission(),
+			PermissionManager.CommandPermissions.BLOCK_ALL.getPermission(),
 		});
 		
 		Group adminGroup = new Group("admin", new String[] {

@@ -2,11 +2,12 @@ package com.gravypod.alladmin.commands;
 
 import java.util.List;
 
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 public class AllAdminCommandWrapper extends AllAdminCommand {
 	ICommand command;
@@ -14,6 +15,46 @@ public class AllAdminCommandWrapper extends AllAdminCommand {
 	public AllAdminCommandWrapper(CommandPermissions perm, String name, String ... alias) {
 		super(perm, name, alias);
 		ready = false;
+	}
+	
+	@Override
+	public void processCommand(ICommandSender user, String[] args) {
+		if (!ready) {
+			super.processCommand(user, args);
+			return;
+		}
+		
+		command.processCommand(user, args);
+	}
+	
+	@Override
+	public int compareTo(ICommand par1iCommand) {
+		return command.compareTo(par1iCommand);
+	}
+	
+	@Override
+	public int getRequiredPermissionLevel() {
+		if (command instanceof CommandBase) {
+			return ((CommandBase)command).getRequiredPermissionLevel();
+		}
+		
+		return super.getRequiredPermissionLevel();
+	}
+	
+	@Override
+	public int compareTo(Object par1Obj) {
+		if (!ready) {
+			return super.compareTo(par1Obj);
+		}
+		return command.compareTo(par1Obj);
+	}
+	
+	@Override
+	public String getCommandName() {
+		if (!ready) {
+			return super.getCommandName();
+		}
+		return command.getCommandName();
 	}
 	
 	@Override

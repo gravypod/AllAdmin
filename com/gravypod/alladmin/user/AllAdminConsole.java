@@ -9,13 +9,14 @@ import net.minecraft.scoreboard.ServerCommandScoreboard;
 import net.minecraft.scoreboard.ServerCommandTestFor;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.gui.MinecraftServerGui;
+import net.minecraft.util.ChunkCoordinates;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.files.SerializedLocation;
 import com.gravypod.alladmin.permissions.Group;
-import com.gravypod.alladmin.permissions.Permissions;
-import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
+import com.gravypod.alladmin.permissions.PermissionManager;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 public class AllAdminConsole implements IUser {
 	
@@ -30,7 +31,7 @@ public class AllAdminConsole implements IUser {
 
 	@Override
 	public Group getRank() {
-		return Permissions.getGroup(Permissions.getDefaultRank());
+		return PermissionManager.getGroup(PermissionManager.getDefaultRank());
 	}
 
 	@Override
@@ -56,11 +57,11 @@ public class AllAdminConsole implements IUser {
 	}
 
 	@Override
-	public void teleport(int x, int y, int z) {
+	public void teleport(double x, double y, double z) {
 	}
 
 	@Override
-	public void teleport(int x, int y, int z, float pitch, float yaw) {
+	public void teleport(double x, double y, double z, float pitch, float yaw) {
 	}
 
 	@Override
@@ -147,13 +148,71 @@ public class AllAdminConsole implements IUser {
 	}
 
 	@Override
-	public void allowFlight() {
+	public void toggleFlight() {
 		
 	}
 
 	@Override
 	public EntityPlayer getHandle() {
 		return null;
+	}
+
+	@Override
+	public boolean isOnline() {
+		return true;
+	}
+
+	@Override
+	public boolean isFlying() {
+		return false;
+	}
+
+	@Override
+	public SerializedLocation getLocation() {
+		return new SerializedLocation();
+	}
+
+	@Override
+	public void teleport(SerializedLocation location) {
+	}
+
+	@Override
+	public void teleport(ChunkCoordinates spawnPoint) {
+	}
+
+	@Override
+	public void showInventory(IUser user) {
+	}
+
+	@Override
+	public void clearInventory() {
+	}
+
+	@Override
+	public boolean hasGodMode() {
+		return false;
+	}
+
+	@Override
+	public boolean canBreak(int blockID) {
+		return false;
+	}
+
+	@Override
+	public void repairItemInHand() {
+	}
+
+	@Override
+	public void toggleGodMode() {
+	}
+
+	@Override
+	public boolean isJailed() {
+		return false;
+	}
+
+	@Override
+	public void sendJail() {
 	}
 
 

@@ -35,19 +35,24 @@ public class Group {
 			return permissionCache.get(s);
 		}
 		
-		boolean has = selfHasPermission(s);
 		
-		if (selfHasPermission("-" + s)) {
-			has = false;
-		} else if (!has) {
-			for (String group : subgroups) {
-				Group g = Permissions.getGroup(group);
-				if (g != null && g.hasPermission(s)) {
-					has = true;
-					break;
-				}
-			}	
+		boolean has = false;
+		
+		for (String group : subgroups) {
+			System.out.println(group);
+			Group g = PermissionManager.getGroup(group);
+			if (g != null && g.hasPermission(s)) {
+				has = true;
+			}
 		}
+		if (!has) {
+			has = selfHasPermission(s);
+			
+			if (selfHasPermission("-" + s)) {
+				has = false;
+			}
+		}
+		
 		permissionCache.put(s, has);
 		return has;
 		
@@ -112,5 +117,11 @@ public class Group {
 	public String getMessageFormat() {
 		return messageFormat;
 	}
+	public List<String> getSubgroups() {
+		return subgroups;
+	}
 
+	public boolean removePermission(String permission) {
+		return permissions.remove(permission);
+	}
 }

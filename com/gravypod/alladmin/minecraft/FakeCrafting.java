@@ -1,13 +1,13 @@
 package com.gravypod.alladmin.minecraft;
 
-import com.gravypod.alladmin.commands.CommandWorkbench;
+import com.gravypod.alladmin.commands.WorkbenchCommand;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.world.World;
 /**
- * Fake crafting table GUI to allow for {@link CommandWorkbench}
+ * Fake crafting table GUI to allow for {@link WorkbenchCommand}
  * @author gravypod
  *
  */

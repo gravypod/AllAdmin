@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -33,7 +33,7 @@ public abstract class AllAdminCommand extends CommandBase {
 	
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender sender) {
-		IUser user = AllAdmin.getUser(getCommandSenderAsPlayer(sender));
+		IUser user = AllAdmin.getUser(sender);
 		return (hasPermission(user) || user.hasPermission(permission)) || super.canCommandSenderUseCommand(sender);
 	}
 
@@ -50,10 +50,14 @@ public abstract class AllAdminCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender sender) {
 		return AllAdmin.getString(name + "usage");
 	}
-
+	
+	public String getCommandUsage(IUser sender) {
+		return this.getCommandUsage(sender.getICommandSender());
+	}
+	
 	@Override
 	public void processCommand(ICommandSender user, String[] args) {
-		IUser sender = AllAdmin.getUser(getCommandSenderAsPlayer(user));
+		IUser sender = AllAdmin.getUser(user);
 		execute(sender, args);
 
 	}

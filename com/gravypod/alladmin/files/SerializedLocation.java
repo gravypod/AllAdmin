@@ -1,6 +1,7 @@
 package com.gravypod.alladmin.files;
 
 public class SerializedLocation {
-	public int x, y, z, dim;
+	public double x, y, z;
+	public int dim;
 	public float pitch, yaw;
 }

@@ -12,7 +12,7 @@ import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.esotericsoftware.yamlbeans.YamlWriter;
 import com.gravypod.alladmin.AllAdmin;
-import com.gravypod.alladmin.permissions.Permissions;
+import com.gravypod.alladmin.permissions.PermissionManager;
 
 public class UserFiles {
 
@@ -39,16 +39,19 @@ public class UserFiles {
 			try {
 				YamlReader reader = new YamlReader(new FileReader(userFile));
 				user = reader.read(SerializedUser.class);
+				reader.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (YamlException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
 			user = new SerializedUser();
 			user.homes = new HashMap<String, SerializedLocation>();
 			user.name = name;
-			user.rank = Permissions.getDefaultRank();
+			user.rank = PermissionManager.getDefaultRank();
 		}
 		
 		props.put(name, user);
@@ -59,7 +62,7 @@ public class UserFiles {
 	
 	public static void unloadUser(String name, SerializedUser serializedUser) throws FileNotFoundException, IOException {
 		File userFile = new File(userDir, name + ".yml");
-		
+		System.out.println(name + " " + serializedUser.name);
 		if (props.remove(name).equals(serializedUser) && userFile.exists()) {
 			return;
 		}

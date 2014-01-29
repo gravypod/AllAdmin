@@ -4,10 +4,11 @@ import java.util.HashMap;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChunkCoordinates;
 
 import com.gravypod.alladmin.files.SerializedLocation;
 import com.gravypod.alladmin.permissions.Group;
-import com.gravypod.alladmin.permissions.Permissions.CommandPermissions;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 public interface IUser {
 	
@@ -65,7 +66,7 @@ public interface IUser {
 	 * @param y - Y coord
 	 * @param z - Z coord
 	 */
-	public void teleport(int x, int y, int z);
+	public void teleport(double x, double y, double z);
 	
 	/**
 	 * Teleport a user with setting a pitch and yaw
@@ -75,7 +76,9 @@ public interface IUser {
 	 * @param pitch
 	 * @param yaw
 	 */
-	public void teleport(int x, int y, int z, float pitch, float yaw);
+	public void teleport(double x, double y, double z, float pitch, float yaw);
+	
+	public void teleport(SerializedLocation location);
 	
 	/**
 	 * Set a home and specify its name
@@ -152,9 +155,32 @@ public interface IUser {
 
 	public boolean hasPermission(CommandPermissions multiSetHome);
 
-	public void allowFlight();
+	public void toggleFlight();
 	
 	public EntityPlayer getHandle();
 	
+	public boolean isOnline();
+
+	public boolean isFlying();
+	
+	public SerializedLocation getLocation();
+
+	public void teleport(ChunkCoordinates spawnPoint);
+
+	public void showInventory(IUser user);
+
+	public void clearInventory();
+
+	public boolean hasGodMode();
+
+	public boolean canBreak(int blockID);
+	
+	public void repairItemInHand();
+
+	public void toggleGodMode();
+
+	public boolean isJailed();
+	
+	public void sendJail();
 	
 }
