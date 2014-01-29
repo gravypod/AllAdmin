@@ -78,7 +78,13 @@ public class PermissionManager {
 			}
 		},
 		BLOCK_ALL("alladmin.blocks.all"), 
-		REPAIR("alladmin.command.repair");
+		REPAIR("alladmin.command.repair"), 
+		HELP("alladmin.command.help"),
+		OP("alladmin.command.op"),
+		DEBUG("alladmin.command.debug"),
+		GAME_RULE("alladmin.command.gamerule"), 
+		TIMEOUT("alladmin.command.timeout"), 
+		TIME("alladmin.command.time"),
 		;
 		
 		private final String permission;

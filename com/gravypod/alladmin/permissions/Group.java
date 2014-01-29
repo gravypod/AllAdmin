@@ -35,22 +35,23 @@ public class Group {
 			return permissionCache.get(s);
 		}
 		
-		
 		boolean has = false;
 		
 		for (String group : subgroups) {
-			System.out.println(group);
 			Group g = PermissionManager.getGroup(group);
 			if (g != null && g.hasPermission(s)) {
 				has = true;
 			}
 		}
+		
 		if (!has) {
 			has = selfHasPermission(s);
 			
-			if (selfHasPermission("-" + s)) {
-				has = false;
-			}
+			
+		}
+		
+		if (!has && selfHasPermission("-" + s)) {
+			has = false;
 		}
 		
 		permissionCache.put(s, has);
@@ -58,35 +59,30 @@ public class Group {
 		
 	}
 	
-	private boolean selfHasPermission(String s) {
+	private boolean selfHasPermission(String s) {// From group manager, taken with permission from elgarl
 		
-		if (permissions.contains(s)) {
-			return true;
-		}
-		
-		String[] parts = s.toLowerCase().split("\\.");
-		
-		StringBuilder builder = new StringBuilder();
+		String name = s.toLowerCase().toLowerCase();
 
-		for (String part : parts) {
-			
-			if (permissions.contains(builder.toString() + "*")) {
-				return true;
-			}
-			
-			builder.append(part);
+        if (permissions.contains(name)) {
+            return true;
+        }
 
-			if (permissions.contains(builder.toString())) {
-				return true;
-			}
+        final String[] parts = name.split("\\.");
+        final StringBuilder builder = new StringBuilder(name.length());
+        
+        for (String part : parts) {
+        	
+            builder.append('*');
 
-			builder.append(".");
-
-
-		}
-
-		return false;
-
+            if (permissions.contains(builder.toString())) {
+                return true;
+            }
+            
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append(part).append('.');
+        }
+        
+        return false;
 	}
 	
 	public SerializedGroup serializeGroup() {

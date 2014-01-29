@@ -13,7 +13,8 @@ import com.gravypod.alladmin.AllAdmin;
 
 public class ConfigFiles {
 
-	private static final File configFile = new File(AllAdmin.getDataDir(), "config.yml");
+	private static final File configFile = new File(AllAdmin.getDataDir(),
+			"config.yml");
 	public static String broadcastFormat;
 	static {
 		load();
@@ -22,19 +23,23 @@ public class ConfigFiles {
 	public static void save() throws IOException {
 		YamlWriter writer = new YamlWriter(new FileWriter(configFile));
 		SerializedConfig config = new SerializedConfig();
-		
+
 		config.broadcastFormat = broadcastFormat;
 		writer.write(config);
 		writer.close();
 	}
 
 	public static void load() {
-		try {
-			YamlReader reader = new YamlReader(new FileReader(configFile));
-			SerializedConfig config = reader.read(SerializedConfig.class);
-			reader.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		if (configFile.exists()) {
+			try {
+				YamlReader reader = new YamlReader(new FileReader(configFile));
+				SerializedConfig config = reader.read(SerializedConfig.class);
+				reader.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
 			broadcastFormat = "&e{MESSAGE}";
 		}
 	}

@@ -62,7 +62,7 @@ public class AllAdminUser implements IUser {
 		if (!PermissionManager.groupExists(group.getName())) {
 			setRank(PermissionManager.getDefaultRank());
 		}
-		return group.hasPermission(permission);
+		return MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(getUsername()) || group.hasPermission(permission);
 
 	}
 

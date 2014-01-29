@@ -13,6 +13,7 @@ import com.esotericsoftware.yamlbeans.YamlWriter;
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.permissions.Group;
 import com.gravypod.alladmin.permissions.PermissionManager;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 public class PermissionFiles {
 	
