@@ -38,6 +38,7 @@ public class UserFiles {
 		if (userFile.exists()) {
 			try {
 				YamlReader reader = new YamlReader(new FileReader(userFile));
+				AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 				user = reader.read(SerializedUser.class);
 				reader.close();
 			} catch (FileNotFoundException e) {
@@ -73,6 +74,7 @@ public class UserFiles {
 			userFile.createNewFile();
 		}
 		YamlWriter writer = new YamlWriter(new FileWriter(userFile));
+		AllAdminYMLConfig.getYMLConfig(writer.getConfig());
 		writer.write(serializedUser);
 		writer.close();
 		

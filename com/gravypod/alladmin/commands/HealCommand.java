@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 

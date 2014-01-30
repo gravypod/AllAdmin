@@ -1,6 +1,7 @@
 package com.gravypod.alladmin.commands;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 

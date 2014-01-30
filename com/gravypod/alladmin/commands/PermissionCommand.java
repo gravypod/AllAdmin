@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.files.PermissionFiles;
 import com.gravypod.alladmin.permissions.Group;

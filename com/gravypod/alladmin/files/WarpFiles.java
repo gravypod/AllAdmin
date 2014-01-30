@@ -23,6 +23,7 @@ public class WarpFiles {
 		SerializedWarpConfig serializedWarpConfig = new SerializedWarpConfig();
 		serializedWarpConfig.warps = warps;
 		YamlWriter writer = new YamlWriter(new FileWriter(warpFile));
+		AllAdminYMLConfig.getYMLConfig(writer.getConfig());
 		writer.write(serializedWarpConfig);
 		writer.close();
 	}
@@ -31,6 +32,7 @@ public class WarpFiles {
 		try {
 			if (warpFile.exists()) {
 				YamlReader reader = new YamlReader(new FileReader(warpFile));
+				AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 				SerializedWarpConfig serializedWarpConfig = reader.read(SerializedWarpConfig.class);
 				warps.putAll(serializedWarpConfig.warps);
 				reader.close();
@@ -59,6 +61,10 @@ public class WarpFiles {
 	
 	public static HashMap<String, SerializedLocation> getWarps() {
 		return warps;
+	}
+
+	public static void deleteWarp(String warp) {
+		warps.remove(warp);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.gravypod.alladmin.commands;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.Utils;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
@@ -13,7 +14,7 @@ public class TpPosCommand extends AllAdminCommand {
 	}
 
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 		if (args.length == 4) {
 			
 			if (!sender.hasPermission(CommandPermissions.TP_OTHERS)) {

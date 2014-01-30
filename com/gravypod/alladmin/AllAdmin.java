@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.gravypod.alladmin.commands.CommandRegistry;
 import com.gravypod.alladmin.commands.wrapped.BanCommand;
 import com.gravypod.alladmin.commands.wrapped.BanIpCommand;
 import com.gravypod.alladmin.commands.wrapped.DebugCommand;
@@ -76,7 +75,6 @@ public class AllAdmin {
 	
 	public static final I18n localization = new I18n();
 	
-	
 	@Mod.EventHandler
 	public static void preInit(FMLServerStartingEvent event) {
 		
@@ -86,7 +84,7 @@ public class AllAdmin {
 			return;
 		}
 		
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		MinecraftForge.EVENT_BUS.register(new AllAdminEventHandler());
 		
 		System.out.println("[AllAdmin] Starting! Created by gravypod. Version " + version);
 		
@@ -97,7 +95,7 @@ public class AllAdmin {
 		
 		ServerCommandManager ch = (ServerCommandManager) MinecraftServer.getServer().getCommandManager();
 		
-		for (CommandRegistry reg : CommandRegistry.values()) {
+		for (AllAdminCommandRegistry reg : AllAdminCommandRegistry.values()) {
 			ch.registerCommand(reg.getCommand());
 		}
 		
@@ -141,15 +139,16 @@ public class AllAdmin {
 		};
 		
 		for (CommandBase base : baseCommands) {
-			ch.getCommands().remove(base.getCommandName());
-			ch.getCommands().put(base.getCommandName(), base);
+			String name = base.getCommandName();
+			ch.getCommands().remove(name);
+			ch.getCommands().put(name, base);
 			
 			List<String> alias = base.getCommandAliases();
-			if (alias != null)
-			for (String a : alias) {
-				ch.getCommands().put(a, base);
+			if (alias != null) {
+				for (String a : alias) {
+					ch.getCommands().put(a, base);
+				}
 			}
-			
 		}
 		
 		GameRegistry.registerPlayerTracker(new IPlayerTracker() {
@@ -171,10 +170,6 @@ public class AllAdmin {
 		
 	}
 	
-	protected static void removeUser(String username) {
-		users.remove(username.toLowerCase());
-	}
-
 	@Mod.EventHandler
 	public static void stopping(FMLServerStoppingEvent event) {
 		if (!running) {
@@ -226,6 +221,10 @@ public class AllAdmin {
 		
 		return users.get(name);
 		
+	}
+	
+	public static void removeUser(String username) {
+		users.remove(username.toLowerCase());
 	}
 
 	public static String getString(String name) {

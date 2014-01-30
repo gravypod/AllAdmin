@@ -14,6 +14,7 @@ import com.esotericsoftware.yamlbeans.YamlWriter;
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.permissions.Group;
 import com.gravypod.alladmin.permissions.PermissionManager;
+
 import static com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions.*;
 
 public class PermissionFiles {
@@ -24,6 +25,7 @@ public class PermissionFiles {
 	static {
 		try {
 			YamlReader reader = new YamlReader(new FileReader(permissionFile));
+			AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 			permissonConfigs = reader.read(SerializedPermissionConfigs.class);
 		} catch (FileNotFoundException e) {
 			loadDefault();
@@ -38,6 +40,7 @@ public class PermissionFiles {
 			return;
 		}
 		YamlWriter writer = new YamlWriter(new FileWriter(permissionFile));
+		AllAdminYMLConfig.getYMLConfig(writer.getConfig());
 		writer.write(perm);
 		writer.close();
 	}

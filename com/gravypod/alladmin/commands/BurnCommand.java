@@ -1,6 +1,7 @@
 package com.gravypod.alladmin.commands;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.Utils;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
@@ -12,7 +13,7 @@ public class BurnCommand extends AllAdminCommand {
 	}
 
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 		
 		if (args.length == 2) {
 			IUser user = AllAdmin.getUser(args[0]);

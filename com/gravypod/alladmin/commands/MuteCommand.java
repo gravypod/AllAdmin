@@ -3,6 +3,7 @@ package com.gravypod.alladmin.commands;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
@@ -18,7 +19,7 @@ public class MuteCommand extends AllAdminCommand {
 	}
 	
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 		
 		if (args.length != 1) {
 			sender.translate("muteusage");

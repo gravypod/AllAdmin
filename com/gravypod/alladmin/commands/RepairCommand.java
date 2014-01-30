@@ -1,5 +1,6 @@
 package com.gravypod.alladmin.commands;
 
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
@@ -9,7 +10,7 @@ public class RepairCommand extends AllAdminCommand {
 		super(perm, name, alias);
 	}
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 		sender.repairItemInHand();
 		sender.translate("repaired");
 	}

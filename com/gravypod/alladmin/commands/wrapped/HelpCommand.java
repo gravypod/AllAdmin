@@ -23,4 +23,5 @@ public class HelpCommand extends CommandHelp {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
 }

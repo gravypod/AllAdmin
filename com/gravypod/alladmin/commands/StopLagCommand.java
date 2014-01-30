@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
@@ -23,7 +24,7 @@ public class StopLagCommand extends AllAdminCommand {
 	}
 
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 
 		WorldServer[] worlds = MinecraftServer.getServer().worldServers;
 		

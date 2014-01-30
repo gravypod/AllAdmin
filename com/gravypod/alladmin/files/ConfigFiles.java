@@ -32,6 +32,7 @@ public class ConfigFiles {
 		}
 		
 		YamlWriter writer = new YamlWriter(new FileWriter(configFile));
+		AllAdminYMLConfig.getYMLConfig(writer.getConfig());
 		writer.write(config);
 		writer.close();
 		
@@ -45,6 +46,7 @@ public class ConfigFiles {
 
 		try {
 			YamlReader reader = new YamlReader(new FileReader(configFile));
+			AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 			serializedConfig = reader.read(SerializedConfig.class);
 			reader.close();
 		} catch (Exception e) {

@@ -2,6 +2,7 @@ package com.gravypod.alladmin.commands;
 
 import net.minecraft.server.MinecraftServer;
 
+import com.gravypod.alladmin.AllAdminCommand;
 import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.Utils;
 import com.gravypod.alladmin.files.SerializedLocation;
@@ -14,7 +15,7 @@ public class SetSpawnCommand extends AllAdminCommand {
 	}
 
 	@Override
-	void execute(IUser sender, String[] args) {
+	public void execute(IUser sender, String[] args) {
 		
 		if (args.length == 0) {
 			
