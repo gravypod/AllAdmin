@@ -42,7 +42,7 @@ public class HomeCommand extends AllAdminCommand {
 
 		switch (args.length) {
 		case 0:
-			if (!sender.getHomes().containsKey("default")) {
+			if (!sender.getHomes().containsKey("defaultHome")) {
 				sender.translate("nodefaulthome");
 				return;
 			}

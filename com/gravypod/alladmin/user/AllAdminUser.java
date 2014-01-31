@@ -13,6 +13,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -28,6 +29,7 @@ import com.gravypod.alladmin.IUser;
 import com.gravypod.alladmin.files.SerializedLocation;
 import com.gravypod.alladmin.files.SerializedUser;
 import com.gravypod.alladmin.files.UserFiles;
+import com.gravypod.alladmin.minecraft.FakeChest;
 import com.gravypod.alladmin.minecraft.FakeCrafting;
 import com.gravypod.alladmin.minecraft.FakeEnchantment;
 import com.gravypod.alladmin.permissions.Group;
@@ -106,8 +108,9 @@ public class AllAdminUser implements IUser {
 			user.homes = getHomes();
 			user.isMuted = isMute();
 			user.isInvisible = isInvisible();
-			user.godmode = this.godemode;
+			user.godmode = hasGodMode();
 			user.name = name;
+			System.out.println("Logout event for " + name + " running");
 			UserFiles.unloadUser(name, user);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -136,7 +139,7 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void setHome() {
-		setHome("default");
+		setHome("defaultHome");
 	}
 
 	@Override
@@ -157,13 +160,12 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void sendHome() {
-		sendHome("default");
+		sendHome("defaultHome");
 	}
 
 	@Override
 	public HashMap<String, SerializedLocation> getHomes() {
-		return homes == null ? new HashMap<String, SerializedLocation>()
-				: homes;
+		return homes;
 	}
 
 	@Override
@@ -262,7 +264,9 @@ public class AllAdminUser implements IUser {
 	public boolean isFlying() {
 		return getHandle().capabilities.allowFlying;
 	}
-	
+	private void openChest(Container c) {
+		openContainer(c, 4, 9, "");
+	}
 	private void openContainer(Container container, int indescriptNumberOne, int indescriptNumberTwo, String randomIndescriptString) {
 		getHandle().incrementWindowID();
 		getHandle().playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(getHandle().currentWindowId, indescriptNumberOne, randomIndescriptString, indescriptNumberTwo, false));
@@ -296,7 +300,8 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void showInventory(IUser user) {
-		getHandle().displayGUIChest(user.getHandle().inventory);
+		IInventory inventory = user.getHandle().inventory;
+		openContainer(new FakeChest( getHandle().inventory, inventory), 0, inventory.getSizeInventory(), "");
 	}
 
 	@Override

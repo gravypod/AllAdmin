@@ -61,7 +61,7 @@ public class UserFiles {
 		
 	}
 	
-	public static void unloadUser(String name, SerializedUser serializedUser) throws FileNotFoundException, IOException {
+	public static void unloadUser(String name, SerializedUser serializedUser) throws IOException {
 		name = name.toLowerCase();
 		File userFile = new File(userDir, name + ".yml");
 		SerializedUser user = props.remove(name);
@@ -70,9 +70,6 @@ public class UserFiles {
 			return;
 		}
 		
-		if (!userFile.exists()) {
-			userFile.createNewFile();
-		}
 		YamlWriter writer = new YamlWriter(new FileWriter(userFile));
 		AllAdminYMLConfig.getYMLConfig(writer.getConfig());
 		writer.write(serializedUser);

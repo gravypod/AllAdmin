@@ -1,6 +1,7 @@
 package com.gravypod.alladmin.files;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class SerializedUser {
 	public String name;
@@ -14,6 +15,18 @@ public class SerializedUser {
 		if (obj instanceof SerializedUser) {
 			SerializedUser u = (SerializedUser) obj;
 			boolean homesEqual =  u.homes.entrySet().containsAll(homes.entrySet());
+			
+			for (Entry<String, SerializedLocation> location : u.homes.entrySet()) {
+				
+				if (!homes.containsKey(location.getKey())) {
+					return false;
+				}
+				
+				if (!homes.get(location.getKey()).equals(location.getValue())) {
+					return false;
+				}
+			}
+			
 			boolean usernameEqual = u.name.equals(name);
 			boolean rankEqual = u.rank.equals(rank);
 			boolean invisEqual = u.isInvisible == isInvisible;
