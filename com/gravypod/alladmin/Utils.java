@@ -6,8 +6,10 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Utils {
+	
 	// Bukkit code
 	private final static char colorCode = '&';
+	
     public static String translateAlternateColorCodes(String textToTranslate) {
         char[] b = textToTranslate.toCharArray();
         for (int i = 0; i < b.length - 1; i++) {
@@ -34,6 +36,7 @@ public class Utils {
 
         return response.toString();
     }
+    
     public static boolean isInteger(String str) {
     	if (str == null) {
     		return false;

@@ -95,11 +95,7 @@ public class AllAdmin {
 		
 		ServerCommandManager ch = (ServerCommandManager) MinecraftServer.getServer().getCommandManager();
 		
-		for (AllAdminCommandRegistry reg : AllAdminCommandRegistry.values()) {
-			ch.registerCommand(reg.getCommand());
-		}
-		
-		CommandBase[] baseCommands = new CommandBase[] {
+		IWrappedCommand[] baseCommands = new IWrappedCommand[] {
 				new BanCommand(CommandPermissions.BAN),
 				new BanIpCommand(CommandPermissions.BAN),
 				new DebugCommand(CommandPermissions.DEBUG),
@@ -138,11 +134,11 @@ public class AllAdmin {
 				
 		};
 		
-		for (CommandBase base : baseCommands) {
+		for (IWrappedCommand base : baseCommands) {
 			String name = base.getCommandName();
 			ch.getCommands().remove(name);
 			ch.getCommands().put(name, base);
-			
+
 			List<String> alias = base.getCommandAliases();
 			if (alias != null) {
 				for (String a : alias) {
@@ -150,17 +146,23 @@ public class AllAdmin {
 				}
 			}
 		}
+		for (AllAdminCommandRegistry reg : AllAdminCommandRegistry.values()) {
+			ch.registerCommand(reg.getCommand());
+		}
 		
 		GameRegistry.registerPlayerTracker(new IPlayerTracker() {
 			@Override
 			public void onPlayerRespawn(EntityPlayer player) {}
 			@Override
 			public void onPlayerLogout(EntityPlayer player) {
+				if (!running) {
+					return;
+				}
 				IUser user = getUser(player.username);
-				removeUser(player.username);
 				if (user != null) {
 					user.logout();
 				}
+				removeUser(player.username);
 			}
 			@Override
 			public void onPlayerLogin(EntityPlayer player) {}
@@ -172,12 +174,11 @@ public class AllAdmin {
 	
 	@Mod.EventHandler
 	public static void stopping(FMLServerStoppingEvent event) {
-		if (!running) {
-			return;
-		}
+		running = false;
 		for (IUser user : users.values()) {
 			user.logout();
 		}
+		
 		saveConfigs();
 	}
 	
@@ -192,10 +193,6 @@ public class AllAdmin {
 	 * @return IUser who has the name provided or null if no user existed or the plugin has not loaded
 	 */
 	public static IUser getUser(Object sender) {
-		
-		if (!running) {
-			return null;
-		}
 		
 		String name = null;
 		

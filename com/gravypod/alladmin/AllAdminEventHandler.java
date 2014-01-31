@@ -1,6 +1,7 @@
 package com.gravypod.alladmin;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.gravypod.alladmin.commands.wrapped.BanCommand;
 import com.gravypod.alladmin.commands.wrapped.BanIpCommand;
@@ -42,6 +43,7 @@ import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.EventPriority;
@@ -60,6 +62,7 @@ public class AllAdminEventHandler {
 		
 		if (user.isMute()) {
 			events.setCanceled(true);
+			return;
 		}
 		
 		String format = user.getRank().getMessageFormat();
@@ -67,7 +70,6 @@ public class AllAdminEventHandler {
 		format = format.replace("{GROUPNAME}", user.getRank().getName());
 		format = format.replace("{WORLD}", events.player.worldObj.getWorldInfo().getWorldName());
 		format = format.replace("{MESSAGE}", events.message);
-		
 		
 		events.component = ChatMessageComponent.createFromText(Utils.translateAlternateColorCodes(format));
 	}
@@ -91,7 +93,7 @@ public class AllAdminEventHandler {
 		
 	}
 	
-	@ForgeSubscribe
+	@ForgeSubscribe(priority = EventPriority.LOW,receiveCanceled=false)
 	public void blockBreak(BreakEvent event) {
 		
 		IUser user = AllAdmin.getUser(event.getPlayer());
@@ -106,42 +108,5 @@ public class AllAdminEventHandler {
 		}
 		
 	}
-	
-	/*@ForgeSubscribe(receiveCanceled = false, priority = EventPriority.HIGHEST)
-	public void command(CommandEvent event) { // Handle negated permission
-		String name = event.command.getCommandName();
-		
-		ICommandSender sender = event.sender;
-		
-		CommandBase cmd = this.replacedCommands.get(name);
-		
-		if (cmd == null) {
-			return;
-		}
-		
-		if (cmd.canCommandSenderUseCommand(sender)) {
-			event.setCanceled(true);
-			cmd.processCommand(sender, event.parameters);
-		} else {
-			System.out.println(name + " " + sender.getCommandSenderName() + " could not use");
-		}
-		
-	}*/
-	
-	/*@ForgeSubscribe
-	public void interact(BreakSpeed event) {
-		
-		IUser user = AllAdmin.getUser(event.entityPlayer);
-		
-		if (user == null) {
-			return;
-		}
-		
-		
-		if (!user.canPlace(event.block.blockID)) {
-			event.setCanceled(true);
-		}
-		
-	}*/
 	
 }

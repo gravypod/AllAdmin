@@ -5,9 +5,10 @@ import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
-public class ToggleDownfallCommand extends CommandToggleDownfall {
+public class ToggleDownfallCommand extends CommandToggleDownfall implements IWrappedCommand{
 	CommandPermissions permission;
 	public ToggleDownfallCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -22,5 +23,9 @@ public class ToggleDownfallCommand extends CommandToggleDownfall {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
+	}
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
 	}
 }

@@ -2,12 +2,13 @@ package com.gravypod.alladmin.commands.wrapped;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandPlaySound;
 import net.minecraft.command.ICommandSender;
 
-public class PlaySoundCommand extends CommandPlaySound {
+public class PlaySoundCommand extends CommandPlaySound implements IWrappedCommand {
 	CommandPermissions permission;
 	public PlaySoundCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,4 +24,10 @@ public class PlaySoundCommand extends CommandPlaySound {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
+	}
+	
 }

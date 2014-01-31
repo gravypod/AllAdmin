@@ -17,7 +17,7 @@ import com.gravypod.alladmin.permissions.PermissionManager;
 public class UserFiles {
 
 	private static final File userDir;
-	private static final HashMap<String, SerializedUser> props = new HashMap<String, SerializedUser>();
+	private static final HashMap<String, SerializedUser> userFiles = new HashMap<String, SerializedUser>();
 	static {
 		userDir = new File(AllAdmin.getDataDir(), "users");
 
@@ -28,8 +28,8 @@ public class UserFiles {
 	
 	public static SerializedUser loadUser(String name) {
 		name = name.toLowerCase();
-		if (props.containsKey(name)) {
-			return props.get(name);
+		if (userFiles.containsKey(name)) {
+			return userFiles.get(name);
 		}
 		
 		File userFile = new File(userDir, name + ".yml");
@@ -41,21 +41,18 @@ public class UserFiles {
 				AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 				user = reader.read(SerializedUser.class);
 				reader.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (YamlException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				user = blankUser(name);
 			}
 		} else {
-			user = new SerializedUser();
-			user.homes = new HashMap<String, SerializedLocation>();
-			user.name = name;
-			user.rank = PermissionManager.getDefaultRank();
+			user = blankUser(name);
 		}
 		
-		props.put(name, user);
+		if (user == null) {
+			user = blankUser(name);
+		}
+		
+		userFiles.put(name, user);
 		
 		return user;
 		
@@ -64,7 +61,8 @@ public class UserFiles {
 	public static void unloadUser(String name, SerializedUser serializedUser) throws IOException {
 		name = name.toLowerCase();
 		File userFile = new File(userDir, name + ".yml");
-		SerializedUser user = props.remove(name);
+		SerializedUser user = userFiles.remove(name);
+		
 		
 		if (user.equals(serializedUser) && userFile.exists()) {
 			return;
@@ -75,6 +73,14 @@ public class UserFiles {
 		writer.write(serializedUser);
 		writer.close();
 		
+	}
+	
+	private static SerializedUser blankUser(String name) {
+		SerializedUser user = new SerializedUser();
+		user.homes = new HashMap<String, SerializedLocation>();
+		user.name = name;
+		user.rank = PermissionManager.getDefaultRank();
+		return user;
 	}
 	
 	

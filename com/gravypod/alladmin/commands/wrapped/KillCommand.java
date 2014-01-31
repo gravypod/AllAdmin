@@ -2,12 +2,13 @@ package com.gravypod.alladmin.commands.wrapped;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandKill;
 import net.minecraft.command.ICommandSender;
 
-public class KillCommand extends CommandKill {
+public class KillCommand extends CommandKill implements IWrappedCommand {
 	CommandPermissions permission;
 	public KillCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,4 +24,11 @@ public class KillCommand extends CommandKill {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
+	}
+	
 }

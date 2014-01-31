@@ -2,12 +2,13 @@ package com.gravypod.alladmin.commands.wrapped;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandServerList;
 import net.minecraft.command.ICommandSender;
 
-public class ListCommand extends CommandServerList {
+public class ListCommand extends CommandServerList implements IWrappedCommand {
 	CommandPermissions permission;
 	public ListCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,4 +24,10 @@ public class ListCommand extends CommandServerList {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
+	}
+	
 }

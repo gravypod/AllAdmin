@@ -14,7 +14,6 @@ public class SerializedUser {
 	public boolean equals(Object obj) {
 		if (obj instanceof SerializedUser) {
 			SerializedUser u = (SerializedUser) obj;
-			boolean homesEqual =  u.homes.entrySet().containsAll(homes.entrySet());
 			
 			for (Entry<String, SerializedLocation> location : u.homes.entrySet()) {
 				
@@ -32,7 +31,7 @@ public class SerializedUser {
 			boolean invisEqual = u.isInvisible == isInvisible;
 			boolean muteEqual = u.isMuted == isMuted;
 			boolean godEqual = u.godmode == godmode;
-			return usernameEqual && rankEqual && homesEqual && invisEqual && muteEqual && godEqual;
+			return usernameEqual && rankEqual && invisEqual && muteEqual && godEqual;
 		}
 		return super.equals(obj);
 	}

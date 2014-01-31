@@ -2,12 +2,13 @@ package com.gravypod.alladmin.commands.wrapped;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandServerBanlist;
 import net.minecraft.command.ICommandSender;
 
-public class BanlistCommand extends CommandServerBanlist {
+public class BanlistCommand extends CommandServerBanlist implements IWrappedCommand {
 	CommandPermissions permission;
 	public BanlistCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,4 +24,10 @@ public class BanlistCommand extends CommandServerBanlist {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
+	}
+	
 }

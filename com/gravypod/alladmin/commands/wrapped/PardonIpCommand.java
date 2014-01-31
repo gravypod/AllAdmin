@@ -6,9 +6,10 @@ import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
-public class PardonIpCommand extends CommandServerPardonIp {
+public class PardonIpCommand extends CommandServerPardonIp implements IWrappedCommand {
 	CommandPermissions permission;
 	public PardonIpCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -24,4 +25,10 @@ public class PardonIpCommand extends CommandServerPardonIp {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public CommandPermissions getPermission() {
+		return permission;
+	}
+	
 }

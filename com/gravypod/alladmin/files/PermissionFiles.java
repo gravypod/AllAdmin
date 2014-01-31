@@ -27,9 +27,12 @@ public class PermissionFiles {
 			YamlReader reader = new YamlReader(new FileReader(permissionFile));
 			AllAdminYMLConfig.getYMLConfig(reader.getConfig());
 			permissonConfigs = reader.read(SerializedPermissionConfigs.class);
-		} catch (FileNotFoundException e) {
-			loadDefault();
-		} catch (YamlException e) {
+		} catch (Exception e) {
+			
+			if (permissionFile.exists()) {
+				System.out.println("Error loading the permissions config, renaming the file and creating a default version. Your old file is located at permissions.yml.broken");
+				permissionFile.renameTo(new File(AllAdmin.getDataDir(), "permissions.yml.broken"));
+			}
 			loadDefault();
 		}
 	}
