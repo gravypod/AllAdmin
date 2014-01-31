@@ -3,7 +3,7 @@
   "modid": "AllAdmin",
   "name": "AllAdmin",
   "description": "Basic server administration commands",
-  "version": "0.0.1a",
+  "version": "0.0.2a",
   "mcversion": "1.6",
   "url": "",
   "updateUrl": "",

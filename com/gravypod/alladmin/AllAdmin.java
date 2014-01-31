@@ -68,7 +68,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @NetworkMod(clientSideRequired = false)
 public class AllAdmin {
 	
-	public static final String version = "0.0.1a";
+	public static final String version = "0.0.2a";
 	public static boolean running;
 	
 	public static HashMap<String, IUser> users = new HashMap<String, IUser>();
