@@ -43,7 +43,7 @@ public enum AllAdminCommandRegistry {
 	FLY_COMMAND(new FlyCommand(FLY, "fly")),
 	TP_POS_COMMAND(new TpPosCommand(TP, "tppos")), 
 	WARP_COMMAND(new WarpCommand(SET_WARP, "warp")),
-	DEL_WARP_COMMAND(new DelWarpCommand(SET_WARP, "warp")),
+	DEL_WARP_COMMAND(new DelWarpCommand(SET_WARP, "delwarp")),
 	SET_WARP_COMMAND(new SetWarpCommand(SET_WARP, "setwarp")),
 	SPAWN_COMMAND(new SpawnCommand(SPAWN, "spawn")),
 	SET_SPAWN_COMMAND(new SetSpawnCommand(SET_SPAWN, "setspawn")),

@@ -90,8 +90,7 @@ public class AllAdminUser implements IUser {
 
 	@Override
 	public void send(String message) {
-		getHandle().sendChatToPlayer(
-				ChatMessageComponent.createFromText(message));
+		getHandle().sendChatToPlayer(ChatMessageComponent.createFromText(message));
 	}
 
 	@Override
@@ -102,7 +101,6 @@ public class AllAdminUser implements IUser {
 	@Override
 	public void logout() {
 		try {
-			System.out.println("Logging out");
 			SerializedUser user = new SerializedUser();
 			user.rank = getRank().getName();
 			user.homes = getHomes();
