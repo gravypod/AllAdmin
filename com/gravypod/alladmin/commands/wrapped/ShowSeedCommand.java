@@ -1,14 +1,13 @@
 package com.gravypod.alladmin.commands.wrapped;
 
-import com.gravypod.alladmin.AllAdmin;
-import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
-import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
-
 import net.minecraft.command.CommandShowSeed;
 import net.minecraft.command.ICommandSender;
 
-public class ShowSeedCommand extends CommandShowSeed implements IWrappedCommand {
+import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
+
+public class ShowSeedCommand extends CommandShowSeed {
 	CommandPermissions permission;
 	public ShowSeedCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,11 +22,6 @@ public class ShowSeedCommand extends CommandShowSeed implements IWrappedCommand 
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
-	}
-	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
 	}
 	
 }

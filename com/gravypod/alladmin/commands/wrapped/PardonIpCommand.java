@@ -1,15 +1,13 @@
 package com.gravypod.alladmin.commands.wrapped;
 
-import net.minecraft.command.CommandPlaySound;
 import net.minecraft.command.CommandServerPardonIp;
 import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
-public class PardonIpCommand extends CommandServerPardonIp implements IWrappedCommand {
+public class PardonIpCommand extends CommandServerPardonIp {
 	CommandPermissions permission;
 	public PardonIpCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -24,11 +22,6 @@ public class PardonIpCommand extends CommandServerPardonIp implements IWrappedCo
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
-	}
-	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
 	}
 	
 }

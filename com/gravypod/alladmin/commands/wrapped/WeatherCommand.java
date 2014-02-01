@@ -5,10 +5,9 @@ import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
-public class WeatherCommand extends CommandWeather implements IWrappedCommand {
+public class WeatherCommand extends CommandWeather {
 	CommandPermissions permission;
 	public WeatherCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -25,8 +24,4 @@ public class WeatherCommand extends CommandWeather implements IWrappedCommand {
 		return 0;
 	}
 	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
-	}
 }

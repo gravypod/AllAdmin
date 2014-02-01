@@ -1,14 +1,13 @@
 package com.gravypod.alladmin.commands.wrapped;
 
-import com.gravypod.alladmin.AllAdmin;
-import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
-import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
-
 import net.minecraft.command.CommandGive;
 import net.minecraft.command.ICommandSender;
 
-public class GiveCommand extends CommandGive implements IWrappedCommand {
+import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
+
+public class GiveCommand extends CommandGive {
 	CommandPermissions permission;
 	public GiveCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -23,12 +22,6 @@ public class GiveCommand extends CommandGive implements IWrappedCommand {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
-	}
-	
-	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
 	}
 	
 }

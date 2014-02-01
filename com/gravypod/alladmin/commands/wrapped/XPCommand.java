@@ -5,10 +5,9 @@ import net.minecraft.command.ICommandSender;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
-public class XPCommand extends CommandXP implements IWrappedCommand {
+public class XPCommand extends CommandXP {
 	CommandPermissions permission;
 	public XPCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -25,8 +24,4 @@ public class XPCommand extends CommandXP implements IWrappedCommand {
 		return 0;
 	}
 	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
-	}
 }

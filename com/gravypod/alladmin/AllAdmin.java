@@ -95,7 +95,7 @@ public class AllAdmin {
 		
 		ServerCommandManager ch = (ServerCommandManager) MinecraftServer.getServer().getCommandManager();
 		
-		IWrappedCommand[] baseCommands = new IWrappedCommand[] {
+		CommandBase[] baseCommands = new CommandBase[] {
 				new BanCommand(CommandPermissions.BAN),
 				new BanIpCommand(CommandPermissions.BAN),
 				new DebugCommand(CommandPermissions.DEBUG),
@@ -134,7 +134,7 @@ public class AllAdmin {
 				
 		};
 		
-		for (IWrappedCommand base : baseCommands) {
+		for (CommandBase base : baseCommands) {
 			String name = base.getCommandName();
 			ch.getCommands().remove(name);
 			ch.getCommands().put(name, base);

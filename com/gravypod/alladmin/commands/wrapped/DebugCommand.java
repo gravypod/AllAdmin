@@ -2,13 +2,12 @@ package com.gravypod.alladmin.commands.wrapped;
 
 import com.gravypod.alladmin.AllAdmin;
 import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
 import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
 
 import net.minecraft.command.CommandDebug;
 import net.minecraft.command.ICommandSender;
 
-public class DebugCommand extends CommandDebug implements IWrappedCommand {
+public class DebugCommand extends CommandDebug {
 	CommandPermissions permission;
 	public DebugCommand(CommandPermissions permission) {
 		this.permission = permission;
@@ -22,11 +21,6 @@ public class DebugCommand extends CommandDebug implements IWrappedCommand {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
-	}
-	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
 	}
 	
 }

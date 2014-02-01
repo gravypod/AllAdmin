@@ -1,14 +1,13 @@
 package com.gravypod.alladmin.commands.wrapped;
 
-import com.gravypod.alladmin.AllAdmin;
-import com.gravypod.alladmin.IUser;
-import com.gravypod.alladmin.IWrappedCommand;
-import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
-
 import net.minecraft.command.CommandServerStop;
 import net.minecraft.command.ICommandSender;
 
-public class StopCommand extends CommandServerStop implements IWrappedCommand {
+import com.gravypod.alladmin.AllAdmin;
+import com.gravypod.alladmin.IUser;
+import com.gravypod.alladmin.permissions.PermissionManager.CommandPermissions;
+
+public class StopCommand extends CommandServerStop {
 	
 	CommandPermissions permission;
 	
@@ -27,9 +26,5 @@ public class StopCommand extends CommandServerStop implements IWrappedCommand {
 		return 0;
 	}
 	
-	@Override
-	public CommandPermissions getPermission() {
-		return permission;
-	}
 	
 }
