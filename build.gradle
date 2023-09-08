@@ -1,0 +1,40 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven { url "https://maven.fabricmc.net" }
+		maven { url "https://repo.sleeping.town" }
+	}
+	dependencies {
+		classpath "agency.highlysuspect:voldeloom:2.4-SNAPSHOT"
+	}
+}
+
+apply plugin: "agency.highlysuspect.voldeloom"
+
+compileJava {
+	sourceCompatibility = "1.6"
+	targetCompatibility = "1.6"
+}
+
+String minecraftVersion = "1.6.4"
+String forgeVersion = "1.6.4-9.11.1.1345"
+
+volde {
+	runs {
+		client {
+			programArg "quaternary"
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${minecraftVersion}"
+	forge "net.minecraftforge:forge:${forgeVersion}:universal@jar"
+
+	mappings volde.layered {
+		importBaseZip "net.minecraftforge:forge:${forgeVersion}:src@zip"
+		removeClasses(["bar", "bas"])
+	}
+
+	compile fileTree(dir: './libs', include: ['*.jar'])
+}
